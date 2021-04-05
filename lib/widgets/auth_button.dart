@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:uniguide/widgets/font_styles.dart';
 
 class AuthButton extends StatelessWidget {
-
   final String childText;
   final Function func;
 
@@ -10,7 +10,10 @@ class AuthButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: Text(childText),
+      child: Text(
+        childText,
+        style: wideButtonTitle,
+      ),
       onPressed: func,
       style: ElevatedButton.styleFrom(
         primary: Color(0xFF4F4DAA),

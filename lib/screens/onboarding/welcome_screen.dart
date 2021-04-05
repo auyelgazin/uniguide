@@ -17,11 +17,17 @@ class WelcomeScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                IconButton(
-                  icon: Icon(Icons.exit_to_app),
-                  onPressed: () {
-                    Get.back();
-                  },
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: Color(0xFF232195).withOpacity(0.3),
+                    ),
+                    onPressed: () {
+                      Get.back();
+                    },
+                  ),
                 ),
               ],
             ),
@@ -32,12 +38,20 @@ class WelcomeScreen extends StatelessWidget {
             ),
             Column(
               children: [
-                Text(
-                  'welcome'.tr,
-                  style: titleStyle,
-                ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                  child: Text(
+                    'welcome'.tr,
+                    textAlign: TextAlign.center,
+                    style: titleStyle,
+                  ),
+                ),
+                // TODO
+                // SizedBox(
+                //   height: 15,
+                // ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                     'welcome_info'.tr,
                     textAlign: TextAlign.center,
@@ -54,38 +68,43 @@ class WelcomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  WideButtonBox(Container(
-                    child: AuthButton(
-                      'login'.tr,
-                      () {},
-                    ),
-                  )),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'no_acc'.tr,
-                        style: TextStyle(
-                          color: Color(0xFF161616),
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
-                        ),
+                  WideButtonBox(
+                    Container(
+                      child: AuthButton(
+                        'login'.tr,
+                        () {},
                       ),
-                      TextButton(
-                        child: Text(
-                          'signup'.tr,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'no_acc'.tr,
                           style: TextStyle(
+                            color: Color(0xFF161616),
                             fontWeight: FontWeight.w500,
                             fontSize: 12,
-                            color: Color(0xFF4F4DAA),
-                            decoration: TextDecoration.underline,
                           ),
                         ),
-                        onPressed: () {
-                          print('pressed');
-                        },
-                      ),
-                    ],
+                        TextButton(
+                          child: Text(
+                            'signup'.tr,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                              color: Color(0xFF4F4DAA),
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                          onPressed: () {
+                            print('pressed');
+                          },
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),
@@ -96,5 +115,3 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 }
-
-

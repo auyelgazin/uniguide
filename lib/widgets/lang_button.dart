@@ -53,7 +53,7 @@ class LangButton extends StatelessWidget {
               ),
               Icon(
                 Icons.arrow_forward_ios,
-                color: Color(0xFF232195).withOpacity(0.5),
+                color: Color(0xFF232195).withOpacity(0.3),
               )
             ],
           ),

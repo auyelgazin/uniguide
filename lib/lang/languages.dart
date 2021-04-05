@@ -6,7 +6,7 @@ class Languages extends Translations{
   Map<String, Map<String, String>> get keys => {
     'en_US': {
       'choose': 'Which language do you want to choose?',
-      'welcome': 'Welcome!',
+      'welcome': 'Welcome to Uniguide!',
       'welcome_info': 'This application is a social network of the Suleyman Demirel University, to speed up the problem solving process!',
       'login': 'Log In',
       'no_acc': 'Don\'t have an account yet?',
@@ -14,7 +14,7 @@ class Languages extends Translations{
     },
     'ru_RU': {
       'choose': 'Какой язык вы хотите выбрать?',
-      'welcome': 'Добро пожаловать!',
+      'welcome': 'Добро пожаловать в UniGuide!',
       'welcome_info': 'Данное приложение является социальной сетью университета им.Сулеймана Демиреля, для ускорения процесса решения проблем!',
       'login': 'Войти',
       'no_acc': 'У вас еще нет аккаунта?',
@@ -22,7 +22,7 @@ class Languages extends Translations{
     },
     'kz_KZ': {
       'choose': 'Қай тілді таңдағыңыз келеді?',
-      'welcome': 'Қош келдіңіз!',
+      'welcome': 'UniGuide-қа қош келдіңіз!',
       'welcome_info': 'Бұл қосымша - мәселе шешу процессін жеделдетуге арналған Сүлеймен Демирел Университетінің әлеуметтік желісі!',
       'login': 'Кіру',
       'no_acc': 'Аккаунтыңыз жоқ па?',
