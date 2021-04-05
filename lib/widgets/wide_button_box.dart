@@ -1,3 +1,5 @@
+// Fixed-sized BoxConstraints for showing purple 'submit' buttons and auth related textFields
+
 import 'package:flutter/material.dart';
 
 class WideButtonBox extends StatelessWidget {

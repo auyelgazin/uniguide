@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/widgets/auth_button.dart';
-import 'package:uniguide/widgets/font_styles.dart';
+import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -33,6 +33,7 @@ class WelcomeScreen extends StatelessWidget {
             ),
             Container(
               child: Image(
+                height: 250,
                 image: AssetImage('images/welcome_screen.png'),
               ),
             ),
@@ -46,10 +47,9 @@ class WelcomeScreen extends StatelessWidget {
                     style: titleStyle,
                   ),
                 ),
-                // TODO
-                // SizedBox(
-                //   height: 15,
-                // ),
+                SizedBox(
+                  height: 15,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
@@ -71,7 +71,7 @@ class WelcomeScreen extends StatelessWidget {
                   WideButtonBox(
                     Container(
                       child: AuthButton(
-                        'login'.tr,
+                        'signup'.tr,
                         () {},
                       ),
                     ),
@@ -82,19 +82,19 @@ class WelcomeScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          'no_acc'.tr,
+                          'have_acc?'.tr,
                           style: TextStyle(
-                            color: Color(0xFF161616),
+                            color: Color(0xFF141619),
                             fontWeight: FontWeight.w500,
-                            fontSize: 12,
+                            fontSize: 16,
                           ),
                         ),
                         TextButton(
                           child: Text(
-                            'signup'.tr,
+                            'login'.tr,
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
-                              fontSize: 12,
+                              fontSize: 16,
                               color: Color(0xFF4F4DAA),
                               decoration: TextDecoration.underline,
                             ),

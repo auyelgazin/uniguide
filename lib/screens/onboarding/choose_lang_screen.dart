@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/controllers/language_controller.dart';
-import 'package:uniguide/widgets/font_styles.dart';
-import 'package:uniguide/widgets/wide_button_box.dart';
-import 'welcome_screen.dart';
+import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/widgets/lang_button.dart';
 
 LanguageController _controller = Get.put(LanguageController());

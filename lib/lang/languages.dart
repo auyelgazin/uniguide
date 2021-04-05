@@ -9,7 +9,7 @@ class Languages extends Translations{
       'welcome': 'Welcome to Uniguide!',
       'welcome_info': 'This application is a social network of the Suleyman Demirel University, to speed up the problem solving process!',
       'login': 'Log In',
-      'no_acc': 'Don\'t have an account yet?',
+      'have_acc?': 'Already have an account?',
       'signup': 'Sign Up',
     },
     'ru_RU': {
@@ -17,7 +17,7 @@ class Languages extends Translations{
       'welcome': 'Добро пожаловать в UniGuide!',
       'welcome_info': 'Данное приложение является социальной сетью университета им.Сулеймана Демиреля, для ускорения процесса решения проблем!',
       'login': 'Войти',
-      'no_acc': 'У вас еще нет аккаунта?',
+      'have_acc?': 'У вас уже есть аккаунт?',
       'signup': 'Зарегистрироваться',
     },
     'kz_KZ': {
@@ -25,7 +25,7 @@ class Languages extends Translations{
       'welcome': 'UniGuide-қа қош келдіңіз!',
       'welcome_info': 'Бұл қосымша - мәселе шешу процессін жеделдетуге арналған Сүлеймен Демирел Университетінің әлеуметтік желісі!',
       'login': 'Кіру',
-      'no_acc': 'Аккаунтыңыз жоқ па?',
+      'have_acc?': 'Аккаунтыңыз бар ма?',
       'signup': 'Тіркелу',
     }
     

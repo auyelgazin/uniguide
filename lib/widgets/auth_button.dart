@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uniguide/widgets/font_styles.dart';
+import 'package:uniguide/constants/font_styles.dart';
 
 class AuthButton extends StatelessWidget {
   final String childText;

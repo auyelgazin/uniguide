@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:uniguide/lang/languages.dart';
 
 import 'package:uniguide/screens/onboarding/choose_lang_screen.dart';
-import 'package:uniguide/screens/onboarding/welcome_screen.dart';
 
 void main() {
   runApp(MyApp());
