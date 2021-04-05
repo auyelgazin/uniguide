@@ -5,7 +5,7 @@ class Languages extends Translations{
   @override
   Map<String, Map<String, String>> get keys => {
     'en_US': {
-      'choose': 'Choose',
+      'choose': 'Which language do you want to choose?',
       'welcome': 'Welcome!',
       'welcome_info': 'This application is a social network of the Suleyman Demirel University, to speed up the problem solving process!',
       'login': 'Log In',
@@ -13,7 +13,7 @@ class Languages extends Translations{
       'signup': 'Sign Up',
     },
     'ru_RU': {
-      'choose': 'Выберите язык',
+      'choose': 'Какой язык вы хотите выбрать?',
       'welcome': 'Добро пожаловать!',
       'welcome_info': 'Данное приложение является социальной сетью университета им.Сулеймана Демиреля, для ускорения процесса решения проблем!',
       'login': 'Войти',
@@ -21,7 +21,7 @@ class Languages extends Translations{
       'signup': 'Зарегистрироваться',
     },
     'kz_KZ': {
-      'choose': 'Таңдаңыз',
+      'choose': 'Қай тілді таңдағыңыз келеді?',
       'welcome': 'Қош келдіңіз!',
       'welcome_info': 'Бұл қосымша - мәселе шешу процессін жеделдетуге арналған Сүлеймен Демирел Университетінің әлеуметтік желісі!',
       'login': 'Кіру',

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uniguide/widgets/auth_button.dart';
+import 'package:uniguide/widgets/font_styles.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -14,7 +16,12 @@ class WelcomeScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                IconButton(icon: Icon(Icons.exit_to_app), onPressed: (){Get.back();}),
+                IconButton(
+                  icon: Icon(Icons.exit_to_app),
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
               ],
             ),
             Container(
@@ -25,28 +32,23 @@ class WelcomeScreen extends StatelessWidget {
             Column(
               children: [
                 Text(
-              'welcome'.tr,
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF232195),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text(
-                'welcome_info'.tr,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xFF161616),
+                  'welcome'.tr,
+                  style: titleStyle,
                 ),
-              ),
-            ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(
+                    'welcome_info'.tr,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFF161616),
+                    ),
+                  ),
+                ),
               ],
             ),
-            
             Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -54,16 +56,10 @@ class WelcomeScreen extends StatelessWidget {
                   ConstrainedBox(
                     constraints:
                         BoxConstraints.tightFor(width: 335, height: 57),
-                    child: ElevatedButton(
-                      child: Text('login'.tr),
-                      onPressed: () {
-
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF4F4DAA),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                    child: Container(
+                      child: AuthButton(
+                        'login'.tr,
+                        () {},
                       ),
                     ),
                   ),

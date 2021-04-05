@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       translations: Languages(),
       title: 'UniGuide',
       theme: ThemeData(
-        
+        fontFamily: 'SFPro',
         primarySwatch: Colors.blue,
       ),
 
