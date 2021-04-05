@@ -22,7 +22,9 @@ class WelcomeScreen extends StatelessWidget {
                 image: AssetImage('images/welcome_screen.png'),
               ),
             ),
-            Text(
+            Column(
+              children: [
+                Text(
               'welcome'.tr,
               style: TextStyle(
                 fontSize: 28,
@@ -30,15 +32,21 @@ class WelcomeScreen extends StatelessWidget {
                 color: Color(0xFF232195),
               ),
             ),
-            Text(
-              'welcome_info'.tr,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-                color: Color(0xFF161616),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Text(
+                'welcome_info'.tr,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xFF161616),
+                ),
               ),
             ),
+              ],
+            ),
+            
             Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,7 +55,7 @@ class WelcomeScreen extends StatelessWidget {
                     constraints:
                         BoxConstraints.tightFor(width: 335, height: 57),
                     child: ElevatedButton(
-                      child: Text('Войти'),
+                      child: Text('login'.tr),
                       onPressed: () {
 
                       },
@@ -63,7 +71,7 @@ class WelcomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'У вас еще нет аккаунта? ',
+                        'no_acc'.tr,
                         style: TextStyle(
                           color: Color(0xFF161616),
                           fontWeight: FontWeight.w500,
@@ -72,7 +80,7 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                       TextButton(
                         child: Text(
-                          'Зарегистрироваться',
+                          'signup'.tr,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 12,

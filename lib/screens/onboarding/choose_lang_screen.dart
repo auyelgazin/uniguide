@@ -16,8 +16,9 @@ class ChooseLangScreen extends StatelessWidget {
           children: [
             Text('choose'.tr),
             LangButton('en', 'US', 'English'),
-            LangButton('kz', 'KZ', 'Қазақша'),
             LangButton('ru', 'RU', 'Русский'),
+            LangButton('kz', 'KZ', 'Қазақша'),
+            
           ],
         ),
       ),
