@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/controllers/language_controller.dart';
 import 'package:uniguide/widgets/font_styles.dart';
+import 'package:uniguide/widgets/wide_button_box.dart';
 import 'welcome_screen.dart';
 
 LanguageController _controller = Get.put(LanguageController());
@@ -24,9 +25,54 @@ class ChooseLangScreen extends StatelessWidget {
               style: titleStyle,
             ),
           ),
-          LangButton('en', 'US', 'English'),
-          LangButton('ru', 'RU', 'Русский'),
-          LangButton('kz', 'KZ', 'Қазақша'),
+          SizedBox(
+            height: 60,
+          ),
+          WideButtonBox(
+            Container(
+              decoration: BoxDecoration(
+                color: Color(0xFFB7C1F4),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    backgroundImage: AssetImage('images/en.png'),
+                    maxRadius: 15,
+                  ),
+                  Text(
+                    'English',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFF141619),
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: Color(0xFF232195).withOpacity(0.5),
+                  )
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 21,
+          ),
+          WideButtonBox(
+            Container(
+              child: LangButton('ru', 'RU', 'Русский'),
+            ),
+          ),
+          SizedBox(
+            height: 21,
+          ),
+          WideButtonBox(
+            Container(
+              child: LangButton('kz', 'KZ', 'Қазақша'),
+            ),
+          ),
         ],
       ),
     );

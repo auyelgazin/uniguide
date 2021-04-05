@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/widgets/auth_button.dart';
 import 'package:uniguide/widgets/font_styles.dart';
+import 'package:uniguide/widgets/wide_button_box.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -53,16 +54,12 @@ class WelcomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ConstrainedBox(
-                    constraints:
-                        BoxConstraints.tightFor(width: 335, height: 57),
-                    child: Container(
-                      child: AuthButton(
-                        'login'.tr,
-                        () {},
-                      ),
+                  WideButtonBox(Container(
+                    child: AuthButton(
+                      'login'.tr,
+                      () {},
                     ),
-                  ),
+                  )),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -99,3 +96,5 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 }
+
+
