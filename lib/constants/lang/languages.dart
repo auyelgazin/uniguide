@@ -5,12 +5,18 @@ class Languages extends Translations{
   @override
   Map<String, Map<String, String>> get keys => {
     'en_US': {
+      // Onboarding
       'choose': 'Which language do you want to choose?',
       'welcome': 'Welcome to Uniguide!',
       'welcome_info': 'This application is a social network of the Suleyman Demirel University, to speed up the problem solving process!',
       'login': 'Log In',
       'have_acc?': 'Already have an account?',
       'signup': 'Sign Up',
+
+      // Authorize
+      'loginInfo': 'Log in with your SDU email',
+      'emailAddress': 'Email address',
+
     },
     'ru_RU': {
       'choose': 'Какой язык вы хотите выбрать?',

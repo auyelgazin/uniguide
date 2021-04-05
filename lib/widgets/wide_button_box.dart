@@ -3,16 +3,16 @@
 import 'package:flutter/material.dart';
 
 class WideButtonBox extends StatelessWidget {
-  final Container container;
+  final Widget widget;
 
-  WideButtonBox(this.container);
+  WideButtonBox(this.widget);
 
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
       
       constraints: BoxConstraints.tightFor(width: 335, height: 57),
-      child: container,
+      child: widget,
     );
   }
 }

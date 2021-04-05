@@ -11,3 +11,9 @@ var wideButtonTitle = TextStyle(
   fontWeight: FontWeight.w500,
   color: Colors.white
 );
+
+var loginSignupInfo = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.w400,
+  color: Color(0xFF121212)
+);
