@@ -24,7 +24,7 @@ class AppRoutes {
       page: () => LoginScreen(),
     ),
     GetPage(
-      name: '/',
+      name: '/dashboard',
       page: () => DashboardScreen(),
     ),
   ];

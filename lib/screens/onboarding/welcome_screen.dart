@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:uniguide/widgets/auth_button.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
-import 'package:uniguide/screens/auth/login_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -73,7 +72,9 @@ class WelcomeScreen extends StatelessWidget {
                     Container(
                       child: AuthButton(
                         'signup'.tr,
-                        () {},
+                        () {
+                          Get.offNamed('/signup');
+                        },
                       ),
                     ),
                   ),
@@ -101,7 +102,7 @@ class WelcomeScreen extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            Get.off(() => LoginScreen());
+                            Get.offNamed('/login');
                           },
                         ),
                       ],

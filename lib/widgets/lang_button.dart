@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uniguide/controllers/language_controller.dart';
 import 'package:get/get.dart';
-import 'package:uniguide/screens/onboarding/welcome_screen.dart';
 import 'wide_button_box.dart';
 
 class LangButton extends StatelessWidget {
@@ -18,7 +17,7 @@ class LangButton extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         languageController.changeLanguage(langID, region);
-        Get.to(() => WelcomeScreen());
+        Get.toNamed('/welcome');
       },
       child: WideButtonBox(
         Container(

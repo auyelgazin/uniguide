@@ -62,26 +62,25 @@ class LoginScreen extends StatelessWidget {
                     keyboardType: TextInputType.visiblePassword,
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20),
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'forgot_pass?'.tr,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFF4F4DAA),
-                            decoration: TextDecoration.underline,
-                          ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'forgot_pass?'.tr,
+                        style: TextStyle(
+                          color: Color(0xFF4F4DAA),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.underline,
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 37,
@@ -90,8 +89,12 @@ class LoginScreen extends StatelessWidget {
                   Container(
                     child: AuthButton(
                       'login'.tr,
-                      () async{
-                        String res = await AuthService(auth: firebaseAuth).Login(email: emailController.text, password: passwordController.text);
+                      () async {
+                        String res =
+                            await AuthService(auth: firebaseAuth).Login(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        );
                         print(res);
                       },
                     ),
@@ -110,7 +113,9 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.offNamed('/signup');
+                        },
                         child: Text(
                           'signup'.tr,
                           style: TextStyle(
