@@ -14,8 +14,13 @@ class Languages extends Translations{
       'signup': 'Sign Up',
 
       // Authorize
-      'loginInfo': 'Log in with your SDU email',
-      'emailAddress': 'Email address',
+      'login_info': 'Log in with your SDU email',
+      'email_address': 'Email address',
+      'password': 'Password',
+      'forgot_pass?': 'Forgot password?',
+      'no_acc?': 'Don\'t have an account?',
+      'signup_info': 'Create your own account',
+      'full_name': 'Full name',
 
     },
     'ru_RU': {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:get/get.dart';
+import 'package:uniguide/widgets/auth_button.dart';
 import 'package:uniguide/widgets/auth_textfield.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
 
@@ -25,7 +26,7 @@ class LoginScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 20),
               child: Text(
-                'loginInfo'.tr,
+                'login_info'.tr,
                 style: loginSignupInfo,
               ),
             ),
@@ -36,16 +37,85 @@ class LoginScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
-                    height: 100,
-                    child: AuthTextField(
-                      hintLabelText: 'emailAddress'.tr,
-                      hidePassword: false,
-                      controller: emailController,
-                      trailingIcon: null,
+                  child: AuthTextField(
+                    hintLabelText: 'email_address'.tr,
+                    hidePassword: false,
+                    controller: emailController,
+                    trailingIcon: null,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: AuthTextField(
+                    hintLabelText: 'password'.tr,
+                    hidePassword: true,
+                    controller: passwordController,
+                    trailingIcon: Icon(Icons.remove_red_eye),
+                    keyboardType: TextInputType.visiblePassword,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'forgot_pass?'.tr,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF4F4DAA),
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 37,
+                ),
+                WideButtonBox(
+                  Container(
+                    child: AuthButton(
+                      'login'.tr,
+                      () {},
                     ),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        'no_acc?'.tr,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFF141619),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'signup'.tr,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF4F4DAA),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                )
               ],
             ),
           ],

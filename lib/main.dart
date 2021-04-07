@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/constants/lang/languages.dart';
 import 'package:uniguide/screens/auth/login_screen.dart';
+import 'package:uniguide/screens/auth/signup_screen.dart';
 import 'package:uniguide/screens/onboarding/choose_lang_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uniguide/screens/onboarding/welcome_screen.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
 
-      home: initScreen == 0 || initScreen == null ? LoginScreen() : ChooseLangScreen(),
+      home: initScreen == 0 || initScreen == null ? ChooseLangScreen() : ChooseLangScreen(),
       
     );
   }
