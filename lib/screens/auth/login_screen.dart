@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:get/get.dart';
+import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/widgets/auth_button.dart';
 import 'package:uniguide/widgets/auth_textfield.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
@@ -8,6 +10,8 @@ import 'package:uniguide/widgets/wide_button_box.dart';
 class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +90,10 @@ class LoginScreen extends StatelessWidget {
                   Container(
                     child: AuthButton(
                       'login'.tr,
-                      () {},
+                      () async{
+                        String res = await AuthService(auth: firebaseAuth).Login(email: emailController.text, password: passwordController.text);
+                        print(res);
+                      },
                     ),
                   ),
                 ),

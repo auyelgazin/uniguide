@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:get/get.dart';
+import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/widgets/auth_button.dart';
 import 'package:uniguide/widgets/auth_textfield.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
 
 class SignupScreen extends StatelessWidget {
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -101,7 +104,14 @@ class SignupScreen extends StatelessWidget {
                   Container(
                     child: AuthButton(
                       'signup'.tr,
-                      () {},
+                      () async {
+                        String res =
+                            await AuthService(auth: firebaseAuth).Signup(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        );
+                        print(res);
+                      },
                     ),
                   ),
                 ),

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:uniguide/constants/lang/languages.dart';
 import 'package:uniguide/screens/auth/login_screen.dart';
 import 'package:uniguide/screens/auth/signup_screen.dart';
+import 'package:uniguide/screens/dashboard/dashboard_screen.dart';
 import 'package:uniguide/screens/onboarding/choose_lang_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uniguide/screens/onboarding/welcome_screen.dart';
@@ -15,7 +16,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   FirebaseApp myFirebaseApp = await Firebase.initializeApp();
-  String name = myFirebaseApp.options.iosBundleId;
+  String name = myFirebaseApp.options.apiKey;
   print(name);
 
   SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
 
-      home: initScreen == 0 || initScreen == null ? ChooseLangScreen() : ChooseLangScreen(),
+      home: initScreen == 0 || initScreen == null ? ChooseLangScreen() : LoginScreen(),
       
     );
   }
