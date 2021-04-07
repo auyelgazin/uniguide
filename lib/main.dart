@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/constants/lang/languages.dart';
@@ -10,7 +11,13 @@ import 'package:uniguide/screens/onboarding/welcome_screen.dart';
 int initScreen;
 
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
+
+  FirebaseApp myFirebaseApp = await Firebase.initializeApp();
+  String name = myFirebaseApp.options.iosBundleId;
+  print(name);
+
   SharedPreferences preferences = await SharedPreferences.getInstance();
   initScreen = await preferences.getInt('initScreen');
   await preferences.setInt('initScreen', 1);
