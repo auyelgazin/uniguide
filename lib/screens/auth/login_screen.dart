@@ -36,11 +36,14 @@ class LoginScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: AuthTextField(
-                    hintLabelText: 'emailAddress'.tr,
-                    hidePassword: false,
-                    controller: emailController,
-                    trailingIcon: null,
+                  child: Container(
+                    height: 100,
+                    child: AuthTextField(
+                      hintLabelText: 'emailAddress'.tr,
+                      hidePassword: false,
+                      controller: emailController,
+                      trailingIcon: null,
+                    ),
                   ),
                 ),
               ],

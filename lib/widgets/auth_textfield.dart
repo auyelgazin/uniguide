@@ -25,9 +25,8 @@ class AuthTextField extends StatelessWidget {
       cursorWidth: 1.5,
       obscureText: hidePassword,
       decoration: InputDecoration(
-          
-          // border: InputBorder.none,
-          
+        
+          // border: ,
           suffixIcon: trailingIcon,
           hintText: hintLabelText,
           hintStyle: TextStyle(

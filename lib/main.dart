@@ -3,8 +3,16 @@ import 'package:get/get.dart';
 import 'package:uniguide/constants/lang/languages.dart';
 import 'package:uniguide/screens/auth/login_screen.dart';
 import 'package:uniguide/screens/onboarding/choose_lang_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uniguide/screens/onboarding/welcome_screen.dart';
 
-void main() {
+int initScreen;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  initScreen = await preferences.getInt('initScreen');
+  await preferences.setInt('initScreen', 1);
   runApp(MyApp());
 }
 
@@ -22,7 +30,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
 
-      home: LoginScreen(),
+      home: initScreen == 0 || initScreen == null ? LoginScreen() : ChooseLangScreen(),
       
     );
   }
