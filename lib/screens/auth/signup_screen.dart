@@ -76,26 +76,8 @@ class SignupScreen extends StatelessWidget {
                     keyboardType: TextInputType.visiblePassword,
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20),
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'forgot_pass?'.tr,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFF4F4DAA),
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                WideButtonBox(
+                  DropdownButton()
                 ),
                 SizedBox(
                   height: 37,
