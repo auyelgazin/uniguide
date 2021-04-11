@@ -1,11 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:uniguide/controllers/auth/login_controller.dart';
 import 'package:uniguide/screens/dashboard/dashboard_screen.dart';
 
 class AuthService {
   FirebaseAuth auth;
 
   AuthService({this.auth});
+
+  final LoginController controller = Get.put(LoginController());
 
   Future<Stream<User>> AlreadyRegistered({FirebaseAuth auth}) async {
     Stream<User> stream = await auth.authStateChanges();
@@ -18,10 +21,11 @@ class AuthService {
   }) async {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
-      // Get.offNamed('/dashboard');
+      Get.offNamed('/dashboard');
       return 'USER LOGGED IN';
     } on FirebaseException catch (e) {
       print(e.message);
+      controller.isIncorrect();
       return e.message;
     }
   }

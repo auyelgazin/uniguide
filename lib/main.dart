@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       getPages: AppRoutes.list,
-      initialRoute: initScreen == 0 || initScreen == null ? '/chooseLang' : '/chooseLang',
+      initialRoute: initScreen == 0 || initScreen == null ? '/chooseLang' : '/login',
       // home: initScreen == 0 || initScreen == null ? ChooseLangScreen() : LoginScreen(),
       
 

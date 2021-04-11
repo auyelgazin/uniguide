@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:get/get.dart';
+import 'package:uniguide/controllers/auth/login_controller.dart';
 import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/widgets/auth_button.dart';
 import 'package:uniguide/widgets/auth_textfield.dart';
@@ -12,6 +13,8 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
 
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+  final LoginController controller = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +37,20 @@ class LoginScreen extends StatelessWidget {
                 style: loginSignupInfo,
               ),
             ),
+            SizedBox(
+              height: 37,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Obx(
+                () => Text(
+                  '${controller.error.value}',
+                  style: authError,
+                ),
+              ),
+            ),
             Column(
               children: [
-                SizedBox(
-                  height: 37,
-                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: AuthTextField(
@@ -91,20 +103,14 @@ class LoginScreen extends StatelessWidget {
                       'login'.tr,
                       () async {
                         String tfText = emailController.text.trim();
-                        // if tfText.contains('sdu.edu.kz') async {
-                        // String res =
-                        //     await AuthService(auth: firebaseAuth).Login(
-                        //   email: emailController.text,
-                        //   password: passwordController.text,
-                        // );
-                        // print(res);
-                        // }
-                        
-                        if (tfText.contains('sdu.edu.kz')) {
 
-                          await AuthService(auth: firebaseAuth).Login(email: emailController.text, password: passwordController.text);
-                          print('contains sdu');
-                        } else print('NO SDU SH1T');
+                        if (tfText.contains('sdu.edu.kz')) {
+                          await AuthService(auth: firebaseAuth).Login(
+                              email: emailController.text,
+                              password: passwordController.text);
+                        } else
+                          controller.isIncorrect();
+                          print('NO SDU SH1T');
                       },
                     ),
                   ),

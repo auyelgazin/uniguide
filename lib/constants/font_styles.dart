@@ -17,3 +17,9 @@ var loginSignupInfo = TextStyle(
   fontWeight: FontWeight.w400,
   color: Color(0xFF121212)
 );
+
+var authError = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.w400,
+  color: Color(0xFFC10000)
+);

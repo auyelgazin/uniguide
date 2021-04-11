@@ -76,9 +76,9 @@ class SignupScreen extends StatelessWidget {
                     keyboardType: TextInputType.visiblePassword,
                   ),
                 ),
-                WideButtonBox(
-                  DropdownButton()
-                ),
+                // WideButtonBox(
+                //   DropdownButton()
+                // ),
                 SizedBox(
                   height: 37,
                 ),
