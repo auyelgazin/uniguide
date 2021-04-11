@@ -90,12 +90,21 @@ class LoginScreen extends StatelessWidget {
                     child: AuthButton(
                       'login'.tr,
                       () async {
-                        String res =
-                            await AuthService(auth: firebaseAuth).Login(
-                          email: emailController.text,
-                          password: passwordController.text,
-                        );
-                        print(res);
+                        String tfText = emailController.text.trim();
+                        // if tfText.contains('sdu.edu.kz') async {
+                        // String res =
+                        //     await AuthService(auth: firebaseAuth).Login(
+                        //   email: emailController.text,
+                        //   password: passwordController.text,
+                        // );
+                        // print(res);
+                        // }
+                        
+                        if (tfText.contains('sdu.edu.kz')) {
+
+                          await AuthService(auth: firebaseAuth).Login(email: emailController.text, password: passwordController.text);
+                          print('contains sdu');
+                        } else print('NO SDU SH1T');
                       },
                     ),
                   ),

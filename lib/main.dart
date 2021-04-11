@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:uniguide/constants/lang/languages.dart';
 import 'package:uniguide/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uniguide/screens/onboarding/choose_lang_screen.dart';
 
 int initScreen;
 
@@ -36,9 +37,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       getPages: AppRoutes.list,
-      initialRoute: initScreen == 0 || initScreen == null ? '/chooseLang' : '/login',
+      initialRoute: initScreen == 0 || initScreen == null ? '/chooseLang' : '/chooseLang',
       // home: initScreen == 0 || initScreen == null ? ChooseLangScreen() : LoginScreen(),
       
+
+      // git test:
+      // 
+      // home: initScreen == 0 ? ChooseLangScreen() : ChooseLangScreen(),
     );
   }
 }
