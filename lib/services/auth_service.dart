@@ -44,4 +44,12 @@ class AuthService {
       return e.message;
     }
   }
+
+  // String authored(){
+  //   if (auth.currentUser.uid != null) {
+  //     return '/welcome';
+  //   } else return '/login';
+  // }
 }
+
+

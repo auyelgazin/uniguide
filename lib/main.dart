@@ -5,6 +5,7 @@ import 'package:uniguide/constants/lang/languages.dart';
 import 'package:uniguide/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uniguide/screens/onboarding/choose_lang_screen.dart';
+import 'package:uniguide/services/auth_service.dart';
 
 int initScreen;
 
@@ -13,7 +14,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Firebase Core initialization
-  FirebaseApp myFirebaseApp = await Firebase.initializeApp();
+  await Firebase.initializeApp();
 
   SharedPreferences preferences = await SharedPreferences.getInstance();
   initScreen = await preferences.getInt('initScreen');
@@ -22,6 +23,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -37,13 +39,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       getPages: AppRoutes.list,
-      initialRoute: initScreen == 0 || initScreen == null ? '/chooseLang' : '/login',
+      initialRoute: initScreen == 0 || initScreen == null ? '/chooseLang' : '/dashboard',
       // home: initScreen == 0 || initScreen == null ? ChooseLangScreen() : LoginScreen(),
       
-
-      // git test:
-      // 
-      // home: initScreen == 0 ? ChooseLangScreen() : ChooseLangScreen(),
     );
   }
 }
+
+// String authoredOrNot(){
+//   if()
+// }
