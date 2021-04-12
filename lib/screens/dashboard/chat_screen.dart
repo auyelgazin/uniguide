@@ -8,14 +8,21 @@ class ChatScreen extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 20, left: 20),
-            child: Text(
-              'Chat',
-              style: titleStyle
+            padding: const EdgeInsets.only(top: 30.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Text('Chat', style: titleStyle),
+                ),
+                
+              ],
             ),
           )
         ],
       ),
+      
     );
   }
 }

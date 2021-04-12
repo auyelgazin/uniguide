@@ -15,7 +15,7 @@ class Languages extends Translations{
 
       // Authorize
       'login_info': 'Log in with your SDU email',
-      'email_address': 'Email address',
+      'email_address': 'Email',
       'password': 'Password',
       'forgot_pass?': 'Forgot password?',
       'no_acc?': 'Don\'t have an account?',

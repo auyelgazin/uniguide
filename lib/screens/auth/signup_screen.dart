@@ -17,74 +17,75 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 40, left: 20),
-              child: Text(
-                'signup'.tr,
-                style: titleStyle,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 40, left: 20),
+                child: Text(
+                  'signup'.tr,
+                  style: titleStyle,
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Text(
-                'signup_info'.tr,
-                style: loginSignupInfo,
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(
+                  'signup_info'.tr,
+                  style: loginSignupInfo,
+                ),
               ),
-            ),
-            Column(
-              children: [
-                SizedBox(
-                  height: 37,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: AuthTextField(
-                    hintLabelText: 'full_name'.tr,
-                    hidePassword: false,
-                    controller: fullNameController,
-                    trailingIcon: null,
-                    keyboardType: TextInputType.name,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(
+                    height: 37,
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: AuthTextField(
-                    hintLabelText: 'email_address'.tr,
-                    hidePassword: false,
-                    controller: emailController,
-                    trailingIcon: null,
-                    keyboardType: TextInputType.emailAddress,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: AuthTextField(
+                      hintLabelText: 'full_name'.tr,
+                      hidePassword: false,
+                      controller: fullNameController,
+                      trailingIcon: null,
+                      keyboardType: TextInputType.name,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: AuthTextField(
-                    hintLabelText: 'password'.tr,
-                    hidePassword: true,
-                    controller: passwordController,
-                    trailingIcon: Icon(Icons.remove_red_eye),
-                    keyboardType: TextInputType.visiblePassword,
+                  SizedBox(
+                    height: 20,
                   ),
-                ),
-                // WideButtonBox(
-                //   DropdownButton()
-                // ),
-                SizedBox(
-                  height: 37,
-                ),
-                WideButtonBox(
-                  Container(
-                    child: AuthButton(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: AuthTextField(
+                      hintLabelText: 'email_address'.tr,
+                      hidePassword: false,
+                      controller: emailController,
+                      trailingIcon: null,
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: AuthTextField(
+                      hintLabelText: 'password'.tr,
+                      hidePassword: true,
+                      controller: passwordController,
+                      trailingIcon: Icon(Icons.remove_red_eye),
+                      keyboardType: TextInputType.visiblePassword,
+                    ),
+                  ),
+                  // WideButtonBox(
+                  //   DropdownButton()
+                  // ),
+                  SizedBox(
+                    height: 37,
+                  ),
+                  WideButtonBox(
+                    AuthButton(
                       'signup'.tr,
                       () async {
                         String res =
@@ -96,38 +97,39 @@ class SignupScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Row(
-                    children: [
-                      Text(
-                        'have_acc?'.tr,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFF141619),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Get.offNamed('/login');
-                        },
-                        child: Text(
-                          'login'.tr,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          'have_acc?'.tr,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: Color(0xFF4F4DAA),
+                            color: Color(0xFF141619),
                           ),
                         ),
-                      )
-                    ],
+                        TextButton(
+                          onPressed: () {
+                            Get.offNamed('/login');
+                          },
+                          child: Text(
+                            'login'.tr,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF4F4DAA),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                )
-              ],
-            ),
-          ],
+                  
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

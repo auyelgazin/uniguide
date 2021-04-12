@@ -8,7 +8,7 @@ class WriteScreen extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 20, left: 20),
+            padding: const EdgeInsets.only(top: 30, left: 20),
             child: Text(
               'Write',
               style: titleStyle

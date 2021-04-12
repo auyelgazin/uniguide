@@ -19,87 +19,88 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 40, left: 20),
-              child: Text(
-                'login'.tr,
-                style: titleStyle,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Text(
-                'login_info'.tr,
-                style: loginSignupInfo,
-              ),
-            ),
-            SizedBox(
-              height: 37,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Obx(
-                () => Text(
-                  '${controller.error.value}',
-                  style: authError,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 40, left: 20),
+                child: Text(
+                  'login'.tr,
+                  style: titleStyle,
                 ),
               ),
-            ),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: AuthTextField(
-                    hintLabelText: 'email_address'.tr,
-                    hidePassword: false,
-                    controller: emailController,
-                    trailingIcon: null,
-                    keyboardType: TextInputType.emailAddress,
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(
+                  'login_info'.tr,
+                  style: loginSignupInfo,
+                ),
+              ),
+              SizedBox(
+                height: 37,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Obx(
+                  () => Text(
+                    '${controller.error.value}',
+                    style: authError,
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: AuthTextField(
-                    hintLabelText: 'password'.tr,
-                    hidePassword: true,
-                    controller: passwordController,
-                    trailingIcon: Icon(Icons.remove_red_eye),
-                    keyboardType: TextInputType.visiblePassword,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: AuthTextField(
+                      hintLabelText: 'email_address'.tr,
+                      hidePassword: false,
+                      controller: emailController,
+                      trailingIcon: null,
+                      keyboardType: TextInputType.emailAddress,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'forgot_pass?'.tr,
-                        style: TextStyle(
-                          color: Color(0xFF4F4DAA),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.underline,
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: AuthTextField(
+                      hintLabelText: 'password'.tr,
+                      hidePassword: true,
+                      controller: passwordController,
+                      trailingIcon: Icon(Icons.remove_red_eye),
+                      keyboardType: TextInputType.visiblePassword,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          width: 10,
                         ),
-                      ),
-                    ],
+                        Text(
+                          'forgot_pass?'.tr,
+                          style: TextStyle(
+                            color: Color(0xFF4F4DAA),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 37,
-                ),
-                WideButtonBox(
-                  Container(
-                    child: AuthButton(
+                  SizedBox(
+                    height: 37,
+                  ),
+                  WideButtonBox(
+                    AuthButton(
                       'login'.tr,
                       () async {
                         String tfText = emailController.text.trim();
@@ -110,42 +111,42 @@ class LoginScreen extends StatelessWidget {
                               password: passwordController.text);
                         } else
                           controller.isIncorrect();
-                          print('NO SDU SH1T');
+                        print('NO SDU SH1T');
                       },
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Row(
-                    children: [
-                      Text(
-                        'no_acc?'.tr,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFF141619),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Get.offNamed('/signup');
-                        },
-                        child: Text(
-                          'signup'.tr,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          'no_acc?'.tr,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: Color(0xFF4F4DAA),
+                            color: Color(0xFF141619),
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ],
+                        TextButton(
+                          onPressed: () {
+                            Get.offNamed('/signup');
+                          },
+                          child: Text(
+                            'signup'.tr,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF4F4DAA),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -33,7 +33,7 @@ class WelcomeScreen extends StatelessWidget {
             ),
             Container(
               child: Image(
-                height: 250,
+                height: 300,
                 image: AssetImage('images/welcome_screen.png'),
               ),
             ),
@@ -66,7 +66,7 @@ class WelcomeScreen extends StatelessWidget {
             ),
             Container(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   WideButtonBox(
                     Container(
@@ -86,7 +86,7 @@ class WelcomeScreen extends StatelessWidget {
                         Text(
                           'have_acc?'.tr,
                           style: TextStyle(
-                            color: Color(0xFF141619),
+                            color: Color(0xFF141619).withOpacity(0.5),
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
                           ),
@@ -98,7 +98,7 @@ class WelcomeScreen extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                               fontSize: 16,
                               color: Color(0xFF4F4DAA),
-                              decoration: TextDecoration.underline,
+                              // decoration: TextDecoration.underline,
                             ),
                           ),
                           onPressed: () {

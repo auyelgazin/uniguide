@@ -9,10 +9,13 @@ class WideButtonBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      
-      constraints: BoxConstraints.tightFor(width: 335, height: 57),
-      child: widget,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: ConstrainedBox(
+        
+        constraints: BoxConstraints.tightFor(height: 57),
+        child: widget,
+      ),
     );
   }
 }
