@@ -84,6 +84,13 @@ class SignupScreen extends StatelessWidget {
                   SizedBox(
                     height: 37,
                   ),
+                  Column(
+                    children: [
+                      CheckboxListTile(value: false, onChanged: (isChecked){}),
+                      CheckboxListTile(value: false, onChanged: (isChecked){}),
+                      CheckboxListTile(value: false, onChanged: (isChecked){}),
+                    ],
+                  ),
                   WideButtonBox(
                     AuthButton(
                       'signup'.tr,
