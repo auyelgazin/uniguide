@@ -102,7 +102,7 @@ class BlogCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 15,
+              flex: 13,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -115,7 +115,7 @@ class BlogCard extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 85,
+              flex: 87,
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xFFB7C1F4).withOpacity(0.3),
@@ -163,7 +163,7 @@ class BlogCard extends StatelessWidget {
                                     ),
                                     SizedBox(height: 5),
                                     Text(
-                                      'Also understand that, as humans, design can be emotional and stimulate the playful brain.',
+                                      'AAlso understand that, as humans, design can be emotional and stimulate lso understand that, as humans, design can be emotional and stimulate Also understand that, as humans, design can be emotional and stimulate the playful brain.',
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w400),
@@ -174,9 +174,8 @@ class BlogCard extends StatelessWidget {
                                 Row(children: [
                                   InkWell(
                                     child: Row(children: [
-                                      Icon(
-                                        Icons.comment_outlined,
-                                        color: Color(0xFF687684),
+                                      ImageIcon(
+                                        AssetImage('images/comment.png')
                                       ),
                                       SizedBox(
                                         width: 6,
@@ -196,9 +195,8 @@ class BlogCard extends StatelessWidget {
                                   InkWell(
                                     child: Row(
                                       children: [
-                                        Icon(
-                                          Icons.favorite_outline_rounded,
-                                          color: Color(0xFF687684),
+                                        ImageIcon(
+                                          AssetImage('images/like.png'),
                                         ),
                                         SizedBox(
                                           width: 6,
