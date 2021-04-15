@@ -107,11 +107,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       child: Column(
                         children: [
-                          buildCheckbox(roles: roles[0], onClicked: (){
-                            setState(() {
-                              this.value = !value;
-                            });
-                          })
+                          
                         ],
                       ),
                     ),
@@ -166,31 +162,7 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Widget buildSingleCheckbox(Role roles) => buildCheckbox(
-        roles: roles,
-        onClicked: () {
-          setState(() {
-            final newValue = !roles.value;
-            roles.value = newValue;
-          });
-        },
-      );
-
-  Widget buildCheckbox({
-    @required Role roles,
-    @required VoidCallback onClicked,
-  }) =>
-      ListTile(
-        onTap: onClicked,
-        leading: Checkbox(
-          value: roles.value,
-          onChanged: (value) => onClicked(),
-        ),
-        title: Text(
-          roles.title,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-      );
+  
 }
 
 /*

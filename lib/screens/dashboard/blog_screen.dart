@@ -70,34 +70,45 @@ class BlogScreen extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            child: ListView(
-              // This next line does the trick.
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            child: Row(
+              children: [
                 Container(
-                  width: 160.0,
-                  color: Colors.red,
+                  child: CircleAvatar(),
                 ),
                 Container(
-                  width: 160.0,
-                  color: Colors.blue,
-                ),
-                Container(
-                  width: 160.0,
-                  color: Colors.green,
-                ),
-                Container(
-                  width: 160.0,
-                  color: Colors.yellow,
-                ),
-                Container(
-                  width: 160.0,
-                  color: Colors.orange,
-                ),
+                  decoration: new BoxDecoration(
+                    color: Color(0xFFB7C1F4).withOpacity(0.3),
+                    borderRadius: new BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          Text('Name sur'),
+                          Text('23:34'),
+                          IconButton(icon: Icon(Icons.more), onPressed: () {})
+                        ],
+                      ),
+                      Container(
+                        width: 200,
+                        child: Container(
+                          padding: EdgeInsets.only(right: 20),
+                          child: Text(
+                            'disahdiashiud dsahudhau hsauhdusa hhdsuahduahudhushaud udh ausdhuas disahuidhasuidhudhuhdasd usdahduisa',
+                            textAlign: TextAlign.left,
+                            softWrap: true,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
-          )
+          ),
         ],
       ),
     );
