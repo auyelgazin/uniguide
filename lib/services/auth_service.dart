@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:uniguide/controllers/auth/login_controller.dart';
+import 'package:uniguide/screens/auth/auth_controllers/login_controller.dart';
 import 'package:uniguide/screens/dashboard/dashboard_screen.dart';
 
 class AuthService {

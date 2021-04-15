@@ -36,7 +36,8 @@ class BlogScreen extends StatelessWidget {
                             color: Colors.white,
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 40),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
@@ -45,11 +46,9 @@ class BlogScreen extends StatelessWidget {
                                     child: Text(
                                       'Choose',
                                       style: TextStyle(
-                                        color: Color(0xFF141619),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500
-
-                                      ),
+                                          color: Color(0xFF141619),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500),
                                     ),
                                     onPressed: () {
                                       Get.back();
@@ -68,6 +67,34 @@ class BlogScreen extends StatelessWidget {
                         ));
                       }),
                 )
+              ],
+            ),
+          ),
+          Container(
+            child: ListView(
+              // This next line does the trick.
+              scrollDirection: Axis.horizontal,
+              children: <Widget>[
+                Container(
+                  width: 160.0,
+                  color: Colors.red,
+                ),
+                Container(
+                  width: 160.0,
+                  color: Colors.blue,
+                ),
+                Container(
+                  width: 160.0,
+                  color: Colors.green,
+                ),
+                Container(
+                  width: 160.0,
+                  color: Colors.yellow,
+                ),
+                Container(
+                  width: 160.0,
+                  color: Colors.orange,
+                ),
               ],
             ),
           )

@@ -2,17 +2,31 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:get/get.dart';
+import 'package:uniguide/screens/auth/auth_models/role.dart';
 import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/widgets/auth_button.dart';
 import 'package:uniguide/widgets/auth_textfield.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
 
-class SignupScreen extends StatelessWidget {
-  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
+class SignupScreen extends StatefulWidget {
+  @override
+  _SignupScreenState createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  bool value = false;
+
+  final roles = [
+    Role(title: 'Student'),
+    Role(title: 'Stuff'),
+    Role(title: 'Teacher'),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -84,12 +98,23 @@ class SignupScreen extends StatelessWidget {
                   SizedBox(
                     height: 37,
                   ),
-                  Column(
-                    children: [
-                      CheckboxListTile(value: false, onChanged: (isChecked){}),
-                      CheckboxListTile(value: false, onChanged: (isChecked){}),
-                      CheckboxListTile(value: false, onChanged: (isChecked){}),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color(0xFFB7C1F4).withOpacity(0.4),
+                      ),
+                      child: Column(
+                        children: [
+                          buildCheckbox(roles: roles[0], onClicked: (){
+                            setState(() {
+                              this.value = !value;
+                            });
+                          })
+                        ],
+                      ),
+                    ),
                   ),
                   WideButtonBox(
                     AuthButton(
@@ -132,7 +157,6 @@ class SignupScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  
                 ],
               ),
             ],
@@ -141,4 +165,79 @@ class SignupScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget buildSingleCheckbox(Role roles) => buildCheckbox(
+        roles: roles,
+        onClicked: () {
+          setState(() {
+            final newValue = !roles.value;
+            roles.value = newValue;
+          });
+        },
+      );
+
+  Widget buildCheckbox({
+    @required Role roles,
+    @required VoidCallback onClicked,
+  }) =>
+      ListTile(
+        onTap: onClicked,
+        leading: Checkbox(
+          value: roles.value,
+          onChanged: (value) => onClicked(),
+        ),
+        title: Text(
+          roles.title,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      );
 }
+
+/*
+child: Column(
+                        children: [
+                          CheckboxListTile(
+                            title: Text(
+                              'Student',
+                              style: TextStyle(
+                                color: Color(0xFF232195).withOpacity(0.6),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            value: false,
+                            onChanged: (isChecked) {
+                              setState(() {
+                                isChecked = !isChecked;
+                              });
+                            },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25)
+                            ),
+                          ),
+                          CheckboxListTile(
+                            title: Text(
+                              'Student',
+                              style: TextStyle(
+                                color: Color(0xFF232195).withOpacity(0.6),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            value: false,
+                            onChanged: (isChecked) {},
+                          ),CheckboxListTile(
+                            title: Text(
+                              'Student',
+                              style: TextStyle(
+                                color: Color(0xFF232195).withOpacity(0.6),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            value: false,
+                            onChanged: (isChecked) {},
+                          ),
+                        ],
+                      ),
+                      */
