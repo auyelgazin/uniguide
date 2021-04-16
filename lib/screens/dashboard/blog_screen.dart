@@ -1,9 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/constants/font_styles.dart';
+import 'package:uniguide/screens/dashboard/controllers/blog_controller.dart';
+import 'package:uniguide/screens/dashboard/models/dashboard_model.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
+import 'package:intl/intl.dart';
 
 class BlogScreen extends StatelessWidget {
+  BlogController controller = BlogController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,14 +76,45 @@ class BlogScreen extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            height: 450,
-            child: ListView.builder(
-              itemCount: 3,
-              itemBuilder: (BuildContext context, int index){
-                return BlogCard();
-              },
+          // GetBuilder<DashboardModel>(
+          //   builder: (controller) => Container(
 
+          //   ),
+          // )
+          Container(
+            height: 670,
+            child: GetBuilder<BlogController>(
+              init: BlogController(),
+              builder: (value) {
+                return FutureBuilder(
+                    future: value.getData('blogs'),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: Colors.black,
+                          ),
+                        );
+                      } else {
+                        return ListView.builder(
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (BuildContext, int index) {
+                            return BlogCard(
+                              category: snapshot.data[index].data()['category'],
+                              image: snapshot.data[index].data()['sender']
+                                  ['image'],
+                              sender: snapshot.data[index].data()['sender']
+                                  ['fullName'],
+                              sendTime: snapshot.data[index].data()['sendTime'],
+                              title: snapshot.data[index].data()['title'],
+                              comments: snapshot.data[index].data()['comments'],
+                              likes: snapshot.data[index].data()['likes'],
+                            );
+                          },
+                        );
+                      }
+                    });
+              },
             ),
           )
         ],
@@ -88,9 +124,29 @@ class BlogScreen extends StatelessWidget {
 }
 
 class BlogCard extends StatelessWidget {
-  const BlogCard({
-    Key key,
-  }) : super(key: key);
+  String category;
+  String image;
+  String sender;
+  Timestamp sendTime;
+  String title;
+  var comments = [];
+  int likes;
+
+  BlogCard(
+      {this.category,
+      this.image,
+      this.sender,
+      this.sendTime,
+      this.title,
+      this.comments,
+      this.likes});
+
+  String timeStampToDate(Timestamp timeStamp) {
+    var date = timeStamp.toDate();
+    String month = DateFormat.d().add_MMM().format(date).toString();
+    String day = DateFormat.Hm().format(date).toString();
+    return '$month, $day';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,8 +164,7 @@ class BlogCard extends StatelessWidget {
                 children: [
                   InkWell(
                     child: CircleAvatar(),
-                    onTap: (){},
-                    splashColor: Colors.red,
+                    onTap: () {},
                   ),
                 ],
               ),
@@ -122,8 +177,7 @@ class BlogCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+                  padding: EdgeInsets.symmetric(horizontal: 14, vertical: 11),
                   child: Container(
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,27 +186,24 @@ class BlogCard extends StatelessWidget {
                           flex: 9,
                           child: Container(
                             child: Column(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          'Shawn Carter',
+                                          sender,
                                           style: TextStyle(
                                               fontSize: 14,
-                                              fontWeight:
-                                                  FontWeight.w600),
+                                              fontWeight: FontWeight.w600),
                                         ),
                                         SizedBox(width: 8),
                                         Text(
-                                          '22:23',
+                                          timeStampToDate(sendTime),
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w400,
@@ -163,7 +214,7 @@ class BlogCard extends StatelessWidget {
                                     ),
                                     SizedBox(height: 5),
                                     Text(
-                                      'AAlso understand that, as humans, design can be emotional and stimulate lso understand that, as humans, design can be emotional and stimulate Also understand that, as humans, design can be emotional and stimulate the playful brain.',
+                                      title,
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w400),
@@ -175,13 +226,12 @@ class BlogCard extends StatelessWidget {
                                   InkWell(
                                     child: Row(children: [
                                       ImageIcon(
-                                        AssetImage('images/comment.png')
-                                      ),
+                                          AssetImage('images/comment.png')),
                                       SizedBox(
                                         width: 6,
                                       ),
                                       Text(
-                                        '46',
+                                        comments.length.toString(),
                                         style: TextStyle(
                                             color: Color(0xFF687684),
                                             fontSize: 12,
@@ -202,12 +252,11 @@ class BlogCard extends StatelessWidget {
                                           width: 6,
                                         ),
                                         Text(
-                                          '363',
+                                          likes.toString(),
                                           style: TextStyle(
                                               color: Color(0xFF687684),
                                               fontSize: 12,
-                                              fontWeight:
-                                                  FontWeight.w400),
+                                              fontWeight: FontWeight.w400),
                                         )
                                       ],
                                     ),
