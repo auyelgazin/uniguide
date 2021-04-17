@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'SFPro',
         primarySwatch: Colors.blue,
+        unselectedWidgetColor: Color(0xFF232195),
       ),
       getPages: AppRoutes.list,
       initialRoute: initScreen == 0 || initScreen == null ? '/chooseLang' : '/signup',

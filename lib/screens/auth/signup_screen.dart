@@ -6,6 +6,7 @@ import 'package:uniguide/screens/auth/auth_controllers/signup_controller.dart';
 import 'package:uniguide/screens/auth/auth_models/position.dart';
 import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_button.dart';
+import 'package:uniguide/widgets/auth_widgets/auth_checkbox.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_textfield.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
 
@@ -18,16 +19,12 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController fullNameController = TextEditingController();
-
   final TextEditingController emailController = TextEditingController();
-
   final TextEditingController passwordController = TextEditingController();
-
   final SignupController controller = Get.put(SignupController());
 
   String chosenPosition;
-
-  bool value = false;
+  bool agreement = false;
 
   final positions = [
     Position(title: 'Student'),
@@ -132,10 +129,6 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     ),
                   ),
-
-                  // WideButtonBox(
-                  //   DropdownButton()
-                  // ),
                   SizedBox(
                     height: 5,
                   ),
@@ -155,6 +148,13 @@ class _SignupScreenState extends State<SignupScreen> {
 
                               final newValue = !positions[0].value;
                               positions[0].value = newValue;
+
+                              if (positions[0].value == true) {
+                                chosenPosition = positions[0].title;
+                              } else {
+                                chosenPosition = null;
+                              }
+                              print(chosenPosition);
                             });
                           }),
                           buildSingleCheckbox(positions[1], () {
@@ -164,6 +164,13 @@ class _SignupScreenState extends State<SignupScreen> {
 
                               final newValue = !positions[1].value;
                               positions[1].value = newValue;
+
+                              if (positions[1].value == true) {
+                                chosenPosition = positions[1].title;
+                              } else {
+                                chosenPosition = null;
+                              }
+                              print(chosenPosition);
                             });
                           }),
                           buildSingleCheckbox(positions[2], () {
@@ -173,11 +180,52 @@ class _SignupScreenState extends State<SignupScreen> {
 
                               final newValue = !positions[2].value;
                               positions[2].value = newValue;
+
+                              if (positions[2].value == true) {
+                                chosenPosition = positions[2].title;
+                              } else {
+                                chosenPosition = null;
+                              }
+                              print(chosenPosition);
                             });
                           }),
                         ],
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Checkbox(
+                          tristate: false,
+                          activeColor: Color(0xFF232195),
+                          value: agreement,
+                          onChanged: (value) {
+                            setState(() {
+                              agreement = value;
+                            });
+                          },
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          child: TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Я даю согласие на обработку персональных данных',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 18,
                   ),
                   WideButtonBox(
                     AuthButton(
@@ -228,83 +276,4 @@ class _SignupScreenState extends State<SignupScreen> {
       ),
     );
   }
-
-  Widget buildSingleCheckbox(Position position, Function onClicked) =>
-      buildCheckbox(
-        position: position,
-        onClicked: () {
-          onClicked();
-        },
-      );
-
-  Widget buildCheckbox({
-    @required Position position,
-    @required VoidCallback onClicked,
-  }) =>
-      ListTile(
-        onTap: onClicked,
-        trailing: Checkbox(
-          // checkColor: Color(0xFF232195),  // color of tick Mark
-          activeColor: Color(0xFF232195),
-          value: position.value,
-          onChanged: (value) => onClicked(),
-        ),
-        title: Text(
-          position.title,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            color: Color(0xFF232195).withOpacity(0.6),
-          ),
-        ),
-      );
 }
-
-/*
-child: Column(
-                        children: [
-                          CheckboxListTile(
-                            title: Text(
-                              'Student',
-                              style: TextStyle(
-                                color: Color(0xFF232195).withOpacity(0.6),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            value: false,
-                            onChanged: (isChecked) {
-                              setState(() {
-                                isChecked = !isChecked;
-                              });
-                            },
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25)
-                            ),
-                          ),
-                          CheckboxListTile(
-                            title: Text(
-                              'Student',
-                              style: TextStyle(
-                                color: Color(0xFF232195).withOpacity(0.6),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            value: false,
-                            onChanged: (isChecked) {},
-                          ),CheckboxListTile(
-                            title: Text(
-                              'Student',
-                              style: TextStyle(
-                                color: Color(0xFF232195).withOpacity(0.6),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            value: false,
-                            onChanged: (isChecked) {},
-                          ),
-                        ],
-                      ),
-                      */
