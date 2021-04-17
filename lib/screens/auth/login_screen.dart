@@ -111,7 +111,6 @@ class LoginScreen extends StatelessWidget {
                               password: passwordController.text);
                         } else
                           controller.isIncorrect();
-                        print('NO SDU SH1T');
                       },
                     ),
                   ),

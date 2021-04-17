@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/screens/auth/auth_controllers/login_controller.dart';
+import 'package:uniguide/screens/auth/auth_controllers/signup_controller.dart';
 import 'package:uniguide/screens/dashboard/dashboard_screen.dart';
 
 class AuthService {
@@ -9,6 +10,7 @@ class AuthService {
   AuthService({this.auth});
 
   final LoginController controller = Get.put(LoginController());
+  final SignupController signupController = Get.put(SignupController());
 
   Future<Stream<User>> AlreadyRegistered({FirebaseAuth auth}) async {
     Stream<User> stream = await auth.authStateChanges();
@@ -34,14 +36,22 @@ class AuthService {
     String email,
     String password,
   }) async {
-    try {
-      await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      // Get.offNamed('/dashboard');
-      return 'USER SIGNED UP';
-    } on FirebaseException catch (e) {
-      print(e.message);
-      return e.message;
+    if (signupController.error.value == '') {
+      signupController.passwordLessThanSix();
+      try {
+        signupController.emptyAgain();
+        await auth.createUserWithEmailAndPassword(
+            email: email, password: password);
+        
+        Get.offNamed('/congratz');
+        return 'USER SIGNED UP';
+      } on FirebaseException catch (e) {
+        print(e.message);
+        signupController.passwordLessThanSix();
+        return e.message;
+      }
+    } else {
+      print('fill the fields correctly');
     }
   }
 
@@ -51,5 +61,3 @@ class AuthService {
   //   } else return '/login';
   // }
 }
-
-

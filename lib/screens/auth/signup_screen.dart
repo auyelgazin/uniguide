@@ -24,6 +24,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final SignupController controller = Get.put(SignupController());
 
   String chosenPosition;
+  bool checkboxMarked = false;
   bool agreement = false;
 
   final positions = [
@@ -54,12 +55,21 @@ class _SignupScreenState extends State<SignupScreen> {
                   style: loginSignupInfo,
                 ),
               ),
+              SizedBox(
+                height: 37,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Obx(
+                  () => Text(
+                    '${controller.error.value}',
+                    style: authError,
+                  ),
+                ),
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SizedBox(
-                    height: 37,
-                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: AuthTextField(
@@ -102,30 +112,13 @@ class _SignupScreenState extends State<SignupScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Choose your position:',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xFF141619),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Color(0xFFB7C1F4).withOpacity(0.4),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                              children: [],
-                            ),
-                          ),
-                        ],
+                      child: Text(
+                        'Choose your position:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xFF141619),
+                        ),
                       ),
                     ),
                   ),
@@ -151,8 +144,10 @@ class _SignupScreenState extends State<SignupScreen> {
 
                               if (positions[0].value == true) {
                                 chosenPosition = positions[0].title;
+                                checkboxMarked = true;
                               } else {
                                 chosenPosition = null;
+                                checkboxMarked = false;
                               }
                               print(chosenPosition);
                             });
@@ -167,8 +162,10 @@ class _SignupScreenState extends State<SignupScreen> {
 
                               if (positions[1].value == true) {
                                 chosenPosition = positions[1].title;
+                                checkboxMarked = true;
                               } else {
                                 chosenPosition = null;
+                                checkboxMarked = false;
                               }
                               print(chosenPosition);
                             });
@@ -183,8 +180,10 @@ class _SignupScreenState extends State<SignupScreen> {
 
                               if (positions[2].value == true) {
                                 chosenPosition = positions[2].title;
+                                checkboxMarked = true;
                               } else {
                                 chosenPosition = null;
+                                checkboxMarked = false;
                               }
                               print(chosenPosition);
                             });
@@ -196,33 +195,13 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(
                     height: 12,
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Checkbox(
-                          tristate: false,
-                          activeColor: Color(0xFF232195),
-                          value: agreement,
-                          onChanged: (value) {
-                            setState(() {
-                              agreement = value;
-                            });
-                          },
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              'Я даю согласие на обработку персональных данных',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                  PrivacyPolicyCheckbox(
+                    agreementValue: agreement,
+                    onChanged: (value) {
+                      setState(() {
+                        agreement = value;
+                      });
+                    },
                   ),
                   SizedBox(
                     height: 18,
@@ -231,6 +210,35 @@ class _SignupScreenState extends State<SignupScreen> {
                     AuthButton(
                       'signup'.tr,
                       () async {
+                        String email = emailController.text.trim();
+                        String fullName = fullNameController.text.trim();
+                        String password = passwordController.text.trim();
+                        if (email.endsWith('@sdu.edu.kz') |
+                            email.endsWith('@stu.sdu.edu.kz')) {
+                          controller.emptyAgain();
+
+                          if (fullName.isNotEmpty &
+                                  password.isNotEmpty &
+                                  checkboxMarked !=
+                              false) {
+                            if (agreement != false) {
+                              // ideal
+                              controller.emptyAgain();
+
+                              await AuthService(auth: firebaseAuth).Signup(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              );
+                              
+                            } else {
+                              controller.acceptAgreement();
+                            }
+                          } else {
+                            controller.notAllFieldsFilled();
+                          }
+                        } else {
+                          controller.useSDUmail();
+                        }
                         String res =
                             await AuthService(auth: firebaseAuth).Signup(
                           email: emailController.text,
@@ -268,6 +276,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ],
                     ),
                   ),
+                  SizedBox(height: 50)
                 ],
               ),
             ],
