@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:uniguide/controllers/dashboard/dashboard_controller.dart';
+import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'blog_screen.dart';
 import 'chat_screen.dart';
 import 'profile_screen.dart';

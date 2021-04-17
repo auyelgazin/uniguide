@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uniguide/controllers/language_controller.dart';
+import 'package:uniguide/constants/language/language_controller.dart';
 import 'package:get/get.dart';
 import 'wide_button_box.dart';
 

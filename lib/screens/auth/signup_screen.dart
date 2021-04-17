@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:get/get.dart';
+import 'package:uniguide/screens/auth/auth_controllers/signup_controller.dart';
 import 'package:uniguide/screens/auth/auth_models/role.dart';
 import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/widgets/auth_button.dart';
@@ -10,17 +11,14 @@ import 'package:uniguide/widgets/wide_button_box.dart';
 
 final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
-class SignupScreen extends StatefulWidget {
-  @override
-  _SignupScreenState createState() => _SignupScreenState();
-}
-
-class _SignupScreenState extends State<SignupScreen> {
+class SignupScreen extends StatelessWidget {
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  bool value = false;
+  final SignupController controller = Get.put(SignupController());
+
+  String chosenPosition;
 
   final roles = [
     Role(title: 'Student'),
@@ -92,6 +90,73 @@ class _SignupScreenState extends State<SignupScreen> {
                       keyboardType: TextInputType.visiblePassword,
                     ),
                   ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Choose your position:',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFF141619),
+                            ),
+                          ),
+                          SizedBox(height: 5,),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xFFB7C1F4).withOpacity(0.4),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              children: [
+                                Obx(
+                                  () => CheckboxListTile(
+                                    title: Text(
+                                      'Student',
+                                      style: TextStyle(
+                                        color:
+                                            Color(0xFF232195).withOpacity(0.6),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    value: controller.checkboxValue.value,
+                                    onChanged: (value) {
+                                      controller.changeValue();
+                                    },
+                                  ),
+                                ),
+                                Obx(
+                                  () => CheckboxListTile(
+                                    title: Text(
+                                      'Student',
+                                      style: TextStyle(
+                                        color:
+                                            Color(0xFF232195).withOpacity(0.6),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    value: controller.checkboxValue.value,
+                                    onChanged: (value) {
+                                      controller.changeValue();
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
                   // WideButtonBox(
                   //   DropdownButton()
                   // ),
@@ -106,9 +171,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         color: Color(0xFFB7C1F4).withOpacity(0.4),
                       ),
                       child: Column(
-                        children: [
-                          
-                        ],
+                        children: [],
                       ),
                     ),
                   ),
@@ -161,8 +224,6 @@ class _SignupScreenState extends State<SignupScreen> {
       ),
     );
   }
-
-  
 }
 
 /*

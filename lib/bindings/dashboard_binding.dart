@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:uniguide/controllers/dashboard/dashboard_controller.dart';
-import 'package:uniguide/screens/dashboard/models/blog_model.dart';
+import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
+import 'package:uniguide/screens/dashboard/models/post_model.dart';
 import 'package:uniguide/screens/dashboard/models/dashboard_model.dart';
 
 

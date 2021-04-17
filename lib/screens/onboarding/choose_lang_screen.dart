@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:uniguide/controllers/language_controller.dart';
+import 'package:uniguide/constants/language/language_controller.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/widgets/lang_button.dart';
 

@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:uniguide/constants/lang/languages.dart';
+import 'package:uniguide/constants/language/languages.dart';
 import 'package:uniguide/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uniguide/screens/onboarding/choose_lang_screen.dart';
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       getPages: AppRoutes.list,
-      initialRoute: initScreen == 0 || initScreen == null ? '/chooseLang' : '/dashboard',
+      initialRoute: initScreen == 0 || initScreen == null ? '/chooseLang' : '/signup',
       // home: initScreen == 0 || initScreen == null ? ChooseLangScreen() : LoginScreen(),
       
     );

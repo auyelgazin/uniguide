@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:uniguide/screens/dashboard/models/comment.dart';
 import 'package:uniguide/screens/dashboard/models/sender.dart';
 
-class BlogModel{
+class PostModel{
 
   // String blogID;
   String category;
@@ -13,9 +13,9 @@ class BlogModel{
   int likes;
   var comments = [Comment];
 
-  BlogModel(this.category, this.title, this.sendTime, this.sender, this.likes, this.comments);
+  PostModel(this.category, this.title, this.sendTime, this.sender, this.likes, this.comments);
 
-  BlogModel.fromJson(Map<dynamic, dynamic> map){
+  PostModel.fromJson(Map<dynamic, dynamic> map){
     if (map == null) {
       return;
     }
