@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:uniguide/screens/auth/auth_controllers/login_controller.dart';
 import 'package:uniguide/screens/auth/auth_controllers/signup_controller.dart';
 import 'package:uniguide/screens/dashboard/dashboard_screen.dart';
+import 'package:uniguide/services/firestore_service.dart';
 
 class AuthService {
   FirebaseAuth auth;
@@ -35,6 +36,7 @@ class AuthService {
   Future<String> Signup({
     String email,
     String password,
+    Future<void> firestoreSetup
   }) async {
     if (signupController.error.value == '') {
       signupController.passwordLessThanSix();
@@ -42,7 +44,8 @@ class AuthService {
         signupController.emptyAgain();
         await auth.createUserWithEmailAndPassword(
             email: email, password: password);
-        
+        // ignore: unnecessary_statements
+        firestoreSetup;
         Get.offNamed('/congratz');
         return 'USER SIGNED UP';
       } on FirebaseException catch (e) {
@@ -55,9 +58,4 @@ class AuthService {
     }
   }
 
-  // String authored(){
-  //   if (auth.currentUser.uid != null) {
-  //     return '/welcome';
-  //   } else return '/login';
-  // }
 }

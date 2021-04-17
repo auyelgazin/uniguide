@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:uniguide/screens/auth/auth_controllers/signup_controller.dart';
 import 'package:uniguide/screens/auth/auth_models/position.dart';
 import 'package:uniguide/services/auth_service.dart';
+import 'package:uniguide/services/firestore_service.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_button.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_checkbox.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_textfield.dart';
@@ -143,13 +144,13 @@ class _SignupScreenState extends State<SignupScreen> {
                               positions[0].value = newValue;
 
                               if (positions[0].value == true) {
-                                chosenPosition = positions[0].title;
+                                chosenPosition = 'students';
                                 checkboxMarked = true;
                               } else {
                                 chosenPosition = null;
                                 checkboxMarked = false;
                               }
-                              print(chosenPosition);
+                              print('chosen position is: $chosenPosition');
                             });
                           }),
                           buildSingleCheckbox(positions[1], () {
@@ -161,13 +162,13 @@ class _SignupScreenState extends State<SignupScreen> {
                               positions[1].value = newValue;
 
                               if (positions[1].value == true) {
-                                chosenPosition = positions[1].title;
+                                chosenPosition = 'teachers';
                                 checkboxMarked = true;
                               } else {
                                 chosenPosition = null;
                                 checkboxMarked = false;
                               }
-                              print(chosenPosition);
+                              print('chosen position is: $chosenPosition');
                             });
                           }),
                           buildSingleCheckbox(positions[2], () {
@@ -179,13 +180,13 @@ class _SignupScreenState extends State<SignupScreen> {
                               positions[2].value = newValue;
 
                               if (positions[2].value == true) {
-                                chosenPosition = positions[2].title;
+                                chosenPosition = 'stuff';
                                 checkboxMarked = true;
                               } else {
                                 chosenPosition = null;
                                 checkboxMarked = false;
                               }
-                              print(chosenPosition);
+                              print('chosen position is: $chosenPosition');
                             });
                           }),
                         ],
@@ -228,8 +229,11 @@ class _SignupScreenState extends State<SignupScreen> {
                               await AuthService(auth: firebaseAuth).Signup(
                                 email: emailController.text,
                                 password: passwordController.text,
+                                firestoreSetup: userSetup(
+                                    collectionPosition: chosenPosition,
+                                    fullName: fullName,
+                                    email: email),
                               );
-                              
                             } else {
                               controller.acceptAgreement();
                             }
@@ -239,12 +243,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         } else {
                           controller.useSDUmail();
                         }
-                        String res =
-                            await AuthService(auth: firebaseAuth).Signup(
-                          email: emailController.text,
-                          password: passwordController.text,
-                        );
-                        print(res);
                       },
                     ),
                   ),

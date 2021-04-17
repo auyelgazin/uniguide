@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         unselectedWidgetColor: Color(0xFF232195),
       ),
       getPages: AppRoutes.list,
-      initialRoute: initScreen == 0 || initScreen == null ? '/chooseLang' : '/signup',
+      initialRoute: initScreen == 0 || initScreen == null ? '/chooseLang' : '/chooseLang',
       // home: initScreen == 0 || initScreen == null ? ChooseLangScreen() : LoginScreen(),
       
     );
