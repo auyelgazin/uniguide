@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class Role{
+class Position{
   String title;
   bool value;
 
-  Role({@required this.title, this.value = false});
+  Position({@required this.title, this.value = false});
 }

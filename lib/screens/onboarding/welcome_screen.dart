@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:uniguide/widgets/auth_button.dart';
+import 'package:uniguide/widgets/auth_widgets/auth_button.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
 

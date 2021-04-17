@@ -4,7 +4,7 @@ import 'package:uniguide/screens/dashboard/models/post_model.dart';
 import 'package:uniguide/screens/dashboard/models/dashboard_model.dart';
 
 
-class DashboardBinding extends Bindings {
+class DashboardBinding implements Bindings {
   @override
   void dependencies() {
     Get.lazyPut<DashboardController>(() => DashboardController());

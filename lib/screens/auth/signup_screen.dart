@@ -3,27 +3,36 @@ import 'package:flutter/material.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/screens/auth/auth_controllers/signup_controller.dart';
-import 'package:uniguide/screens/auth/auth_models/role.dart';
+import 'package:uniguide/screens/auth/auth_models/position.dart';
 import 'package:uniguide/services/auth_service.dart';
-import 'package:uniguide/widgets/auth_button.dart';
-import 'package:uniguide/widgets/auth_textfield.dart';
+import 'package:uniguide/widgets/auth_widgets/auth_button.dart';
+import 'package:uniguide/widgets/auth_widgets/auth_textfield.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
 
 final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
+  @override
+  _SignupScreenState createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController fullNameController = TextEditingController();
+
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
 
   final SignupController controller = Get.put(SignupController());
 
   String chosenPosition;
 
-  final roles = [
-    Role(title: 'Student'),
-    Role(title: 'Stuff'),
-    Role(title: 'Teacher'),
+  bool value = false;
+
+  final positions = [
+    Position(title: 'Student'),
+    Position(title: 'Teacher'),
+    Position(title: 'Stuff'),
   ];
 
   @override
@@ -107,49 +116,16 @@ class SignupScreen extends StatelessWidget {
                               color: Color(0xFF141619),
                             ),
                           ),
-                          SizedBox(height: 5,),
+                          SizedBox(
+                            height: 5,
+                          ),
                           Container(
                             decoration: BoxDecoration(
                               color: Color(0xFFB7C1F4).withOpacity(0.4),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Column(
-                              children: [
-                                Obx(
-                                  () => CheckboxListTile(
-                                    title: Text(
-                                      'Student',
-                                      style: TextStyle(
-                                        color:
-                                            Color(0xFF232195).withOpacity(0.6),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    value: controller.checkboxValue.value,
-                                    onChanged: (value) {
-                                      controller.changeValue();
-                                    },
-                                  ),
-                                ),
-                                Obx(
-                                  () => CheckboxListTile(
-                                    title: Text(
-                                      'Student',
-                                      style: TextStyle(
-                                        color:
-                                            Color(0xFF232195).withOpacity(0.6),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    value: controller.checkboxValue.value,
-                                    onChanged: (value) {
-                                      controller.changeValue();
-                                    },
-                                  ),
-                                ),
-                              ],
+                              children: [],
                             ),
                           ),
                         ],
@@ -161,7 +137,7 @@ class SignupScreen extends StatelessWidget {
                   //   DropdownButton()
                   // ),
                   SizedBox(
-                    height: 37,
+                    height: 5,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -171,7 +147,35 @@ class SignupScreen extends StatelessWidget {
                         color: Color(0xFFB7C1F4).withOpacity(0.4),
                       ),
                       child: Column(
-                        children: [],
+                        children: [
+                          buildSingleCheckbox(positions[0], () {
+                            setState(() {
+                              positions[1].value = false;
+                              positions[2].value = false;
+
+                              final newValue = !positions[0].value;
+                              positions[0].value = newValue;
+                            });
+                          }),
+                          buildSingleCheckbox(positions[1], () {
+                            setState(() {
+                              positions[0].value = false;
+                              positions[2].value = false;
+
+                              final newValue = !positions[1].value;
+                              positions[1].value = newValue;
+                            });
+                          }),
+                          buildSingleCheckbox(positions[2], () {
+                            setState(() {
+                              positions[1].value = false;
+                              positions[0].value = false;
+
+                              final newValue = !positions[2].value;
+                              positions[2].value = newValue;
+                            });
+                          }),
+                        ],
                       ),
                     ),
                   ),
@@ -224,6 +228,36 @@ class SignupScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget buildSingleCheckbox(Position position, Function onClicked) =>
+      buildCheckbox(
+        position: position,
+        onClicked: () {
+          onClicked();
+        },
+      );
+
+  Widget buildCheckbox({
+    @required Position position,
+    @required VoidCallback onClicked,
+  }) =>
+      ListTile(
+        onTap: onClicked,
+        trailing: Checkbox(
+          // checkColor: Color(0xFF232195),  // color of tick Mark
+          activeColor: Color(0xFF232195),
+          value: position.value,
+          onChanged: (value) => onClicked(),
+        ),
+        title: Text(
+          position.title,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            color: Color(0xFF232195).withOpacity(0.6),
+          ),
+        ),
+      );
 }
 
 /*

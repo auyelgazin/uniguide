@@ -4,8 +4,8 @@ import 'package:uniguide/constants/font_styles.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/screens/auth/auth_controllers/login_controller.dart';
 import 'package:uniguide/services/auth_service.dart';
-import 'package:uniguide/widgets/auth_button.dart';
-import 'package:uniguide/widgets/auth_textfield.dart';
+import 'package:uniguide/widgets/auth_widgets/auth_button.dart';
+import 'package:uniguide/widgets/auth_widgets/auth_textfield.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
 
 class LoginScreen extends StatelessWidget {
