@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,13 +41,18 @@ class MyApp extends StatelessWidget {
         unselectedWidgetColor: Color(0xFF232195),
       ),
       getPages: AppRoutes.list,
-      initialRoute: initScreen == 0 || initScreen == null ? '/chooseLang' : '/chooseLang',
+      initialRoute: initScreen == 0 || initScreen == null ? '/chooseLang' : authWrap(),
       // home: initScreen == 0 || initScreen == null ? ChooseLangScreen() : LoginScreen(),
       
     );
   }
 }
 
-// String authoredOrNot(){
-//   if()
-// }
+String authWrap(){
+  if(FirebaseAuth.instance.currentUser != null) {
+    return '/dashboard';
+  } else return '/login';
+}
+
+
+

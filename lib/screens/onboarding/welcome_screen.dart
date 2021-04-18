@@ -55,11 +55,7 @@ class WelcomeScreen extends StatelessWidget {
                   child: Text(
                     'welcome_info'.tr,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFF161616),
-                    ),
+                    style: welcomeInfo,
                   ),
                 ),
               ],
@@ -85,21 +81,12 @@ class WelcomeScreen extends StatelessWidget {
                       children: [
                         Text(
                           'have_acc?'.tr,
-                          style: TextStyle(
-                            color: Color(0xFF141619).withOpacity(0.5),
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                          ),
+                          style: dontHaveAnAccount,
                         ),
                         TextButton(
                           child: Text(
                             'login'.tr,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: Color(0xFF4F4DAA),
-                              // decoration: TextDecoration.underline,
-                            ),
+                            style: smallLogin,
                           ),
                           onPressed: () {
                             Get.offNamed('/login');

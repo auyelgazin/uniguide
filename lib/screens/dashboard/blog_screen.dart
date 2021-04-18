@@ -1,14 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/screens/dashboard/controllers/blog_controller.dart';
 import 'package:uniguide/screens/dashboard/models/dashboard_model.dart';
+import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/widgets/dashboard_widgets/post_card.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
 import 'package:intl/intl.dart';
 
 class BlogScreen extends StatelessWidget {
+
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
   BlogController controller = BlogController();
   @override
   Widget build(BuildContext context) {
@@ -33,55 +38,55 @@ class BlogScreen extends StatelessWidget {
                       ),
                       color: Color(0xFF232195),
                       iconSize: 20,
-                      onPressed: () {
-                        Get.bottomSheet(Container(
-                          height: 500,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(20.0),
-                                topLeft: Radius.circular(20.0)),
-                            color: Colors.white,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20.0, vertical: 40),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                WideButtonBox(
-                                  ElevatedButton(
-                                    child: Text(
-                                      'Choose',
-                                      style: TextStyle(
-                                          color: Color(0xFF141619),
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    onPressed: () {
-                                      Get.back();
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Color(0xFFB7C1F4),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ));
+                      onPressed: () async{
+                        await AuthService(auth: _auth).signOut();
+                        Get.offNamed('/login');
+                        // DON'T DELETE
+                        // 
+                        // 
+                        // Get.bottomSheet(Container(
+                        //   height: 500,
+                        //   decoration: BoxDecoration(
+                        //     borderRadius: BorderRadius.only(
+                        //         topRight: Radius.circular(20.0),
+                        //         topLeft: Radius.circular(20.0)),
+                        //     color: Colors.white,
+                        //   ),
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.symmetric(
+                        //         horizontal: 20.0, vertical: 40),
+                        //     child: Column(
+                        //       mainAxisAlignment: MainAxisAlignment.end,
+                        //       children: [
+                        //         WideButtonBox(
+                        //           ElevatedButton(
+                        //             child: Text(
+                        //               'Choose',
+                        //               style: TextStyle(
+                        //                   color: Color(0xFF141619),
+                        //                   fontSize: 16,
+                        //                   fontWeight: FontWeight.w500),
+                        //             ),
+                        //             onPressed: () {
+                        //               Get.back();
+                        //             },
+                        //             style: ElevatedButton.styleFrom(
+                        //               primary: Color(0xFFB7C1F4),
+                        //               shape: RoundedRectangleBorder(
+                        //                 borderRadius: BorderRadius.circular(10),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         )
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ));
                       }),
                 )
               ],
             ),
           ),
-          // GetBuilder<DashboardModel>(
-          //   builder: (controller) => Container(
-
-          //   ),
-          // )
           Container(
             height: 670,
             child: GetBuilder<BlogController>(
