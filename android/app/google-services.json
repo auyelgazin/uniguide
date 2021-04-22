@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "978877053539",
+    "project_id": "uniguide-a6633",
+    "storage_bucket": "uniguide-a6633.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978877053539:android:e17bf2757d78b8c944d656",
+        "android_client_info": {
+          "package_name": "com.kuanyshauyelgazin.uniguide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978877053539-n21tf8mu7el9atav7li9ipppfiaslfq8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVrMGYwzc8lR-FEO4BOtITpXS9TPIvtJI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978877053539-n21tf8mu7el9atav7li9ipppfiaslfq8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "978877053539-1ltvfjmh8u95bdj3k3f0ju0pfs6081au.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.uniguideBeta"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
