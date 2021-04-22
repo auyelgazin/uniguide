@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uniguide/constants/font_styles.dart';
+import 'package:uniguide/widgets/profile_button.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -65,10 +66,6 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 17.5),
-                        child: Divider(),
-                      ),
                       SizedBox(
                         height: 5,
                       ),
@@ -76,95 +73,49 @@ class ProfileScreen extends StatelessWidget {
                         flex: 2,
                         child: Container(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Column(
-                                children: [
-                                  ProfileButton(
-                                    avatarImage: 'images/account.png',
-                                    title: 'Personal Data',
-                                    onTap: () {},
+                              ProfileButtonsColumn(),
+                              Container(
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  child: GestureDetector(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(19),
+                                        color: Color(0xFFF2F3F2),
+                                      ),
+                                      height: 50,
+                                      child: Stack(
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20.0),
+                                              child: Image.asset(
+                                                'images/logout.png',
+                                                height: 18,
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              'Log Out',
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w400,
+                                                color: Color(0xFF232195),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 17.5),
-                                    child: Divider(),
-                                  ),
-                                  ProfileButton(
-                                    avatarImage: 'images/settings.png',
-                                    title: 'Settings',
-                                    onTap: () {},
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 17.5),
-                                    child: Divider(),
-                                  ),
-                                  ProfileButton(
-                                    avatarImage: 'images/lang.png',
-                                    title: 'Language',
-                                    onTap: () {},
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 17.5),
-                                    child: Divider(),
-                                  ),
-                                  ProfileButton(
-                                    avatarImage: 'images/survey.png',
-                                    title: 'Survey',
-                                    onTap: () {},
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 17.5),
-                                    child: Divider(),
-                                  ),
-                                ],
+                                ),
                               ),
-                              // GestureDetector(
-                              //   child: Expanded(
-                              //     child: Container(
-                              //       height: 50,
-                              //       decoration: BoxDecoration(
-                              //         color: Color(0xFFF2F3F2),
-                              //       ),
-                              //       child: Row(
-                              //         crossAxisAlignment: CrossAxisAlignment.center,
-                              //         mainAxisAlignment:
-                              //             MainAxisAlignment.spaceBetween,
-                              //         children: [
-                              //           Image.asset(
-                              //             'images/logout.png',
-                              //             height: 20,
-                              //           ),
-                              //           Text(
-                              //             'Log Out',
-                              //             style: TextStyle(
-                              //               fontSize: 18,
-                              //               fontWeight: FontWeight.w400,
-                              //               color: Color(0xFF232195),
-                              //             ),
-                              //           ),
-                              //           SizedBox(width: 20)
-                              //         ],
-                              //       ),
-                              //     ),
-                              //   ),
-                              //   onTap: () {},
-                              // ),
                             ],
                           ),
                         ),
@@ -181,57 +132,73 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-// new device test commit
-class ProfileButton extends StatelessWidget {
-  final String avatarImage;
-  final String title;
-  final Function onTap;
-
-  ProfileButton({this.avatarImage, this.title, this.onTap});
+class ProfileButtonsColumn extends StatelessWidget {
+  const ProfileButtonsColumn({
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 30, right: 44),
-        child: Container(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 18,
-                    backgroundColor: Color(0xFFE4E4E4),
-                    child: Image.asset(
-                      avatarImage,
-                      width: 18,
-                      height: 18,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 11,
-                  ),
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFF4F4F4F),
-                    ),
-                  ),
-                ],
-              ),
-              Image.asset(
-                'images/go.png',
-                height: 13,
-              ),
-            ],
-          ),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: 17.5),
+          child: Divider(),
         ),
-      ),
-      onTap: onTap,
+        ProfileButton(
+          avatarImage: 'images/account.png',
+          title: 'Personal Data',
+          onTap: () {},
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: 17.5),
+          child: Divider(),
+        ),
+        ProfileButton(
+          avatarImage: 'images/settings.png',
+          title: 'Settings',
+          onTap: () {},
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: 17.5),
+          child: Divider(),
+        ),
+        ProfileButton(
+          avatarImage: 'images/lang.png',
+          title: 'Language',
+          onTap: () {},
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: 17.5),
+          child: Divider(),
+        ),
+        ProfileButton(
+          avatarImage: 'images/survey.png',
+          title: 'Survey',
+          onTap: () {},
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: 17.5),
+          child: Divider(),
+        ),
+      ],
     );
   }
 }
