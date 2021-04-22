@@ -134,7 +134,6 @@ class ProfileScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              Text('sd')
                               // GestureDetector(
                               //   child: Expanded(
                               //     child: Container(
@@ -182,6 +181,7 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
+// new device test commit
 class ProfileButton extends StatelessWidget {
   final String avatarImage;
   final String title;
