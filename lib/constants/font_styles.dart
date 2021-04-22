@@ -42,3 +42,16 @@ var authError = TextStyle(
   fontWeight: FontWeight.w400,
   color: Color(0xFFC10000),
 );
+
+// ProfileScreen
+var fullNameStyle = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.w400,
+  color: Color(0xFF151522),
+);
+
+var positionStyle = TextStyle(
+  fontSize: 13,
+  fontWeight: FontWeight.w300,
+  color: Color(0xFF666666),
+);
