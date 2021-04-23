@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uniguide/constants/font_styles.dart';
+import 'package:uniguide/services/firestore_service.dart';
 import 'package:uniguide/widgets/profile_button.dart';
+
+final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -113,6 +117,18 @@ class ProfileScreen extends StatelessWidget {
                                         ],
                                       ),
                                     ),
+                                    onTap: () async{
+                                      dynamic details = await FirestoreService(uid: firebaseAuth.currentUser.uid).getCurrentUserData();
+                                      if (details != null){
+                                        String fullName = details[0];
+                                        String email = details[1];
+                                        String position = details[2];
+
+                                        print(fullName);
+                                        print(email);
+                                        print(position);
+                                      }
+                                    },
                                   ),
                                 ),
                               ),

@@ -229,7 +229,8 @@ class _SignupScreenState extends State<SignupScreen> {
                               await AuthService(auth: firebaseAuth).Signup(
                                 email: emailController.text,
                                 password: passwordController.text,
-                                
+                                fullName: fullName,
+                                position: chosenPosition,
                               );
                             } else {
                               controller.acceptAgreement();
@@ -281,3 +282,4 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 }
+

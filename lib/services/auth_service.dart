@@ -37,6 +37,8 @@ class AuthService {
   Future<String> Signup({
     String email,
     String password,
+    String fullName,
+    String position,
   }) async {
     if (signupController.error.value == '') {
       signupController.passwordLessThanSix();
@@ -45,7 +47,11 @@ class AuthService {
         await auth.createUserWithEmailAndPassword(
             email: email, password: password);
         // ignore: unnecessary_statements
-        await FirestoreService(uid: auth.currentUser.uid).updateUserData('Joma', 'tech');
+        await FirestoreService(uid: auth.currentUser.uid).updateUserData(
+          fullName: fullName,
+          email: email,
+          position: position,
+        );
         Get.offNamed('/congratz');
         return 'USER SIGNED UP';
       } on FirebaseException catch (e) {
@@ -58,13 +64,12 @@ class AuthService {
     }
   }
 
-  Future<void> signOut() async{
+  Future<void> signOut() async {
     await auth.signOut();
   }
 
-  // -> Firestore part
-  
+ 
 
-  
+  // -> Firestore part
 
 }
