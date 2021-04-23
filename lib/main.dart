@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
 String authWrap(){
   if(FirebaseAuth.instance.currentUser != null) {
     return '/dashboard';
-  } else return '/chooseLang';
+  } else return '/signup';
 }
 
 

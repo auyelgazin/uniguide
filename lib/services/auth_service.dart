@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/screens/auth/auth_controllers/login_controller.dart';
@@ -36,7 +37,6 @@ class AuthService {
   Future<String> Signup({
     String email,
     String password,
-    Future<void> firestoreSetup
   }) async {
     if (signupController.error.value == '') {
       signupController.passwordLessThanSix();
@@ -45,7 +45,7 @@ class AuthService {
         await auth.createUserWithEmailAndPassword(
             email: email, password: password);
         // ignore: unnecessary_statements
-        firestoreSetup;
+        await FirestoreService(uid: auth.currentUser.uid).updateUserData('Joma', 'tech');
         Get.offNamed('/congratz');
         return 'USER SIGNED UP';
       } on FirebaseException catch (e) {
@@ -61,5 +61,10 @@ class AuthService {
   Future<void> signOut() async{
     await auth.signOut();
   }
+
+  // -> Firestore part
+  
+
+  
 
 }
