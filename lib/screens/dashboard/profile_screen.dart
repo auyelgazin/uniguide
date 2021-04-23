@@ -1,12 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uniguide/constants/font_styles.dart';
+import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
+import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/services/firestore_service.dart';
 import 'package:uniguide/widgets/profile_button.dart';
+import 'package:get/get.dart';
 
 final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
 class ProfileScreen extends StatelessWidget {
+  DashboardController dashboardController = Get.put(DashboardController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,24 +52,26 @@ class ProfileScreen extends StatelessWidget {
                               CircleAvatar(
                                 radius: 30,
                               ),
-                              Column(
-                                children: [
-                                  Text(
-                                    'Gapuova Madina',
-                                    style: fullNameStyle,
-                                  ),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text(
-                                    '170170170',
-                                    style: positionStyle,
-                                  ),
-                                  Text(
-                                    'Information Systems',
-                                    style: positionStyle,
-                                  ),
-                                ],
+                              Obx(
+                                () => Column(
+                                  children: [
+                                    Text(
+                                      dashboardController.fullName.value,
+                                      style: fullNameStyle,
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      dashboardController.email.value,
+                                      style: positionStyle,
+                                    ),
+                                    Text(
+                                      dashboardController.position.value,
+                                      style: positionStyle,
+                                    ),
+                                  ],
+                                ),
                               )
                             ],
                           ),
@@ -84,6 +91,10 @@ class ProfileScreen extends StatelessWidget {
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 20),
                                   child: GestureDetector(
+                                    onTap: () {
+                                      AuthService(auth: firebaseAuth).signOut();
+                                      Get.offNamed('/login');
+                                    },
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(19),
@@ -117,18 +128,6 @@ class ProfileScreen extends StatelessWidget {
                                         ],
                                       ),
                                     ),
-                                    onTap: () async{
-                                      dynamic details = await FirestoreService(uid: firebaseAuth.currentUser.uid).getCurrentUserData();
-                                      if (details != null){
-                                        String fullName = details[0];
-                                        String email = details[1];
-                                        String position = details[2];
-
-                                        print(fullName);
-                                        print(email);
-                                        print(position);
-                                      }
-                                    },
                                   ),
                                 ),
                               ),
@@ -158,8 +157,7 @@ class ProfileButtonsColumn extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: 17.5),
+          padding: const EdgeInsets.symmetric(horizontal: 17.5),
           child: Divider(),
         ),
         ProfileButton(
@@ -171,8 +169,7 @@ class ProfileButtonsColumn extends StatelessWidget {
           height: 5,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: 17.5),
+          padding: const EdgeInsets.symmetric(horizontal: 17.5),
           child: Divider(),
         ),
         ProfileButton(
@@ -184,8 +181,7 @@ class ProfileButtonsColumn extends StatelessWidget {
           height: 5,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: 17.5),
+          padding: const EdgeInsets.symmetric(horizontal: 17.5),
           child: Divider(),
         ),
         ProfileButton(
@@ -197,8 +193,7 @@ class ProfileButtonsColumn extends StatelessWidget {
           height: 5,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: 17.5),
+          padding: const EdgeInsets.symmetric(horizontal: 17.5),
           child: Divider(),
         ),
         ProfileButton(
@@ -210,8 +205,7 @@ class ProfileButtonsColumn extends StatelessWidget {
           height: 5,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: 17.5),
+          padding: const EdgeInsets.symmetric(horizontal: 17.5),
           child: Divider(),
         ),
       ],
