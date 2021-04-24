@@ -144,7 +144,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               positions[0].value = newValue;
 
                               if (positions[0].value == true) {
-                                chosenPosition = 'students';
+                                chosenPosition = positions[0].title;
                                 checkboxMarked = true;
                               } else {
                                 chosenPosition = null;
@@ -162,7 +162,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               positions[1].value = newValue;
 
                               if (positions[1].value == true) {
-                                chosenPosition = 'teachers';
+                                chosenPosition = positions[1].title;
                                 checkboxMarked = true;
                               } else {
                                 chosenPosition = null;
@@ -180,7 +180,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               positions[2].value = newValue;
 
                               if (positions[2].value == true) {
-                                chosenPosition = 'stuff';
+                                chosenPosition = positions[2].title;
                                 checkboxMarked = true;
                               } else {
                                 chosenPosition = null;
@@ -214,18 +214,19 @@ class _SignupScreenState extends State<SignupScreen> {
                         String email = emailController.text.trim();
                         String fullName = fullNameController.text.trim();
                         String password = passwordController.text.trim();
-                        if (email.endsWith('@sdu.edu.kz') |
-                            email.endsWith('@stu.sdu.edu.kz')) {
-                          controller.emptyAgain();
 
-                          if (fullName.isNotEmpty &
-                                  password.isNotEmpty &
-                                  checkboxMarked !=
-                              false) {
-                            if (agreement != false) {
-                              // ideal
+                        if (fullName.isNotEmpty &&
+                            password.isNotEmpty &&
+                            email.isNotEmpty &&
+                            checkboxMarked == true &&
+                            agreement == true) {
+                          if (chosenPosition == positions[0].title) {
+                            // Student
+                            if (email.length == 24 &&
+                                email.endsWith('@stu.sdu.edu.kz')) {
                               controller.emptyAgain();
 
+                              print('authed stud');
                               await AuthService(auth: firebaseAuth).Signup(
                                 email: emailController.text,
                                 password: passwordController.text,
@@ -233,14 +234,55 @@ class _SignupScreenState extends State<SignupScreen> {
                                 position: chosenPosition,
                               );
                             } else {
-                              controller.acceptAgreement();
+                              controller.useSDUmail();
+                              
                             }
                           } else {
-                            controller.notAllFieldsFilled();
+                            if (!email.endsWith('@sdu.edu.kz')) {
+                              controller.useSDUmail();
+                            } else {
+                              controller.emptyAgain();
+
+                              print('authed teacher & stuff');
+                                await AuthService(auth: firebaseAuth).Signup(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                  fullName: fullName,
+                                  position: chosenPosition,
+                                );
+                            }
                           }
                         } else {
-                          controller.useSDUmail();
+                          controller.notAllFieldsFilled();
                         }
+
+                        // if (email.endsWith('@sdu.edu.kz') |
+                        //     email.endsWith('@stu.sdu.edu.kz')) {
+                        //   controller.emptyAgain();
+
+                        //   if (fullName.isNotEmpty &
+                        //           password.isNotEmpty &
+                        //           checkboxMarked !=
+                        //       false) {
+                        //     if (agreement != false) {
+                        //       // ideal
+                        //       controller.emptyAgain();
+
+                        //       await AuthService(auth: firebaseAuth).Signup(
+                        //         email: emailController.text,
+                        //         password: passwordController.text,
+                        //         fullName: fullName,
+                        //         position: chosenPosition,
+                        //       );
+                        //     } else {
+                        //       controller.acceptAgreement();
+                        //     }
+                        //   } else {
+                        //     controller.notAllFieldsFilled();
+                        //   }
+                        // } else {
+                        //   controller.useSDUmail();
+                        // }
                       },
                     ),
                   ),
@@ -282,4 +324,3 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 }
-
