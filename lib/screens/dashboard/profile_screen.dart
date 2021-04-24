@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
-import 'package:uniguide/screens/dashboard/controllers/user_controller.dart';
-import 'package:uniguide/screens/dashboard/locator/locator.dart';
 import 'package:uniguide/screens/dashboard/models/user_model.dart';
+import 'package:uniguide/screens/dashboard/profile_screens/persontal_data_screen.dart';
 import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/services/firestore_service.dart';
-import 'package:uniguide/widgets/avatar.dart';
+import 'package:uniguide/services/storage_service.dart';
 import 'package:uniguide/widgets/profile_button.dart';
 import 'package:get/get.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
@@ -23,18 +23,25 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   DashboardController dashboardController = Get.put(DashboardController());
-  // UserModel currentUser = locator.get<UserController>().currentUser;
 
   File imageFile;
   final picker = ImagePicker();
+  String uploadedFileUrl;
 
   chooseImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    print(pickedFile.path);
 
     setState(() {
       imageFile = File(pickedFile.path);
     });
   }
+
+  Future uploadFile() async{
+    if (imageFile == null) return;
+    // final fileName = basename()
+  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -73,20 +80,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Container(
-                                child: imageFile != null
-                                    ? Container(
-                                        child: CircleAvatar(
-                                          radius: 35.0,
-                                          backgroundImage: FileImage(imageFile),
+                              GestureDetector(
+                                onTap: () {
+                                  chooseImage();
+                                },
+                                child: Container(
+                                  child: imageFile != null
+                                      ? Container(
+                                          child: CircleAvatar(
+                                            radius: 35.0,
+                                            backgroundImage:
+                                                FileImage(imageFile),
+                                          ),
+                                        )
+                                      : Container(
+                                          child: CircleAvatar(
+                                            radius: 35.0,
+                                            child: Icon(Icons.photo_camera),
+                                          ),
                                         ),
-                                      )
-                                    : Container(
-                                        child: CircleAvatar(
-                                          radius: 35.0,
-                                          child: Icon(Icons.photo_camera),
-                                        ),
-                                      ),
+                                ),
                               ),
                               Obx(
                                 () => Column(
@@ -128,9 +141,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   padding: EdgeInsets.symmetric(horizontal: 20),
                                   child: GestureDetector(
                                     onTap: () {
-                                      // AuthService(auth: firebaseAuth).signOut();
-                                      // Get.offNamed('/login');
-                                      chooseImage();
+                                      AuthService(auth: firebaseAuth).signOut();
+                                      Get.offNamed('/login');
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -200,7 +212,9 @@ class ProfileButtonsColumn extends StatelessWidget {
         ProfileButton(
           avatarImage: 'images/account.png',
           title: 'Personal Data',
-          onTap: () {},
+          onTap: () {
+            Get.to(() => PersonalDataScreen());
+          },
         ),
         SizedBox(
           height: 5,

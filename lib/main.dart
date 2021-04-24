@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:uniguide/constants/language/languages.dart';
 import 'package:uniguide/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uniguide/screens/dashboard/locator/locator.dart';
 import 'package:uniguide/screens/onboarding/choose_lang_screen.dart';
 import 'package:uniguide/services/auth_service.dart';
 
@@ -13,7 +12,6 @@ int initScreen;
 
 Future<void> main() async {
 
-  setupServices();
   WidgetsFlutterBinding.ensureInitialized();
 
   // Firebase Core initialization
