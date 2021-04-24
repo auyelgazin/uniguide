@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/services/firestore_service.dart';
+import 'package:uniguide/widgets/avatar.dart';
 import 'package:uniguide/widgets/profile_button.dart';
 import 'package:get/get.dart';
 
@@ -49,9 +51,12 @@ class ProfileScreen extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              CircleAvatar(
-                                radius: 30,
-                              ),
+                              // Avatar(
+                              //   avatarUrl: null,
+                              //   onTap: ()async{
+                              //     // await ImagePicker.pickImage(source: ImageSource.gallery);
+                              //   },
+                              // ),
                               Obx(
                                 () => Column(
                                   children: [
