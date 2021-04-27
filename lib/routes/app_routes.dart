@@ -4,6 +4,7 @@ import 'package:uniguide/screens/auth/congratz_screen.dart';
 import 'package:uniguide/screens/auth/login_screen.dart';
 import 'package:uniguide/screens/auth/signup_screen.dart';
 import 'package:uniguide/screens/dashboard/profile_screen.dart';
+import 'package:uniguide/screens/dashboard/profile_screens/persontal_data_screen.dart';
 import 'package:uniguide/screens/onboarding/choose_lang_screen.dart';
 import 'package:uniguide/screens/onboarding/welcome_screen.dart';
 import 'package:uniguide/screens/dashboard/dashboard_screen.dart';
@@ -36,8 +37,12 @@ class AppRoutes {
       binding: DashboardBinding(),
     ),
     GetPage(
-      name: '/del',
+      name: '/profile',
       page: () => ProfileScreen(),
+    ),
+    GetPage(
+      name: '/profileEdit',
+      page: () => PersonalDataScreen(),
     ),
   ];
 }

@@ -13,8 +13,15 @@ class FirestoreService{
       'fullName': fullName,
       'email': email,
       'position': position
+      
 
     });
+  }
+
+  updateProfilePic(picUrl) async {
+
+    await FirebaseAuth.instance.currentUser.updateProfile(photoURL: picUrl);
+
   }
 
   Stream<QuerySnapshot> get users{

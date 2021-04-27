@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uniguide/constants/font_styles.dart';
@@ -12,7 +14,7 @@ import 'package:uniguide/services/firestore_service.dart';
 import 'package:uniguide/services/storage_service.dart';
 import 'package:uniguide/widgets/profile_button.dart';
 import 'package:get/get.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart' as Path;
 
 final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
@@ -26,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   File imageFile;
   final picker = ImagePicker();
-  String uploadedFileUrl;
+  String url;
 
   chooseImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -37,10 +39,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
-  Future uploadFile() async{
-    if (imageFile == null) return;
-    // final fileName = basename()
+  uploadFile() async{
+
+    print(imageFile);
+    Reference storageRef = FirebaseStorage.instance.ref().child('avatars/${Path.basename(imageFile.path)}');
+    UploadTask uploadTask = storageRef.putFile(imageFile);
+    print('aaa');
+    print(uploadTask);
+
+    var imageUrl = await (await uploadTask).ref.getDownloadURL();
+    url = imageUrl.toString();
+    print(url);
+
+    
+
+
   }
+
+
   
 
   @override
@@ -89,8 +105,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       ? Container(
                                           child: CircleAvatar(
                                             radius: 35.0,
-                                            backgroundImage:
-                                                FileImage(imageFile),
+                                            backgroundImage: FileImage(imageFile),
+                                            // child:
+                                                // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
                                           ),
                                         )
                                       : Container(
@@ -143,6 +160,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     onTap: () {
                                       AuthService(auth: firebaseAuth).signOut();
                                       Get.offNamed('/login');
+                                      // uploadFile();
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(

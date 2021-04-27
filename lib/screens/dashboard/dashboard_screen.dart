@@ -58,7 +58,7 @@ class DashboardScreen extends StatelessWidget {
                   ),
                   height: 50,
                 ),
-                label: '––'
+                label: '–'
               ),
               BottomNavigationBarItem(
                 icon: SizedBox(
@@ -67,7 +67,7 @@ class DashboardScreen extends StatelessWidget {
                   ),
                   height: 50,
                 ),
-                label: '––'
+                label: '–'
               ),
               BottomNavigationBarItem(
                 icon: SizedBox(
@@ -76,7 +76,7 @@ class DashboardScreen extends StatelessWidget {
                   ),
                   height: 50,
                 ),
-                label: '––'
+                label: '–'
               ),
               BottomNavigationBarItem(
                 icon: SizedBox(
@@ -85,7 +85,7 @@ class DashboardScreen extends StatelessWidget {
                   ),
                   height: 50,
                 ),
-                label: '––'
+                label: '–'
               ),
             ],
           ),
