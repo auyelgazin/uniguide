@@ -103,14 +103,13 @@ class LoginScreen extends StatelessWidget {
                     AuthButton(
                       'login'.tr,
                       () async {
-                        String tfText = emailController.text.trim();
+                        
 
-                        if (tfText.contains('sdu.edu.kz')) {
+                        
                           await AuthService(auth: firebaseAuth).Login(
                               email: emailController.text,
                               password: passwordController.text);
-                        } else
-                          controller.isIncorrect();
+                        
                       },
                     ),
                   ),

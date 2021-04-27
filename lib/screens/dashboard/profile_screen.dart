@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -39,10 +37,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
-  uploadFile() async{
-
+  uploadFile() async {
     print(imageFile);
-    Reference storageRef = FirebaseStorage.instance.ref().child('avatars/${Path.basename(imageFile.path)}');
+    Reference storageRef = FirebaseStorage.instance
+        .ref()
+        .child('avatars/${Path.basename(imageFile.path)}');
     UploadTask uploadTask = storageRef.putFile(imageFile);
     print('aaa');
     print(uploadTask);
@@ -50,25 +49,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var imageUrl = await (await uploadTask).ref.getDownloadURL();
     url = imageUrl.toString();
     print(url);
-
-    
-
-
   }
-
-
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        title: Text(
+          'Profile',
+          style: titleStyle,
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 30, left: 20, right: 20),
-            child: Text('Profile', style: titleStyle),
-          ),
           SizedBox(
             height: 35,
           ),
@@ -96,27 +93,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  chooseImage();
-                                },
-                                child: Container(
-                                  child: imageFile != null
-                                      ? Container(
-                                          child: CircleAvatar(
-                                            radius: 35.0,
-                                            backgroundImage: FileImage(imageFile),
-                                            // child:
-                                                // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
-                                          ),
-                                        )
-                                      : Container(
-                                          child: CircleAvatar(
-                                            radius: 35.0,
-                                            child: Icon(Icons.photo_camera),
-                                          ),
+                              Container(
+                                child: imageFile != null
+                                    ? Container(
+                                        child: CircleAvatar(
+                                          radius: 35.0,
+                                          backgroundImage: FileImage(imageFile),
+                                          // child:
+                                          // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
                                         ),
-                                ),
+                                      )
+                                    : Container(
+                                        child: CircleAvatar(
+                                          radius: 35.0,
+                                          child: Text('AK'),
+                                        ),
+                                      ),
                               ),
                               Obx(
                                 () => Column(
