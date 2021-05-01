@@ -7,6 +7,67 @@ import 'chat_screen.dart';
 import 'profile_screen.dart';
 import 'write_screen.dart';
 
+// class DashboardScreen extends StatefulWidget {
+//   @override
+//   _DashboardScreenState createState() => _DashboardScreenState();
+// }
+
+// class _DashboardScreenState extends State<DashboardScreen> {
+
+//   int _currentIndex = 0;
+
+//   var tabs = [
+//     BlogScreen(),
+//     ChatScreen(),
+//     ProfileScreen(),
+//     WriteScreen()
+//   ];
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: tabs[_currentIndex],
+//       bottomNavigationBar: BottomNavigationBar(
+//         backgroundColor: Color(0xFFB7C1F4),
+//         currentIndex: _currentIndex,
+//         type: BottomNavigationBarType.fixed,
+//         items: [
+//           BottomNavigationBarItem(
+//             icon: Icon(
+//               Icons.home,
+//             ),
+//             label: 'sd',
+//           ),
+//           BottomNavigationBarItem(
+//             icon: Icon(
+//               Icons.add,
+//             ),
+//             label: 'ssad',
+//           ),
+//           BottomNavigationBarItem(
+//             icon: Icon(
+//               Icons.chat,
+//             ),
+//             label: 'sas',
+//           ),
+//           BottomNavigationBarItem(
+//             icon: Icon(
+//               Icons.chat,
+//             ),
+//             label: 'sas',
+//           ),
+
+//         ],
+//         onTap: (index){
+//           setState(() {
+//             _currentIndex = index;
+//           });
+//         },
+//       ),
+//     );
+//   }
+// }
+
 class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -35,57 +96,67 @@ class DashboardScreen extends StatelessWidget {
             backgroundColor: Color(0xFFB7C1F4),
             elevation: 0,
             items: [
-              // _bottomNavigationBarItem(
-              //   icon: CupertinoIcons.home,
-              //   label: 'Home',
+              // BottomNavigationBarItem(
+              //   icon: SizedBox(
+              //     child: ImageIcon(
+              //       AssetImage('images/blog.png'),
+              //     ),
+              //     height: 50,
+              //   ),
+              //   label: '–'
               // ),
-              // _bottomNavigationBarItem(
-              //   icon: CupertinoIcons.sportscourt,
-              //   label: 'News',
+              // BottomNavigationBarItem(
+              //   icon: SizedBox(
+              //     child: ImageIcon(
+              //       AssetImage('images/chat.png'),
+              //     ),
+              //     height: 50,
+              //   ),
+              //   label: '–'
               // ),
-              // _bottomNavigationBarItem(
-              //   icon: CupertinoIcons.bell,
-              //   label: 'Alerts',
+              // BottomNavigationBarItem(
+              //   icon: SizedBox(
+              //     child: ImageIcon(
+              //       AssetImage('images/profile.png'),
+              //     ),
+              //     height: 50,
+              //   ),
+              //   label: '–'
               // ),
-              // _bottomNavigationBarItem(
-              //   icon: CupertinoIcons.person,
-              //   label: 'Account',
+              // BottomNavigationBarItem(
+              //   icon: SizedBox(
+              //     child: ImageIcon(
+              //       AssetImage('images/write.png'),
+              //     ),
+              //     height: 50,
+              //   ),
+              //   label: '–'
               // ),
               BottomNavigationBarItem(
-                icon: SizedBox(
+                icon: Container(
                   child: ImageIcon(
                     AssetImage('images/blog.png'),
                   ),
-                  height: 50,
                 ),
-                label: '–'
+                label: '––',
               ),
               BottomNavigationBarItem(
-                icon: SizedBox(
-                  child: ImageIcon(
-                    AssetImage('images/chat.png'),
-                  ),
-                  height: 50,
+                icon: ImageIcon(
+                  AssetImage('images/chat.png'),
                 ),
-                label: '–'
+                label: '––',
               ),
               BottomNavigationBarItem(
-                icon: SizedBox(
-                  child: ImageIcon(
-                    AssetImage('images/profile.png'),
-                  ),
-                  height: 50,
+                icon: ImageIcon(
+                  AssetImage('images/profile.png'),
                 ),
-                label: '–'
+                label: '––',
               ),
               BottomNavigationBarItem(
-                icon: SizedBox(
-                  child: ImageIcon(
-                    AssetImage('images/write.png'),
-                  ),
-                  height: 50,
+                icon: ImageIcon(
+                  AssetImage('images/write.png'),
                 ),
-                label: '–'
+                label: '––',
               ),
             ],
           ),
@@ -93,11 +164,4 @@ class DashboardScreen extends StatelessWidget {
       },
     );
   }
-
-  // _bottomNavigationBarItem({IconData icon, String label}) {
-  //   return BottomNavigationBarItem(
-  //     icon: Icon(icon),
-  //     label: label,
-  //   );
-  // }
 }
