@@ -9,9 +9,10 @@ class ProfileButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 30, right: 44),
+    return Padding(
+      padding: const EdgeInsets.only(left: 30, right: 44),
+      child: GestureDetector(
+        onTap: onTap,
         child: Container(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -49,7 +50,6 @@ class ProfileButton extends StatelessWidget {
           ),
         ),
       ),
-      onTap: onTap,
     );
   }
 }

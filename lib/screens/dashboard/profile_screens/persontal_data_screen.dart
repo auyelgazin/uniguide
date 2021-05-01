@@ -20,6 +20,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   DashboardController dashboardController = Get.put(DashboardController());
 
+  String editedFullName;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,22 +55,45 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
               children: [
                 Stack(
                   children: [
-                    CircleAvatar(
-                      radius: 55,
-                      backgroundImage: AssetImage('images/profile.png'),
+                    Obx(
+                      () => Container(
+                        child: null != null
+                            ? Container(
+                                child: CircleAvatar(
+                                  radius: 50.0,
+                                  // backgroundImage:
+                                  //     FileImage(imageFile),
+                                  // child:
+                                  // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
+                                ),
+                              )
+                            : Container(
+                                child: CircleAvatar(
+                                  radius: 50.0,
+                                  child: Text(
+                                    dashboardController.getInitials(),
+                                  ),
+                                ),
+                              ),
+                      ),
                     ),
                     Positioned(
                       right: 0,
                       bottom: 0,
-                      child: Container(
-                        width: 36,
-                        height: 36,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFB7C1F4),
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: ImageIcon(
-                          AssetImage('images/camera.png'),
+                      child: GestureDetector(
+                        onTap: () {
+                          print('yrs');
+                        },
+                        child: Container(
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFB7C1F4),
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: ImageIcon(
+                            AssetImage('images/camera.png'),
+                          ),
                         ),
                       ),
                     ),
@@ -104,13 +129,16 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
             child: AuthButton(
               'Save',
               () async {
+                editedFullName = fullNameController.text.trim();
+                dashboardController.fullName.value = editedFullName;
                 await FirestoreService(uid: auth.currentUser.uid)
                     .updateUserData(
-                  fullName: fullNameController.text.trim(),
+                  fullName: editedFullName,
                   email: auth.currentUser.email,
                   position: dashboardController.position.value,
                 );
-                dashboardController.fullName.value.obs;
+
+                // Get.offNamed('/dashboard');
                 Get.back();
                 // updateUserData()
               },

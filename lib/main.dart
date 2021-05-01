@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:uniguide/constants/language/languages.dart';
 import 'package:uniguide/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uniguide/screens/dashboard/profile_screens/ios_imagepicker_test.dart';
 import 'package:uniguide/screens/onboarding/choose_lang_screen.dart';
 import 'package:uniguide/services/auth_service.dart';
 
@@ -41,8 +42,8 @@ class MyApp extends StatelessWidget {
         unselectedWidgetColor: Color(0xFF232195),
       ),
       getPages: AppRoutes.list,
-      initialRoute: initScreen == 0 || initScreen == null ? '/chooseLang' : authWrap(),
-      // home: initScreen == 0 || initScreen == null ? ChooseLangScreen() : LoginScreen(),
+      // initialRoute: initScreen == 0 || initScreen == null ? '/chooseLang' : authWrap(),
+      home: IosImage(),
       
     );
   }
