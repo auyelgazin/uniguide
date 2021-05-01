@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
 
 String authWrap(){
   if(FirebaseAuth.instance.currentUser != null) {
-    return '/profileEdit';
+    return '/dashboard';
   } else return '/signup';
 }
 

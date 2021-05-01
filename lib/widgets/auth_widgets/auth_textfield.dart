@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 class AuthTextField extends StatelessWidget {
-  final String hintLabelText;
+  final String labelText;
+  final String hintText;
   final bool hidePassword;
   final TextEditingController controller;
   final Icon trailingIcon;
   final TextInputType keyboardType;
 
   AuthTextField(
-      {this.hintLabelText,
+      {this.labelText,
+      this.hintText,
       this.hidePassword,
       this.controller,
       this.trailingIcon,
@@ -29,7 +31,7 @@ class AuthTextField extends StatelessWidget {
       obscureText: hidePassword,
       keyboardType: keyboardType,
       decoration: InputDecoration(
-          labelText: hintLabelText,
+          labelText: labelText,
           labelStyle: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -41,12 +43,12 @@ class AuthTextField extends StatelessWidget {
           ),
           suffixIcon: trailingIcon,
 
-          // hintText: hintLabelText,
-          // hintStyle: TextStyle(
-          //   fontSize: 20,
-          //   fontWeight: FontWeight.w400,
-          //   color: Color(0xFF232195).withOpacity(0.6),
-          // ),
+          hintText: hintText,
+          hintStyle: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            color: Color(0xFF212121).withOpacity(0.6),
+          ),
           focusColor: Color(0xFFB7C1F4),
 
           fillColor: Color(0xFFB7C1F4).withOpacity(0.4),

@@ -74,7 +74,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: AuthTextField(
-                      hintLabelText: 'full_name'.tr,
+                      labelText: 'full_name'.tr,
                       hidePassword: false,
                       controller: fullNameController,
                       trailingIcon: null,
@@ -87,7 +87,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: AuthTextField(
-                      hintLabelText: 'email_address'.tr,
+                      labelText: 'email_address'.tr,
                       hidePassword: false,
                       controller: emailController,
                       trailingIcon: null,
@@ -100,7 +100,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: AuthTextField(
-                      hintLabelText: 'password'.tr,
+                      labelText: 'password'.tr,
                       hidePassword: true,
                       controller: passwordController,
                       trailingIcon: Icon(Icons.remove_red_eye),

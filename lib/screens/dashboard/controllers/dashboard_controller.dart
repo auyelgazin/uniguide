@@ -8,10 +8,11 @@ class DashboardController extends GetxController {
 
   void changeTabIndex(int index) {
     tabIndex = index;
-    if (tabIndex == 2){
+    if (tabIndex == 2) {
       getCurrentProfile();
     }
     update();
+    
   }
 
   var fullName = ''.obs;
@@ -25,7 +26,6 @@ class DashboardController extends GetxController {
       fullName.value = details[0];
       email.value = details[1];
       position.value = details[2];
-
     }
   }
 }
