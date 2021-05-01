@@ -93,22 +93,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Container(
-                                child: imageFile != null
-                                    ? Container(
-                                        child: CircleAvatar(
-                                          radius: 35.0,
-                                          backgroundImage: FileImage(imageFile),
-                                          // child:
-                                          // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
+                              Obx(
+                                () => Container(
+                                  child: imageFile != null
+                                      ? Container(
+                                          child: CircleAvatar(
+                                            radius: 35.0,
+                                            backgroundImage:
+                                                FileImage(imageFile),
+                                            // child:
+                                            // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
+                                          ),
+                                        )
+                                      : Container(
+                                          child: CircleAvatar(
+                                            radius: 35.0,
+                                            child: Text(
+                                              dashboardController.getInitials(),
+                                            ),
+                                          ),
                                         ),
-                                      )
-                                    : Container(
-                                        child: CircleAvatar(
-                                          radius: 35.0,
-                                          child: Text('AK'),
-                                        ),
-                                      ),
+                                ),
                               ),
                               Obx(
                                 () => Column(

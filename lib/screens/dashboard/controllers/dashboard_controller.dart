@@ -28,4 +28,8 @@ class DashboardController extends GetxController {
       position.value = details[2];
     }
   }
+
+  String getInitials() => fullName.value.isNotEmpty
+    ? fullName.value.trim().split(' ').map((l) => l[0]).take(2).join()
+    : '';
 }

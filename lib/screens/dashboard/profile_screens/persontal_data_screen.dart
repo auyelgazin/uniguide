@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/constants/font_styles.dart';
@@ -5,8 +7,15 @@ import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart
 import 'package:uniguide/widgets/auth_widgets/auth_button.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_textfield.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
+import 'package:uniguide/services/firestore_service.dart';
 
-class PersonalDataScreen extends StatelessWidget {
+class PersonalDataScreen extends StatefulWidget {
+  @override
+  _PersonalDataScreenState createState() => _PersonalDataScreenState();
+}
+
+class _PersonalDataScreenState extends State<PersonalDataScreen> {
+  FirebaseAuth auth = FirebaseAuth.instance;
   final TextEditingController fullNameController = TextEditingController();
 
   DashboardController dashboardController = Get.put(DashboardController());
@@ -94,7 +103,17 @@ class PersonalDataScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.8,
             child: AuthButton(
               'Save',
-              () {},
+              () async {
+                await FirestoreService(uid: auth.currentUser.uid)
+                    .updateUserData(
+                  fullName: fullNameController.text.trim(),
+                  email: auth.currentUser.email,
+                  position: dashboardController.position.value,
+                );
+                dashboardController.fullName.value.obs;
+                Get.back();
+                // updateUserData()
+              },
             ),
           ),
         ],
