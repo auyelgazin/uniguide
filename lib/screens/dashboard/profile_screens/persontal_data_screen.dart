@@ -54,7 +54,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
   //   url = imageUrl.toString();
   //   print(url);
   // }
-  //
+  
 
   @override
   Widget build(BuildContext context) {

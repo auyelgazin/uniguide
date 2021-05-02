@@ -8,12 +8,13 @@ class FirestoreService {
   FirestoreService({this.uid});
 
   Future updateUserData(
-      {String fullName, String email, String position}) async {
-    return await usersCollection.doc(uid).update({
+      {String fullName, String email, String position, String avatar}) async {
+    return await usersCollection.doc(uid).set({
       'uid': uid,
       'fullName': fullName,
       'email': email,
-      'position': position
+      'position': position,
+      'avatar': avatar
     });
   }
 

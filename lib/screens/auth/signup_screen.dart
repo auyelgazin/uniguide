@@ -232,6 +232,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 password: passwordController.text,
                                 fullName: fullName,
                                 position: chosenPosition,
+                                avatar: '',
                               );
                             } else {
                               controller.useSDUmail();
@@ -249,6 +250,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   password: passwordController.text,
                                   fullName: fullName,
                                   position: chosenPosition,
+                                  avatar: '',
                                 );
                             }
                           }

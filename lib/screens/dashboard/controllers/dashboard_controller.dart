@@ -18,7 +18,6 @@ class DashboardController extends GetxController {
   var fullName = ''.obs;
   var email = ''.obs;
   var position = ''.obs;
-
   var avatar = ''.obs;
 
   Future getCurrentProfile() async {

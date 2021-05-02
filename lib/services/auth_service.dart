@@ -39,6 +39,7 @@ class AuthService {
     String password,
     String fullName,
     String position,
+    String avatar,
   }) async {
     if (signupController.error.value == '') {
       signupController.passwordLessThanSix();
@@ -51,6 +52,7 @@ class AuthService {
           fullName: fullName,
           email: email,
           position: position,
+          avatar: avatar,
         );
         Get.offNamed('/congratz');
         return 'USER SIGNED UP';
