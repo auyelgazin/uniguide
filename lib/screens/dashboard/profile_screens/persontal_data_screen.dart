@@ -122,11 +122,6 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                       bottom: 0,
                       child: GestureDetector(
                         onTap: () async {
-                          // PickedFile image = await ImagePicker.platform.pickImage(source: ImageSource.gallery);
-                          // print(image.path);
-
-                          // chooseImage();
-                          // uploadFile();
 
                           await selectFile();
                           uploadFile();
@@ -146,7 +141,12 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 5),
+                Container(
+                  height: 20,
+                  child: task != null ? buildUploadStatus(task) : Container(),
+                ),
+                SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
@@ -170,7 +170,6 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
               ],
             ),
           ),
-          task != null ? buildUploadStatus(task) : Container(),
           Container(
             padding: EdgeInsets.only(bottom: 20),
             width: MediaQuery.of(context).size.width * 0.8,
@@ -180,8 +179,6 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                 editedFullName = fullNameController.text.trim();
 
                 if (editedFullName.length >= 3) {
-                  
-
                   dashboardController.fullName.value = editedFullName;
                   await FirestoreService(uid: auth.currentUser.uid)
                       .updateUserData(
@@ -240,11 +237,16 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
           if (snapshot.hasData) {
             final snap = snapshot.data;
             final progress = snap.bytesTransferred / snap.totalBytes;
-            final percentage = (progress * 100).toStringAsFixed(2);
+            final percentage = (progress * 100).toStringAsFixed(1);
 
-            return Text(
-              '$percentage %',
-            );
+            if (progress != 1.0) {
+              print(progress);
+              return Text(
+                'Picture uploading: $percentage %',
+                style: positionStyle,
+              );
+            } else
+              return Container();
           } else
             return Container();
         },
