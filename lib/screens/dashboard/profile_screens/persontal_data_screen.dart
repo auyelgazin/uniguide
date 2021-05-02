@@ -30,6 +30,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   File imageFile;
   UploadTask task;
+
+  String urlDownload;
   // final picker = ImagePicker();
   // String url;
 
@@ -93,10 +95,11 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   children: [
                     Obx(
                       () => Container(
-                        child: null != null
+                        child: dashboardController.avatar.value != ''
                             ? Container(
                                 child: CircleAvatar(
                                   radius: 50.0,
+                                  backgroundImage: NetworkImage(dashboardController.avatar.value),
                                   // backgroundImage:
                                   //     FileImage(imageFile),
                                   // child:
@@ -177,6 +180,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                 if (editedFullName.length >= 3) {
                   uploadFile();
 
+                  
+
                   dashboardController.fullName.value = editedFullName;
                   await FirestoreService(uid: auth.currentUser.uid)
                       .updateUserData(
@@ -184,8 +189,6 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                     email: auth.currentUser.email,
                     position: dashboardController.position.value,
                   );
-
-                  // Get.offNamed('/dashboard');
                   // Get.back();
                 }
                 // updateUserData()
@@ -224,7 +227,10 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
     if (task == null) return;
 
     final snapshot = await task.whenComplete(() {});
-    final urlDownload = await snapshot.ref.getDownloadURL();
+    urlDownload = await snapshot.ref.getDownloadURL();
+    dashboardController.avatar.value = urlDownload;
+
+    await FirestoreService(uid: auth.currentUser.uid).setAvatar(avatar: dashboardController.avatar.value);
 
     print('DOWNLOAD LINK => => => $urlDownload');
   }

@@ -28,7 +28,9 @@ class DashboardController extends GetxController {
       fullName.value = details[0];
       email.value = details[1];
       position.value = details[2];
+      avatar.value = details[3];
     }
+    print(details);
   }
 
   String getInitials() => fullName.value.isNotEmpty

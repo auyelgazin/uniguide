@@ -1,41 +1,47 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class FirestoreService{
-
-  final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
+class FirestoreService {
+  final CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection('users');
   final String uid;
   FirestoreService({this.uid});
 
-  Future updateUserData({String fullName, String email, String position}) async{
-    return await usersCollection.doc(uid).set({
+  Future updateUserData(
+      {String fullName, String email, String position}) async {
+    return await usersCollection.doc(uid).update({
       'uid': uid,
       'fullName': fullName,
       'email': email,
       'position': position
-      
+    });
+  }
 
+  Future setAvatar(
+      {String avatar}) async {
+    return await usersCollection.doc(uid).update({
+      'avatar': avatar,
+      
     });
   }
 
   updateProfilePic(picUrl) async {
-
     await FirebaseAuth.instance.currentUser.updateProfile(photoURL: picUrl);
-
   }
 
-  Stream<QuerySnapshot> get users{
+  Stream<QuerySnapshot> get users {
     return usersCollection.snapshots();
   }
 
-  Future getCurrentUserData() async{
-    try{
+  Future getCurrentUserData() async {
+    try {
       DocumentSnapshot ds = await usersCollection.doc(uid).get();
       String fullName = ds.get('fullName');
       String email = ds.get('email');
       String position = ds.get('position');
-      return [fullName, email, position];
-    } catch(e){
+      String avatar = ds.get('avatar');
+      return [fullName, email, position, avatar];
+    } catch (e) {
       print(e.toString());
       return null;
     }
