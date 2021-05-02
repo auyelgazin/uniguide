@@ -99,7 +99,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                             ? Container(
                                 child: CircleAvatar(
                                   radius: 50.0,
-                                  backgroundImage: NetworkImage(dashboardController.avatar.value),
+                                  backgroundImage: NetworkImage(
+                                      dashboardController.avatar.value),
                                   // backgroundImage:
                                   //     FileImage(imageFile),
                                   // child:
@@ -127,7 +128,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           // chooseImage();
                           // uploadFile();
 
-                          selectFile();
+                          await selectFile();
+                          uploadFile();
                         },
                         child: Container(
                           width: 36,
@@ -178,8 +180,6 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                 editedFullName = fullNameController.text.trim();
 
                 if (editedFullName.length >= 3) {
-                  uploadFile();
-
                   
 
                   dashboardController.fullName.value = editedFullName;
@@ -189,7 +189,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                     email: auth.currentUser.email,
                     position: dashboardController.position.value,
                   );
-                  // Get.back();
+                  Get.back();
                 }
                 // updateUserData()
               },
@@ -220,9 +220,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
     final destination = 'avatars/$fileName';
 
     task = StorageService.uploadFile(destination, imageFile);
-    setState(() {
-      
-    });
+    setState(() {});
 
     if (task == null) return;
 
@@ -230,7 +228,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
     urlDownload = await snapshot.ref.getDownloadURL();
     dashboardController.avatar.value = urlDownload;
 
-    await FirestoreService(uid: auth.currentUser.uid).setAvatar(avatar: dashboardController.avatar.value);
+    await FirestoreService(uid: auth.currentUser.uid)
+        .setAvatar(avatar: dashboardController.avatar.value);
 
     print('DOWNLOAD LINK => => => $urlDownload');
   }
@@ -246,7 +245,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
             return Text(
               '$percentage %',
             );
-          } else return Container();
+          } else
+            return Container();
         },
       );
 }
