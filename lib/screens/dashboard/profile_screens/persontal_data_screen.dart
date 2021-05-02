@@ -1,13 +1,19 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
+import 'package:uniguide/services/storage_service.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_button.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_textfield.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
 import 'package:uniguide/services/firestore_service.dart';
+import 'package:path/path.dart' as Path;
 
 class PersonalDataScreen extends StatefulWidget {
   @override
@@ -22,11 +28,41 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   String editedFullName;
 
+  File imageFile;
+  UploadTask task;
+  // final picker = ImagePicker();
+  // String url;
+
+  // chooseImage() async {
+  //   final pickedFile = await picker.getImage(source: ImageSource.gallery);
+  //   print(pickedFile.path);
+
+  //   setState(() {
+  //     imageFile = File(pickedFile.path);
+  //   });
+  // }
+
+  //  uploadFile() async {
+  //   Reference storageRef = FirebaseStorage.instance
+  //       .ref()
+  //       .child('avatars/${Path.basename(imageFile.path)}');
+  //   UploadTask uploadTask = storageRef.putFile(imageFile);
+
+  //   var imageUrl = await (await uploadTask).ref.getDownloadURL();
+  //   url = imageUrl.toString();
+  //   print(url);
+  // }
+  //
+
   @override
   Widget build(BuildContext context) {
+    final fileName =
+        imageFile != null ? Path.basename(imageFile.path) : "No file selected";
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
         leading: Padding(
           padding: const EdgeInsets.only(left: 10),
           child: IconButton(
@@ -40,7 +76,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
           ),
         ),
         title: Text(
-          'Personal Data',
+          'Edit Profile',
           style: titleStyle,
         ),
         backgroundColor: Colors.white,
@@ -81,8 +117,14 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                       right: 0,
                       bottom: 0,
                       child: GestureDetector(
-                        onTap: () {
-                          print('yrs');
+                        onTap: () async {
+                          // PickedFile image = await ImagePicker.platform.pickImage(source: ImageSource.gallery);
+                          // print(image.path);
+
+                          // chooseImage();
+                          // uploadFile();
+
+                          selectFile();
                         },
                         child: Container(
                           width: 36,
@@ -123,6 +165,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
               ],
             ),
           ),
+          task != null ? buildUploadStatus(task) : Container(),
           Container(
             padding: EdgeInsets.only(bottom: 20),
             width: MediaQuery.of(context).size.width * 0.8,
@@ -130,16 +173,21 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
               'Save',
               () async {
                 editedFullName = fullNameController.text.trim();
-                dashboardController.fullName.value = editedFullName;
-                await FirestoreService(uid: auth.currentUser.uid)
-                    .updateUserData(
-                  fullName: editedFullName,
-                  email: auth.currentUser.email,
-                  position: dashboardController.position.value,
-                );
 
-                // Get.offNamed('/dashboard');
-                Get.back();
+                if (editedFullName.length >= 3) {
+                  uploadFile();
+
+                  dashboardController.fullName.value = editedFullName;
+                  await FirestoreService(uid: auth.currentUser.uid)
+                      .updateUserData(
+                    fullName: editedFullName,
+                    email: auth.currentUser.email,
+                    position: dashboardController.position.value,
+                  );
+
+                  // Get.offNamed('/dashboard');
+                  // Get.back();
+                }
                 // updateUserData()
               },
             ),
@@ -148,4 +196,51 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
       ),
     );
   }
+
+  Future selectFile() async {
+    final result =
+        await ImagePicker.platform.pickImage(source: ImageSource.gallery);
+
+    if (result == null) return;
+
+    final path = result.path;
+
+    setState(() {
+      imageFile = File(path);
+    });
+  }
+
+  Future uploadFile() async {
+    if (imageFile == null) return;
+
+    final fileName = Path.basename(imageFile.path);
+    final destination = 'avatars/$fileName';
+
+    task = StorageService.uploadFile(destination, imageFile);
+    setState(() {
+      
+    });
+
+    if (task == null) return;
+
+    final snapshot = await task.whenComplete(() {});
+    final urlDownload = await snapshot.ref.getDownloadURL();
+
+    print('DOWNLOAD LINK => => => $urlDownload');
+  }
+
+  Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
+        stream: task.snapshotEvents,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final snap = snapshot.data;
+            final progress = snap.bytesTransferred / snap.totalBytes;
+            final percentage = (progress * 100).toStringAsFixed(2);
+
+            return Text(
+              '$percentage %',
+            );
+          } else return Container();
+        },
+      );
 }

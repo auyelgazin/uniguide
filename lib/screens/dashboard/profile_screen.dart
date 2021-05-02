@@ -12,7 +12,6 @@ import 'package:uniguide/services/firestore_service.dart';
 import 'package:uniguide/services/storage_service.dart';
 import 'package:uniguide/widgets/profile_button.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart' as Path;
 
 final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
@@ -24,38 +23,16 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   DashboardController dashboardController = Get.put(DashboardController());
 
-  File imageFile;
-  final picker = ImagePicker();
-  String url;
+  
 
-  chooseImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    print(pickedFile.path);
-
-    setState(() {
-      imageFile = File(pickedFile.path);
-    });
-  }
-
-  uploadFile() async {
-    print(imageFile);
-    Reference storageRef = FirebaseStorage.instance
-        .ref()
-        .child('avatars/${Path.basename(imageFile.path)}');
-    UploadTask uploadTask = storageRef.putFile(imageFile);
-    print('aaa');
-    print(uploadTask);
-
-    var imageUrl = await (await uploadTask).ref.getDownloadURL();
-    url = imageUrl.toString();
-    print(url);
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
         title: Text(
           'Profile',
@@ -95,12 +72,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               Obx(
                                 () => Container(
-                                  child: imageFile != null
+                                  child: dashboardController.avatar.value != ''
                                       ? Container(
                                           child: CircleAvatar(
                                             radius: 35.0,
                                             backgroundImage:
-                                                FileImage(imageFile),
+                                                NetworkImage(dashboardController.avatar.value),
                                             // child:
                                             // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
                                           ),

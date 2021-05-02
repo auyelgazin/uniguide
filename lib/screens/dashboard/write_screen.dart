@@ -14,7 +14,7 @@ class WriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-              child: Padding(
+        child: Padding(
           padding: const EdgeInsets.only(top: 20.0),
           child: Column(
             children: [
@@ -28,7 +28,9 @@ class WriteScreen extends StatelessWidget {
                     Text('Write', style: titleStyle),
                     TextButton(
                       onPressed: () async {
-                        await FirebaseFirestore.instance.collection('blogs').add({
+                        await FirebaseFirestore.instance
+                            .collection('blogs')
+                            .add({
                           'category': 'Category not chosen',
                           'comments': [
                             {
@@ -45,9 +47,7 @@ class WriteScreen extends StatelessWidget {
                           'title': titleController.text.trim(),
                         });
                         Get.defaultDialog(
-                          title: 'You sent request',
-                          middleText: 'OK'
-                        );
+                            title: 'You sent request', middleText: 'OK');
                       },
                       child: Text(
                         'Send',

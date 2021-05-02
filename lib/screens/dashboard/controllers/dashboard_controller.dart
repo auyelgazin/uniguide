@@ -19,6 +19,8 @@ class DashboardController extends GetxController {
   var email = ''.obs;
   var position = ''.obs;
 
+  var avatar = ''.obs;
+
   Future getCurrentProfile() async {
     dynamic details = await FirestoreService(uid: firebaseAuth.currentUser.uid)
         .getCurrentUserData();
