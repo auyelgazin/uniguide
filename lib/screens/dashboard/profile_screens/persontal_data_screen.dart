@@ -78,7 +78,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
           ),
         ),
         title: Text(
-          'Edit Profile',
+          'Personal Data',
           style: titleStyle,
         ),
         backgroundColor: Colors.white,

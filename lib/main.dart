@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
 
 String authWrap(){
   if(FirebaseAuth.instance.currentUser != null) {
-    return '/dashboard';
+    return '/settings';
   } else return '/login';
 }
 

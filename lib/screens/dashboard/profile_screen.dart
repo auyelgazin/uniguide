@@ -6,7 +6,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/screens/dashboard/models/user_model.dart';
+import 'package:uniguide/screens/dashboard/profile_screens/language_screen.dart';
 import 'package:uniguide/screens/dashboard/profile_screens/persontal_data_screen.dart';
+import 'package:uniguide/screens/dashboard/profile_screens/settings_screen.dart';
+import 'package:uniguide/screens/dashboard/profile_screens/survey_screen.dart';
 import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/services/firestore_service.dart';
 import 'package:uniguide/services/storage_service.dart';
@@ -218,7 +221,9 @@ class ProfileButtonsColumn extends StatelessWidget {
         ProfileButton(
           avatarImage: 'images/settings.png',
           title: 'Settings',
-          onTap: () {},
+          onTap: () {
+            Get.to(() => SettingsScreen());
+          },
         ),
         SizedBox(
           height: 5,
@@ -230,7 +235,9 @@ class ProfileButtonsColumn extends StatelessWidget {
         ProfileButton(
           avatarImage: 'images/lang.png',
           title: 'Language',
-          onTap: () {},
+          onTap: () {
+            Get.to(() => LanguageScreen());
+          },
         ),
         SizedBox(
           height: 5,
@@ -242,7 +249,9 @@ class ProfileButtonsColumn extends StatelessWidget {
         ProfileButton(
           avatarImage: 'images/survey.png',
           title: 'Survey',
-          onTap: () {},
+          onTap: () {
+            Get.to(() => SurveyScreen());
+          },
         ),
         SizedBox(
           height: 5,
