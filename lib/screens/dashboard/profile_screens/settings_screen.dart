@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/constants/font_styles.dart';
 
+import 'change_password_screen.dart';
+
 class SettingsScreen extends StatefulWidget {
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -36,29 +38,60 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          SizedBox(height: 40),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Send Push Notifications'),
-                Switch(value: false, onChanged: (value) {},),
-              ],
+            child: Container(
+              height: 40,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Send Push Notifications',
+                    style: settingsStyle,
+                  ),
+                  Switch(
+                    value: false,
+                    onChanged: (value) {
+                      Get.defaultDialog(
+                          title:
+                              'Currently we are working on adding this feature',
+                          middleText: 'OK');
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Change Password'),
-                 Image.asset(
-                  'images/go.png',
-                  height: 13,
+          Divider(),
+          GestureDetector(
+            onTap: () {
+              Get.to(() => ChangePasswordScreen());
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                height: 40,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Change Password',
+                      style: settingsStyle,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: Image.asset(
+                        'images/go.png',
+                        height: 13,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
+          Divider(),
         ],
       ),
     );

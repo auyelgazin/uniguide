@@ -55,3 +55,9 @@ var positionStyle = TextStyle(
   fontWeight: FontWeight.w300,
   color: Color(0xFF666666),
 );
+
+var settingsStyle = TextStyle(
+  fontSize: 17,
+  fontWeight: FontWeight.w300,
+  color: Color(0xFF151522),
+);

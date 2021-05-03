@@ -20,6 +20,8 @@ class DashboardController extends GetxController {
   var position = ''.obs;
   var avatar = ''.obs;
 
+  // var password = ''.obs;
+
   Future getCurrentProfile() async {
     dynamic details = await FirestoreService(uid: firebaseAuth.currentUser.uid)
         .getCurrentUserData();
@@ -35,4 +37,9 @@ class DashboardController extends GetxController {
   String getInitials() => fullName.value.isNotEmpty
     ? fullName.value.trim().split(' ').map((l) => l[0]).take(2).join()
     : '';
+
+//   String getCurrentPassword(String passw){
+//     password.value = passw;
+//     return password.value;
+//   }
 }

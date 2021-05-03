@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:get/get.dart';
@@ -109,6 +110,7 @@ class LoginScreen extends StatelessWidget {
                           await AuthService(auth: firebaseAuth).Login(
                               email: emailController.text,
                               password: passwordController.text);
+                            
                         
                       },
                     ),

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/screens/auth/auth_controllers/login_controller.dart';
 import 'package:uniguide/screens/auth/auth_controllers/signup_controller.dart';
+import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/screens/dashboard/dashboard_screen.dart';
 import 'package:uniguide/services/firestore_service.dart';
 
@@ -13,6 +14,7 @@ class AuthService {
 
   final LoginController controller = Get.put(LoginController());
   final SignupController signupController = Get.put(SignupController());
+  // final DashboardController dashboardController = Get.put(DashboardController());
 
   Future<Stream<User>> AlreadyRegistered({FirebaseAuth auth}) async {
     Stream<User> stream = await auth.authStateChanges();
@@ -25,6 +27,7 @@ class AuthService {
   }) async {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
+      // dashboardController.getCurrentPassword(password);
       Get.offNamed('/dashboard');
       return 'USER LOGGED IN';
     } on FirebaseException catch (e) {
@@ -47,6 +50,8 @@ class AuthService {
         signupController.emptyAgain();
         await auth.createUserWithEmailAndPassword(
             email: email, password: password);
+
+        // dashboardController.getCurrentPassword(password);
         // ignore: unnecessary_statements
         await FirestoreService(uid: auth.currentUser.uid).updateUserData(
           fullName: fullName,
@@ -69,6 +74,8 @@ class AuthService {
   Future<void> signOut() async {
     await auth.signOut();
   }
+
+
 
  
 
