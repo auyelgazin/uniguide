@@ -22,6 +22,9 @@ class Languages extends Translations{
       'signup_info': 'Create your own account',
       'full_name': 'Full name',
 
+      // Profile
+      'profile': 'Profile',
+
     },
     'ru_RU': {
       'choose': 'Какой язык вы хотите выбрать?',
@@ -30,6 +33,9 @@ class Languages extends Translations{
       'login': 'Войти',
       'have_acc?': 'У вас уже есть аккаунт?',
       'signup': 'Зарегистрироваться',
+
+      // Profile
+      'profile': 'Профиль',
     },
     'kz_KZ': {
       'choose': 'Қай тілді таңдағыңыз келеді?',
@@ -38,6 +44,9 @@ class Languages extends Translations{
       'login': 'Кіру',
       'have_acc?': 'Аккаунтыңыз бар ма?',
       'signup': 'Тіркелу',
+
+      // Profile
+      'profile': 'Профайыл 667',
     }
     
   };

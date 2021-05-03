@@ -9,12 +9,13 @@ import 'package:uniguide/screens/dashboard/models/user_model.dart';
 import 'package:uniguide/screens/dashboard/profile_screens/language_screen.dart';
 import 'package:uniguide/screens/dashboard/profile_screens/persontal_data_screen.dart';
 import 'package:uniguide/screens/dashboard/profile_screens/settings_screen.dart';
-import 'package:uniguide/screens/dashboard/profile_screens/survey_screen.dart';
 import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/services/firestore_service.dart';
 import 'package:uniguide/services/storage_service.dart';
 import 'package:uniguide/widgets/profile_button.dart';
 import 'package:get/get.dart';
+
+import 'profile_screens/survey_screen.dart';
 
 final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
@@ -38,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         centerTitle: true,
         elevation: 0,
         title: Text(
-          'Profile',
+          'profile'.tr,
           style: titleStyle,
         ),
         backgroundColor: Colors.white,

@@ -9,15 +9,17 @@ class LangButton extends StatelessWidget {
   final String assetImage;
   final String langName;
   final LanguageController languageController;
+  final Function getTo;
 
-  LangButton({this.langID, this.region, this.assetImage, this.langName, this.languageController});
+  LangButton({this.langID, this.region, this.assetImage, this.langName, this.languageController, this.getTo});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         languageController.changeLanguage(langID, region);
-        Get.toNamed('/welcome');
+        
+        getTo();
       },
       child: WideButtonBox(
         Container(

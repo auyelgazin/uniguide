@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/constants/font_styles.dart';
+import 'package:uniguide/constants/language/language_controller.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_checkbox.dart';
+import 'package:uniguide/widgets/lang_button.dart';
 
 class LanguageScreen extends StatefulWidget {
   @override
@@ -9,6 +11,8 @@ class LanguageScreen extends StatefulWidget {
 }
 
 class _LanguageScreenState extends State<LanguageScreen> {
+  LanguageController languageController = Get.put(LanguageController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,26 +39,41 @@ class _LanguageScreenState extends State<LanguageScreen> {
         elevation: 0,
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              'Choose your language',
-              style: loginSignupInfo,
-            ),
+          LangButton(
+              langID: 'en',
+              region: 'US',
+              assetImage: 'images/en.png',
+              langName: 'English  ',
+              languageController: languageController,
+              getTo: () {
+                Get.back();
+              }),
+          SizedBox(
+            height: 21,
           ),
-          Column(
-            children: [
-              CheckboxListTile(
-                controlAffinity: ListTileControlAffinity.leading,
-                value: false,
-                onChanged: (value) {},
-                title: Text('English'),
-              ),
-            ],
+          LangButton(
+              langID: 'ru',
+              region: 'RU',
+              assetImage: 'images/ru.png',
+              langName: 'Русский',
+              languageController: languageController,
+              getTo: () {
+                Get.back();
+              }),
+          SizedBox(
+            height: 21,
           ),
+          LangButton(
+              langID: 'kz',
+              region: 'KZ',
+              assetImage: 'images/kz.png',
+              langName: 'Қазақша',
+              languageController: languageController,
+              getTo: () {
+                Get.back();
+              }),
         ],
       ),
     );

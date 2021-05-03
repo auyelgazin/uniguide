@@ -29,32 +29,38 @@ class ChooseLangScreen extends StatelessWidget {
             child: Column(
               children: [
                 LangButton(
-                  langID: 'en',
-                  region: 'US',
-                  assetImage: 'images/en.png',
-                  langName: 'English  ',
-                  languageController: _controller,
-                ),
+                    langID: 'en',
+                    region: 'US',
+                    assetImage: 'images/en.png',
+                    langName: 'English  ',
+                    languageController: _controller,
+                    getTo: () {
+                      Get.toNamed('/welcome');
+                    }),
                 SizedBox(
                   height: 21,
                 ),
                 LangButton(
-                  langID: 'ru',
-                  region: 'RU',
-                  assetImage: 'images/ru.png',
-                  langName: 'Русский',
-                  languageController: _controller,
-                ),
+                    langID: 'ru',
+                    region: 'RU',
+                    assetImage: 'images/ru.png',
+                    langName: 'Русский',
+                    languageController: _controller,
+                    getTo: () {
+                      Get.toNamed('/welcome');
+                    }),
                 SizedBox(
                   height: 21,
                 ),
                 LangButton(
-                  langID: 'kz',
-                  region: 'KZ',
-                  assetImage: 'images/kz.png',
-                  langName: 'Қазақша',
-                  languageController: _controller,
-                ),
+                    langID: 'kz',
+                    region: 'KZ',
+                    assetImage: 'images/kz.png',
+                    langName: 'Қазақша',
+                    languageController: _controller,
+                    getTo: () {
+                      Get.toNamed('/welcome');
+                    }),
               ],
             ),
           ),

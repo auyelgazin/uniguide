@@ -3,10 +3,16 @@ import 'dart:ui';
 
 class LanguageController extends GetxController{
 
+  var locale;
+
   void changeLanguage(var lang, var region){
 
-    var locale = Locale(lang, region);
+    locale = Locale(lang, region);
     Get.updateLocale(locale);
+  }
+
+  Locale getLocale(){
+    return locale;
   }
 
 }

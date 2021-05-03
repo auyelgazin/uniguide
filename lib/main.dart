@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
 
       // Localization based properties:
-      locale: Locale('en', 'US'),
+      locale: Locale('ru', 'RU'),
       fallbackLocale: Locale('en', 'US'),
       translations: Languages(),
 
