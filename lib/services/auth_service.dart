@@ -17,6 +17,10 @@ class AuthService {
   final SignupController signupController = Get.put(SignupController());
   final DashboardController dashboardController = Get.put(DashboardController());
 
+  String initFullName, initAvatar;
+  String get getInitFullName => initFullName;
+  String get getInitAvatar => initAvatar;
+
   Future<Stream<User>> AlreadyRegistered({FirebaseAuth auth}) async {
     Stream<User> stream = await auth.authStateChanges();
     return stream;
@@ -81,11 +85,15 @@ class AuthService {
       print('fetching user data');
 
       dashboardController.initFullName.value = doc.data()['fullName'];
-      dashboardController.avatar.value = doc.data()['avatar'];
+      dashboardController.initAvatar.value = doc.data()['avatar'];
 
-      print(dashboardController.initFullName);
-      print(dashboardController.avatar);
+      print(dashboardController.initFullName.value);
+      print(dashboardController.initAvatar.value);
     });
+  }
+
+  Future uploadPostData(String postID, dynamic data) async {
+    return FirebaseFirestore.instance.collection('posts').doc(postID).set(data);
   }
 
 

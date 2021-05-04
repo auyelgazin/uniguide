@@ -45,4 +45,6 @@ class DashboardController extends GetxController {
 
   var initFullName = ''.obs;
   var initAvatar = ''.obs;
+
+
 }

@@ -18,7 +18,7 @@ class BlogScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-              child: Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
@@ -39,49 +39,45 @@ class BlogScreen extends StatelessWidget {
                         color: Color(0xFF232195),
                         iconSize: 20,
                         onPressed: () async {
-                          await AuthService(auth: _auth).signOut();
-                          Get.offNamed('/login');
-                          // DON'T DELETE
-                          //
-                          //
-                          // Get.bottomSheet(Container(
-                          //   height: 500,
-                          //   decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.only(
-                          //         topRight: Radius.circular(20.0),
-                          //         topLeft: Radius.circular(20.0)),
-                          //     color: Colors.white,
-                          //   ),
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.symmetric(
-                          //         horizontal: 20.0, vertical: 40),
-                          //     child: Column(
-                          //       mainAxisAlignment: MainAxisAlignment.end,
-                          //       children: [
-                          //         WideButtonBox(
-                          //           ElevatedButton(
-                          //             child: Text(
-                          //               'Choose',
-                          //               style: TextStyle(
-                          //                   color: Color(0xFF141619),
-                          //                   fontSize: 16,
-                          //                   fontWeight: FontWeight.w500),
-                          //             ),
-                          //             onPressed: () {
-                          //               Get.back();
-                          //             },
-                          //             style: ElevatedButton.styleFrom(
-                          //               primary: Color(0xFFB7C1F4),
-                          //               shape: RoundedRectangleBorder(
-                          //                 borderRadius: BorderRadius.circular(10),
-                          //               ),
-                          //             ),
-                          //           ),
-                          //         )
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ));
+                          Get.bottomSheet(Container(
+                            height: 500,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(20.0),
+                                  topLeft: Radius.circular(20.0)),
+                              color: Colors.white,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 40),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  WideButtonBox(
+                                    ElevatedButton(
+                                      child: Text(
+                                        'Choose',
+                                        style: TextStyle(
+                                            color: Color(0xFF141619),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      onPressed: () {
+                                        Get.back();
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Color(0xFFB7C1F4),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ));
                         }),
                   )
                 ],
@@ -93,7 +89,7 @@ class BlogScreen extends StatelessWidget {
                 init: BlogController(),
                 builder: (value) {
                   return FutureBuilder(
-                      future: value.getData('blogs'),
+                      future: value.getData('posts'),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
