@@ -6,19 +6,20 @@ class PostCard extends StatelessWidget {
   String category;
   String image;
   String sender;
-  Timestamp sendTime;
+  // Timestamp sendTime;
   String title;
-  var comments = [];
-  int likes;
+  // var comments = [];
+  // int likes;
 
   PostCard(
       {this.category,
       this.image,
       this.sender,
-      this.sendTime,
+      // this.sendTime,
       this.title,
-      this.comments,
-      this.likes});
+      // this.comments,
+      // this.likes
+      });
 
   String timeStampToDate(Timestamp timeStamp) {
     var date = timeStamp.toDate();
@@ -42,7 +43,9 @@ class PostCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   InkWell(
-                    child: CircleAvatar(),
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(image),
+                    ),
                     onTap: () {},
                   ),
                 ],
@@ -82,7 +85,8 @@ class PostCard extends StatelessWidget {
                                         ),
                                         SizedBox(width: 8),
                                         Text(
-                                          timeStampToDate(sendTime),
+                                          '12 Hours ago',
+                                          // timeStampToDate(sendTime),
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w400,
@@ -110,7 +114,7 @@ class PostCard extends StatelessWidget {
                                         width: 6,
                                       ),
                                       Text(
-                                        comments.length.toString(),
+                                        '12',
                                         style: TextStyle(
                                             color: Color(0xFF687684),
                                             fontSize: 12,
@@ -131,7 +135,7 @@ class PostCard extends StatelessWidget {
                                           width: 6,
                                         ),
                                         Text(
-                                          likes.toString(),
+                                          '1040',
                                           style: TextStyle(
                                               color: Color(0xFF687684),
                                               fontSize: 12,

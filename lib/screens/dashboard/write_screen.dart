@@ -46,8 +46,8 @@ class _WriteScreenState extends State<WriteScreen> {
                         AuthService(auth: auth).uploadPostData(titleController.text, {
                           'title': titleController.text,
                           'category': chosenTopic,
-                          'fullName': dc.initFullName.value,
-                          'avatar': dc.initAvatar.value,
+                          'fullName': dc.fullName.value,
+                          'avatar': dc.avatar.value,
                           'uid': auth.currentUser.uid,
                           'time': Timestamp.now(),
                         }).whenComplete(() {

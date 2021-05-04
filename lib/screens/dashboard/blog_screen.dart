@@ -84,48 +84,82 @@ class BlogScreen extends StatelessWidget {
               ),
             ),
             Container(
-              height: 670,
-              child: GetBuilder<BlogController>(
-                init: BlogController(),
-                builder: (value) {
-                  return FutureBuilder(
-                      future: value.getData('posts'),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(
-                            child: CircularProgressIndicator(
-                              backgroundColor: Colors.black,
-                            ),
-                          );
-                        } else {
-                          return ListView.builder(
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (BuildContext, int index) {
-                              return PostCard(
-                                category:
-                                    snapshot.data[index].data()['category'],
-                                image: snapshot.data[index].data()['sender']
-                                    ['image'],
-                                sender: snapshot.data[index].data()['sender']
-                                    ['fullName'],
-                                sendTime:
-                                    snapshot.data[index].data()['sendTime'],
-                                title: snapshot.data[index].data()['title'],
-                                comments:
-                                    snapshot.data[index].data()['comments'],
-                                likes: snapshot.data[index].data()['likes'],
-                              );
-                            },
-                          );
-                        }
-                      });
+              height: 500,
+              child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+                builder: (context, snapshot) {
+                  if(snapshot.connectionState == ConnectionState.waiting){
+                    return Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.black,
+                      ),
+                    );
+                  }
+                  else {
+                    return loadPosts(context, snapshot);
+
+                  }
                 },
               ),
-            )
+            ),
+            // Container(
+            //   height: 670,
+            //   child: GetBuilder<BlogController>(
+            //     init: BlogController(),
+            //     builder: (value) {
+            //       return FutureBuilder(
+            //           future: value.getData('blogs'),
+            //           builder: (context, snapshot) {
+            //             if (snapshot.connectionState ==
+            //                 ConnectionState.waiting) {
+            //               return Center(
+            //                 child: CircularProgressIndicator(
+            //                   backgroundColor: Colors.black,
+            //                 ),
+            //               );
+            //             } else {
+            //               return ListView.builder(
+            //                 itemCount: snapshot.data.length,
+            //                 itemBuilder: (BuildContext, int index) {
+            //                   return PostCard(
+            //                     category:
+            //                         snapshot.data[index].data()['category'],
+            //                     image: snapshot.data[index].data()['sender']
+            //                         ['image'],
+            //                     sender: snapshot.data[index].data()['sender']
+            //                         ['fullName'],
+            //                     sendTime:
+            //                         snapshot.data[index].data()['sendTime'],
+            //                     title: snapshot.data[index].data()['title'],
+            //                     comments:
+            //                         snapshot.data[index].data()['comments'],
+            //                     likes: snapshot.data[index].data()['likes'],
+            //                   );
+            //                 },
+            //               );
+            //             }
+            //           });
+            //     },
+            //   ),
+            // )
           ],
         ),
       ),
+    );
+  }
+
+  Widget loadPosts(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+
+    return ListView(
+      children: snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
+        return PostCard(
+          category: documentSnapshot.data()['category'],
+          image: documentSnapshot.data()['avatar'],
+          sender: documentSnapshot.data()['fullName'],
+          title: documentSnapshot.data()['title'],
+
+        );
+      }).toList(),
     );
   }
 }
