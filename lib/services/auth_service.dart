@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/screens/auth/auth_controllers/login_controller.dart';
 import 'package:uniguide/screens/auth/auth_controllers/signup_controller.dart';
@@ -14,7 +15,7 @@ class AuthService {
 
   final LoginController controller = Get.put(LoginController());
   final SignupController signupController = Get.put(SignupController());
-  // final DashboardController dashboardController = Get.put(DashboardController());
+  final DashboardController dashboardController = Get.put(DashboardController());
 
   Future<Stream<User>> AlreadyRegistered({FirebaseAuth auth}) async {
     Stream<User> stream = await auth.authStateChanges();
@@ -73,6 +74,18 @@ class AuthService {
 
   Future<void> signOut() async {
     await auth.signOut();
+  }
+
+  Future initUserData() async {
+    return FirebaseFirestore.instance.collection('users').doc(auth.currentUser.uid).get().then((doc) {
+      print('fetching user data');
+
+      dashboardController.initFullName.value = doc.data()['fullName'];
+      dashboardController.avatar.value = doc.data()['avatar'];
+
+      print(dashboardController.initFullName);
+      print(dashboardController.avatar);
+    });
   }
 
 

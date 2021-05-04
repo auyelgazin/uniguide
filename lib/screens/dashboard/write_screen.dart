@@ -1,14 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:uniguide/services/auth_service.dart';
 
 class WriteScreen extends StatelessWidget {
   int time = DateTime.now().millisecondsSinceEpoch;
 
   TextEditingController titleController = TextEditingController();
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -28,26 +31,27 @@ class WriteScreen extends StatelessWidget {
                     Text('Write', style: titleStyle),
                     TextButton(
                       onPressed: () async {
-                        await FirebaseFirestore.instance
-                            .collection('blogs')
-                            .add({
-                          'category': 'Category not chosen',
-                          'comments': [
-                            {
-                              'comment': 'bash',
-                              'sendTime': '12:45',
-                            }
-                          ],
-                          'likes': 40,
-                          'sendTime': FieldValue.serverTimestamp(),
-                          'sender': {
-                            'fullName': 'Shawn Carter',
-                            'image': 'null',
-                          },
-                          'title': titleController.text.trim(),
-                        });
-                        Get.defaultDialog(
-                            title: 'You sent request', middleText: 'OK');
+                        AuthService(auth: auth).initUserData();
+                        // await FirebaseFirestore.instance
+                        //     .collection('blogs')
+                        //     .add({
+                        //   'category': 'Category not chosen',
+                        //   'comments': [
+                        //     {
+                        //       'comment': 'bash',
+                        //       'sendTime': '12:45',
+                        //     }
+                        //   ],
+                        //   'likes': 40,
+                        //   'sendTime': FieldValue.serverTimestamp(),
+                        //   'sender': {
+                        //     'fullName': 'Shawn Carter',
+                        //     'image': 'null',
+                        //   },
+                        //   'title': titleController.text.trim(),
+                        // });
+                        // Get.defaultDialog(
+                        //     title: 'You sent request', middleText: 'OK');
                       },
                       child: Text(
                         'Send',
