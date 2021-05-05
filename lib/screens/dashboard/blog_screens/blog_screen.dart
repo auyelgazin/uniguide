@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/constants/font_styles.dart';
+import 'package:uniguide/screens/dashboard/blog_screens/comments_screen.dart';
 import 'package:uniguide/screens/dashboard/controllers/blog_controller.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/screens/dashboard/models/dashboard_model.dart';
@@ -178,7 +179,9 @@ class _BlogScreenState extends State<BlogScreen> {
           sender: documentSnapshot.data()['fullName'],
           title: documentSnapshot.data()['title'],
           onComment: () {
+            PostFunctions().addComment(context, documentSnapshot.data()['title'], 'opawa');
             PostFunctions().showCommentsPage(context, documentSnapshot, documentSnapshot.data()['title']);
+            // Get.to(() => CommentsScreen());
           },
         );
       }).toList(),

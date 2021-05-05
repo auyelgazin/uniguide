@@ -9,6 +9,8 @@ class PostFunctions {
   DashboardController dashboardController = Get.put(DashboardController());
   FirebaseAuth auth = FirebaseAuth.instance;
 
+  TextEditingController commentController = TextEditingController();
+
   Future addLike(BuildContext context, String postID, String subDocID) async {
     return FirebaseFirestore.instance
         .collection('posts')
@@ -17,8 +19,8 @@ class PostFunctions {
         .doc(subDocID)
         .set({
       'likes': FieldValue.increment(1),
-      'fullName': dashboardController.fullName,
-      'avatar': dashboardController.avatar,
+      'fullName': dashboardController.fullName.value,
+      'avatar': dashboardController.avatar.value,
       'uid': auth.currentUser.uid,
       'time': Timestamp.now(),
     });
@@ -32,8 +34,8 @@ class PostFunctions {
         .doc(comment)
         .set({
       'comment': comment,
-      'fullName': dashboardController.fullName,
-      'avatar': dashboardController.avatar,
+      'fullName': dashboardController.fullName.value,
+      'avatar': dashboardController.avatar.value,
       'uid': auth.currentUser.uid,
       'time': Timestamp.now(),
     });
@@ -42,44 +44,61 @@ class PostFunctions {
   showCommentsPage(
       BuildContext context, DocumentSnapshot snapshot, String docID) {
     return showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Container(
-            child: Column(
-              children: [
-                Text('Comments Section: '),
-                Container(
-                  child: StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection('posts')
-                        .doc(docID)
-                        .collection('comments')
-                        .orderBy('time')
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            backgroundColor: Colors.black,
-                          ),
+      context: context,
+      builder: (context) {
+        return Container(
+          child: Column(
+            children: [
+              Text('Comments Section: '),
+              Container(
+                height: 200,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('posts')
+                      .doc(docID)
+                      .collection('comments')
+                      .orderBy('time')
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          backgroundColor: Colors.black,
+                        ),
+                      );
+                    } else {
+                      return new ListView(
+                          children: snapshot.data.docs
+                              .map((DocumentSnapshot documentSnapshot) {
+                        return CommentCard(
+                          sender: documentSnapshot.data()['fullName'],
+                          image: documentSnapshot.data()['avatar'],
+                          comment: documentSnapshot.data()['comment'],
                         );
-                      } else {
-                        return new ListView(
-                            children: snapshot.data.docs
-                                .map((DocumentSnapshot documentSnapshot) {
-                          return CommentCard(
-                            sender: documentSnapshot.data()['fullName'],
-                            image: documentSnapshot.data()['avatar'],
-                            comment: documentSnapshot.data()['comment'],
-                          );
-                        }).toList());
-                      }
-                    },
-                  ),
+                      }).toList());
+                    }
+                  },
                 ),
-              ],
-            ),
-          );
-        });
+              ),
+              // Container(
+              //   height: 60,
+              //   width: MediaQuery.of(context).size.width,
+              //   child: Row(
+              //     children: [
+              //       TextField(
+              //         controller: commentController,
+              //       ),
+                    // ElevatedButton(
+                    //   onPressed: () {},
+                    //   child: Icon(Icons.send),
+              //       // )
+              //     ],
+              //   ),
+              // ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
