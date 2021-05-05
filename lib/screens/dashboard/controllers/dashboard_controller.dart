@@ -34,8 +34,8 @@ class DashboardController extends GetxController {
     print(details);
   }
 
-  String getInitials() => fullName.value.isNotEmpty
-    ? fullName.value.trim().split(' ').map((l) => l[0]).take(2).join()
+  String getInitials(String displayName) => displayName.isNotEmpty
+    ? displayName.trim().split(' ').map((l) => l[0]).take(2).join()
     : '';
 
 //   String getCurrentPassword(String passw){

@@ -62,7 +62,7 @@ class AuthService {
           fullName: fullName,
           email: email,
           position: position,
-          avatar: avatar,
+          avatar: null,
         );
         Get.offNamed('/congratz');
         return 'USER SIGNED UP';

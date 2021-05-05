@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 
 class PostCard extends StatelessWidget {
   String category;
@@ -11,15 +13,15 @@ class PostCard extends StatelessWidget {
   // var comments = [];
   // int likes;
 
-  PostCard(
-      {this.category,
-      this.image,
-      this.sender,
-      // this.sendTime,
-      this.title,
-      // this.comments,
-      // this.likes
-      });
+  PostCard({
+    this.category,
+    this.image,
+    this.sender,
+    // this.sendTime,
+    this.title,
+    // this.comments,
+    // this.likes
+  });
 
   String timeStampToDate(Timestamp timeStamp) {
     var date = timeStamp.toDate();
@@ -27,6 +29,8 @@ class PostCard extends StatelessWidget {
     String day = DateFormat.Hm().format(date).toString();
     return '$month, $day';
   }
+
+  DashboardController dashboardController = Get.put(DashboardController());
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +46,24 @@ class PostCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  InkWell(
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(image),
-                    ),
-                    onTap: () {},
+                  Container(
+                    child: image != null
+                        ? Container(
+                            child: CircleAvatar(
+
+                              backgroundImage: NetworkImage(
+                                  image),
+                              // child:
+                              // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
+                            ),
+                          )
+                        : Container(
+                            child: CircleAvatar(
+                              child: Text(
+                                dashboardController.getInitials(sender),
+                              ),
+                            ),
+                          ),
                   ),
                 ],
               ),

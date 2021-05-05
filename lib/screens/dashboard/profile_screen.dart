@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uniguide/constants/font_styles.dart';
@@ -29,7 +30,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   
 
- 
+ @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    dashboardController.getCurrentProfile();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               Obx(
                                 () => Container(
-                                  child: dashboardController.avatar.value != ''
+                                  child: dashboardController.avatar.value != null
                                       ? Container(
                                           child: CircleAvatar(
                                             radius: 35.0,
@@ -90,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           child: CircleAvatar(
                                             radius: 35.0,
                                             child: Text(
-                                              dashboardController.getInitials(),
+                                              dashboardController.getInitials(dashboardController.fullName.value),
                                             ),
                                           ),
                                         ),
@@ -193,9 +199,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 }
 
 class ProfileButtonsColumn extends StatelessWidget {
-  const ProfileButtonsColumn({
-    Key key,
-  }) : super(key: key);
+
+  DashboardController dashboardController = Get.put(DashboardController());
+  
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +214,8 @@ class ProfileButtonsColumn extends StatelessWidget {
         ProfileButton(
           avatarImage: 'images/account.png',
           title: 'Personal Data',
-          onTap: () {
+          onTap: () async{
+            await dashboardController.getCurrentProfile();
             Get.to(() => PersonalDataScreen());
           },
         ),

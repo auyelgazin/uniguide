@@ -32,6 +32,13 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
   UploadTask task;
 
   String urlDownload;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    
+  }
   // final picker = ImagePicker();
   // String url;
 
@@ -95,7 +102,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   children: [
                     Obx(
                       () => Container(
-                        child: dashboardController.avatar.value != ''
+                        child: dashboardController.avatar.value != null
                             ? Container(
                                 child: CircleAvatar(
                                   radius: 50.0,
@@ -111,7 +118,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                 child: CircleAvatar(
                                   radius: 50.0,
                                   child: Text(
-                                    dashboardController.getInitials(),
+                                    dashboardController.getInitials(dashboardController.fullName.value),
                                   ),
                                 ),
                               ),
