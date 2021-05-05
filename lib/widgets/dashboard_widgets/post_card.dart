@@ -12,6 +12,7 @@ class PostCard extends StatelessWidget {
   String title;
   // var comments = [];
   // int likes;
+  Function onComment;
 
   PostCard({
     this.category,
@@ -19,6 +20,7 @@ class PostCard extends StatelessWidget {
     this.sender,
     // this.sendTime,
     this.title,
+    this.onComment
     // this.comments,
     // this.likes
   });
@@ -124,6 +126,7 @@ class PostCard extends StatelessWidget {
                                 SizedBox(height: 10),
                                 Row(children: [
                                   InkWell(
+                                    onTap: onComment,
                                     child: Row(children: [
                                       ImageIcon(
                                           AssetImage('images/comment.png')),

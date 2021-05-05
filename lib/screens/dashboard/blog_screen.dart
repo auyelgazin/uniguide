@@ -6,6 +6,7 @@ import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/screens/dashboard/controllers/blog_controller.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/screens/dashboard/models/dashboard_model.dart';
+import 'package:uniguide/screens/utils/post_options.dart';
 import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/widgets/dashboard_widgets/post_card.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
@@ -176,7 +177,9 @@ class _BlogScreenState extends State<BlogScreen> {
           image: documentSnapshot.data()['avatar'],
           sender: documentSnapshot.data()['fullName'],
           title: documentSnapshot.data()['title'],
-
+          onComment: () {
+            PostFunctions().showCommentsPage(context, documentSnapshot, documentSnapshot.data()['title']);
+          },
         );
       }).toList(),
     );
