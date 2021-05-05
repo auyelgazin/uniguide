@@ -43,8 +43,8 @@ class DashboardController extends GetxController {
 //     return password.value;
 //   }
 
-  var initFullName = ''.obs;
-  var initAvatar = ''.obs;
+  // var initFullName = ''.obs;
+  // var initAvatar = ''.obs;
 
 
 }
