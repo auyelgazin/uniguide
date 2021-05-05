@@ -99,7 +99,11 @@ class _BlogScreenState extends State<BlogScreen> {
               ),
             ),
             Container(
-              height: 500,
+              constraints: BoxConstraints(
+                maxHeight: 666,
+                minHeight: 400,
+              ),
+              height: 400,
               child: StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance.collection('posts').snapshots(),
                 builder: (context, snapshot) {
