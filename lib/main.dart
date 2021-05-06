@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:uniguide/constants/language/languages.dart';
 import 'package:uniguide/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uniguide/screens/dashboard/dashboard_helper.dart';
 import 'package:uniguide/screens/onboarding/choose_lang_screen.dart';
 import 'package:uniguide/services/auth_service.dart';
 import 'package:provider/provider.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => FirebaseOperations()),
         ChangeNotifierProvider(create: (_) => Authentication()),
+        ChangeNotifierProvider(create: (_) => DashboardHelper()),
       ],
     );
   }
