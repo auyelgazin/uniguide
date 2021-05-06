@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'blog_screens/blog_screen.dart';
 import 'chat_screen.dart';
@@ -68,7 +70,21 @@ import 'write_screen.dart';
 //   }
 // }
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
+  @override
+  _DashboardScreenState createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+
+  @override
+  void initState() {
+    Provider.of<FirebaseOperations>(context, listen: false).initUserData(context);
+    // TODO: implement initState
+    super.initState();
+    
+  }
+  
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DashboardController>(

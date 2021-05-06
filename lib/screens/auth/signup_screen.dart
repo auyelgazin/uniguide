@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/provider_files/authentication.dart';
+import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/screens/auth/auth_controllers/signup_controller.dart';
 import 'package:uniguide/screens/auth/auth_models/position.dart';
 import 'package:uniguide/services/auth_service.dart';
@@ -237,6 +238,14 @@ class _SignupScreenState extends State<SignupScreen> {
                               //   avatar: '',
                               // );
                               Provider.of<Authentication>(context, listen: false).createAccount(email, password).whenComplete(() {
+                                print('creating USER collection');
+                                Provider.of<FirebaseOperations>(context, listen: false).createUserCollection(context, {
+                                  'useruid': Provider.of<Authentication>(context, listen: false).getUserUid,
+                                  'email': email,
+                                  'fullname': fullName,
+                                  'position': chosenPosition,
+                                });
+                              }).whenComplete(() {
                                 Get.toNamed('/dashboard');
                               });
                             } else {
@@ -258,8 +267,16 @@ class _SignupScreenState extends State<SignupScreen> {
                                 //   avatar: '',
                                 // );
                                 Provider.of<Authentication>(context, listen: false).createAccount(email, password).whenComplete(() {
-                                  Get.toNamed('/dashboard');
+                                  print('creating USER collection');
+                                Provider.of<FirebaseOperations>(context, listen: false).createUserCollection(context, {
+                                  'useruid': Provider.of<Authentication>(context, listen: false).getUserUid,
+                                  'email': email,
+                                  'fullname': fullName,
+                                  'position': chosenPosition,
                                 });
+                              }).whenComplete(() {
+                                Get.toNamed('/dashboard');
+                              });
                             }
                           }
                         } else {

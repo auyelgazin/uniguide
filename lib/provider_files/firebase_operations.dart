@@ -6,10 +6,12 @@ import 'authentication.dart';
 
 class FirebaseOperations with ChangeNotifier {
   UploadTask imageUploadTask;
-  String initUserEmail, initUserName, initUserImage;
-  String get getInitUserName => initUserName;
-  String get getInitUserEmail => initUserEmail;
-  String get getInitUserImage => initUserImage;
+  String initEmail, initFullname, initPosition; //, initUserImage;
+  String get getInitFullname => initFullname;
+  String get geiInitEmail => initEmail;
+  String get getInitPosition => initPosition;
+  // String get getInitUserImage => initUserImage;
+
 
   // Future uploadUserAvatar(BuildContext context) async {
   //   Reference imageReference = FirebaseStorage.instance.ref().child(
@@ -36,18 +38,20 @@ class FirebaseOperations with ChangeNotifier {
   }
 
   Future initUserData(BuildContext context) async {
-    return FirebaseFirestore.instance
+    return await FirebaseFirestore.instance
         .collection('users')
         .doc(Provider.of<Authentication>(context, listen: false).getUserUid)
         .get()
         .then((doc) {
       print('Fetching user data');
-      initUserName = doc.data()['username'];
-      initUserEmail = doc.data()['useremail'];
-      initUserImage = doc.data()['userimage'];
-      print(initUserName);
-      print(initUserEmail);
-      print(initUserImage);
+      initFullname = doc.data()['fullname'];
+      initEmail = doc.data()['email'];
+      initPosition = doc.data()['position'];
+      // initUserImage = doc.data()['userimage'];
+      print(initFullname);
+      print(initEmail);
+      print(initPosition);
+      // print(initUserImage);
       notifyListeners();
     });
   }
