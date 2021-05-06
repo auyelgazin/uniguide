@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/constants/language/languages.dart';
+import 'package:uniguide/provider_files/post_functions.dart';
 import 'package:uniguide/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uniguide/screens/dashboard/dashboard_helper.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
             initScreen == 0 || initScreen == null ? '/chooseLang' : authWrap(),
       ),
       providers: [
+        // ChangeNotifierProvider(create: (_) => PostFunctions()),
         ChangeNotifierProvider(create: (_) => FirebaseOperations()),
         ChangeNotifierProvider(create: (_) => Authentication()),
         ChangeNotifierProvider(create: (_) => DashboardHelper()),

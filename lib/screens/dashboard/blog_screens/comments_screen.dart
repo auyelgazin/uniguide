@@ -116,8 +116,8 @@ class _CommentsScreenState extends State<CommentsScreen> {
           sender: documentSnapshot.data()['fullName'],
           title: documentSnapshot.data()['title'],
           onComment: () {
-            PostFunctions().addComment(context, documentSnapshot.data()['title'], 'opawa');
-            PostFunctions().showCommentsPage(context, documentSnapshot, documentSnapshot.data()['title']);
+            PostOptions().addComment(context, documentSnapshot.data()['title'], 'opawa');
+            PostOptions().showCommentsPage(context, documentSnapshot, documentSnapshot.data()['title']);
             // Get.to(() => CommentsScreen());
           },
         );

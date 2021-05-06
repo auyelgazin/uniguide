@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/widgets/dashboard_widgets/comment_card.dart';
 
-class PostFunctions {
+class PostOptions {
   DashboardController dashboardController = Get.put(DashboardController());
   FirebaseAuth auth = FirebaseAuth.instance;
 
