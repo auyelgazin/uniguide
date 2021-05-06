@@ -42,7 +42,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
       body: Container(
         child: Column(
           children: [
-            PostCard(image: null, sender: 'POST_SENDER', title: 'POST_TITLE', onComment: (){}, category: null,),
+            PostCard( sender: 'POST_SENDER', title: 'POST_TITLE', onComment: (){}, category: null,),
             Text('Начало обсуждения'),
           ],
         ),
@@ -112,7 +112,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
       children: snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
         return PostCard(
           category: documentSnapshot.data()['category'],
-          image: documentSnapshot.data()['avatar'],
+          // image: documentSnapshot.data()['avatar'],
           sender: documentSnapshot.data()['fullName'],
           title: documentSnapshot.data()['title'],
           onComment: () {

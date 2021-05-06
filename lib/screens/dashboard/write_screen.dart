@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:uniguide/provider_files/authentication.dart';
+import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/screens/dashboard/models/topic.dart';
 import 'package:uniguide/services/auth_service.dart';
@@ -42,17 +45,27 @@ class _WriteScreenState extends State<WriteScreen> {
                     Text('Write', style: titleStyle),
                     TextButton(
                       onPressed: () async {
-                        await AuthService(auth: auth).initUserData();
-                        AuthService(auth: auth).uploadPostData(titleController.text, {
+                        Provider.of<FirebaseOperations>(context, listen: false).uploadPostData(titleController.text, {
                           'title': titleController.text,
                           'category': chosenTopic,
-                          'fullName': dc.fullName.value,
-                          'avatar': dc.avatar.value,
-                          'uid': auth.currentUser.uid,
+                          'fullname': Provider.of<FirebaseOperations>(context, listen: false).getInitFullname,
+                          'email': Provider.of<FirebaseOperations>(context, listen: false).geiInitEmail,
+                          'useruid': Provider.of<Authentication>(context, listen: false).getUserUid,
                           'time': Timestamp.now(),
                         }).whenComplete(() {
-                          print('post uploaded');
+                          print('Post uploaded');
                         });
+                        // await AuthService(auth: auth).initUserData();
+                        // AuthService(auth: auth).uploadPostData(titleController.text, {
+                        //   'title': titleController.text,
+                        //   'category': chosenTopic,
+                        //   'fullName': dc.fullName.value,
+                        //   'avatar': dc.avatar.value,
+                        //   'uid': auth.currentUser.uid,
+                        //   'time': Timestamp.now(),
+                        // }).whenComplete(() {
+                        //   print('post uploaded');
+                        // });
 
                         // await FirebaseFirestore.instance
                         //     .collection('blogs')

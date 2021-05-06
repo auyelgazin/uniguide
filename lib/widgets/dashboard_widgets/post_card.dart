@@ -6,7 +6,7 @@ import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart
 
 class PostCard extends StatefulWidget {
   String category;
-  String image;
+  // String image;
   String sender;
   // Timestamp sendTime;
   String title;
@@ -16,7 +16,7 @@ class PostCard extends StatefulWidget {
 
   PostCard({
     this.category,
-    this.image,
+    // this.image,
     this.sender,
     // this.sendTime,
     this.title,
@@ -63,22 +63,27 @@ class _PostCardState extends State<PostCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    child: widget.image != null
-                        ? Container(
-                            child: CircleAvatar(
+                    child: CircleAvatar(
+                      child: Text(
+                        dashboardController.getInitials(widget.sender),
+                      ),
+                    ),
+                    // child: widget.image != null
+                    //     ? Container(
+                    //         child: CircleAvatar(
 
-                              backgroundImage: NetworkImage(widget.image),
-                              // child:
-                              // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
-                            ),
-                          )
-                        : Container(
-                            child: CircleAvatar(
-                              child: Text(
-                                dashboardController.getInitials(widget.sender),
-                              ),
-                            ),
-                          ),
+                    //           backgroundImage: NetworkImage(widget.image),
+                    //           // child:
+                    //           // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
+                    //         ),
+                    //       )
+                    //     : Container(
+                    //         child: CircleAvatar(
+                    //           child: Text(
+                    //             dashboardController.getInitials(widget.sender),
+                    //           ),
+                    //         ),
+                    //       ),
                   ),
                 ],
               ),

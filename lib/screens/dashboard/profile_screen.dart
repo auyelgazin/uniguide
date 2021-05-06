@@ -83,35 +83,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Obx(
-                                () => Container(
-                                  // child: CircleAvatar(
-                                  //   child: Text(dashboardController.getInitials(Provider.of<FirebaseOperations>(context, listen: false).getInitFullname)),
-                                  // ),
-                                  child: dashboardController.avatar.value !=
-                                          null
-                                      ? Container(
-                                          child: CircleAvatar(
-                                            radius: 35.0,
-                                            backgroundImage: NetworkImage(
-                                                dashboardController
-                                                    .avatar.value),
-                                            // child:
-                                            // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
-                                          ),
-                                        )
-                                      : Container(
-                                          child: CircleAvatar(
-                                            radius: 35.0,
-                                            child: Text(
-                                              dashboardController.getInitials(
-                                                  dashboardController
-                                                      .fullName.value),
-                                            ),
-                                          ),
-                                        ),
+                              Container(
+                                child: CircleAvatar(
+                                  radius: 35.0,
+                                  child: Text(
+                                    dashboardController.getInitials(
+                                        Provider.of<FirebaseOperations>(context, listen: false).getInitFullname),
+                                  ),
                                 ),
                               ),
+                              // Obx(
+                              //   () => Container(
+                              //     // child: CircleAvatar(
+                              //     //   child: Text(dashboardController.getInitials(Provider.of<FirebaseOperations>(context, listen: false).getInitFullname)),
+                              //     // ),
+                              //     child: dashboardController.avatar.value !=
+                              //             null
+                              //         ? Container(
+                              //             child: CircleAvatar(
+                              //               radius: 35.0,
+                              //               backgroundImage: NetworkImage(
+                              //                   dashboardController
+                              //                       .avatar.value),
+                              //               // child:
+                              //               // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
+                              //             ),
+                              //           )
+                              //         : Container(
+                              //             child: CircleAvatar(
+                              //               radius: 35.0,
+                              //               child: Text(
+                              //                 dashboardController.getInitials(
+                              //                     dashboardController
+                              //                         .fullName.value),
+                              //               ),
+                              //             ),
+                              //           ),
+                              //   ),
+                              // ),
                               // Obx(
                               //   () => Column(
                               //     children: [
@@ -174,7 +183,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   padding: EdgeInsets.symmetric(horizontal: 20),
                                   child: GestureDetector(
                                     onTap: () {
-                                      Provider.of<Authentication>(context, listen: false).logOutViaEmail();
+                                      Provider.of<Authentication>(context,
+                                              listen: false)
+                                          .logOutViaEmail();
                                       Get.offNamed('/login');
                                       // uploadFile();
                                     },

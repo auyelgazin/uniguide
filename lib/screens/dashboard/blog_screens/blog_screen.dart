@@ -178,13 +178,13 @@ class _BlogScreenState extends State<BlogScreen> {
       children: snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
         return PostCard(
           category: documentSnapshot.data()['category'],
-          image: documentSnapshot.data()['avatar'],
-          sender: documentSnapshot.data()['fullName'],
+          // image: documentSnapshot.data()['avatar'],
+          sender: documentSnapshot.data()['fullname'],
           title: documentSnapshot.data()['title'],
           onComment: () {
             // dc.getCurrentProfile();
-            PostFunctions().addComment(context, documentSnapshot.data()['title'], 'kuka');
-            PostFunctions().showCommentsPage(context, documentSnapshot, documentSnapshot.data()['title']);
+            // PostFunctions().addComment(context, documentSnapshot.data()['title'], 'kuka');
+            // PostFunctions().showCommentsPage(context, documentSnapshot, documentSnapshot.data()['title']);
             // Get.to(() => CommentsScreen());
           },
         );
