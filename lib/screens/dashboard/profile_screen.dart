@@ -1,14 +1,19 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:uniguide/constants/font_styles.dart';
+import 'package:uniguide/provider_files/authentication.dart';
+import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/screens/dashboard/models/user_model.dart';
 import 'package:uniguide/screens/dashboard/profile_screens/language_screen.dart';
 import 'package:uniguide/screens/dashboard/profile_screens/persontal_data_screen.dart';
+import 'package:uniguide/screens/dashboard/profile_screens/profile_helper.dart';
 import 'package:uniguide/screens/dashboard/profile_screens/settings_screen.dart';
 import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/services/firestore_service.dart';
@@ -28,9 +33,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   DashboardController dashboardController = Get.put(DashboardController());
 
-  
-
- @override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -82,12 +85,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               Obx(
                                 () => Container(
-                                  child: dashboardController.avatar.value != null
+                                  // child: CircleAvatar(
+                                  //   child: Text(dashboardController.getInitials(Provider.of<FirebaseOperations>(context, listen: false).getInitFullname)),
+                                  // ),
+                                  child: dashboardController.avatar.value !=
+                                          null
                                       ? Container(
                                           child: CircleAvatar(
                                             radius: 35.0,
-                                            backgroundImage:
-                                                NetworkImage(dashboardController.avatar.value),
+                                            backgroundImage: NetworkImage(
+                                                dashboardController
+                                                    .avatar.value),
                                             // child:
                                             // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
                                           ),
@@ -96,33 +104,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           child: CircleAvatar(
                                             radius: 35.0,
                                             child: Text(
-                                              dashboardController.getInitials(dashboardController.fullName.value),
+                                              dashboardController.getInitials(
+                                                  dashboardController
+                                                      .fullName.value),
                                             ),
                                           ),
                                         ),
                                 ),
                               ),
-                              Obx(
-                                () => Column(
-                                  children: [
-                                    Text(
-                                      dashboardController.fullName.value,
-                                      style: fullNameStyle,
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      dashboardController.email.value,
-                                      style: positionStyle,
-                                    ),
-                                    Text(
-                                      dashboardController.position.value,
-                                      style: positionStyle,
-                                    ),
-                                  ],
-                                ),
-                              )
+                              // Obx(
+                              //   () => Column(
+                              //     children: [
+                              //       Text(
+                              //         dashboardController.fullName.value,
+                              //         style: fullNameStyle,
+                              //       ),
+                              //       SizedBox(
+                              //         height: 8,
+                              //       ),
+                              //       Text(
+                              //         dashboardController.email.value,
+                              //         style: positionStyle,
+                              //       ),
+                              //       Text(
+                              //         dashboardController.position.value,
+                              //         style: positionStyle,
+                              //       ),
+                              //     ],
+                              //   ),
+                              // )
+                              StreamBuilder<DocumentSnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(Provider.of<Authentication>(context,
+                                            listen: false)
+                                        .getUserUid)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  } else {
+                                    return Container(
+                                      child: Provider.of<ProfileHelper>(context,
+                                              listen: false)
+                                          .accountInfo(context, snapshot),
+                                    );
+                                  }
+                                },
+                              ),
                             ],
                           ),
                         ),
@@ -142,7 +174,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   padding: EdgeInsets.symmetric(horizontal: 20),
                                   child: GestureDetector(
                                     onTap: () {
-                                      AuthService(auth: firebaseAuth).signOut();
+                                      Provider.of<Authentication>(context, listen: false).logOutViaEmail();
                                       Get.offNamed('/login');
                                       // uploadFile();
                                     },
@@ -199,9 +231,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 }
 
 class ProfileButtonsColumn extends StatelessWidget {
-
   DashboardController dashboardController = Get.put(DashboardController());
-  
 
   @override
   Widget build(BuildContext context) {
@@ -214,7 +244,7 @@ class ProfileButtonsColumn extends StatelessWidget {
         ProfileButton(
           avatarImage: 'images/account.png',
           title: 'Personal Data',
-          onTap: () async{
+          onTap: () async {
             await dashboardController.getCurrentProfile();
             Get.to(() => PersonalDataScreen());
           },

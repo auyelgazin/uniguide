@@ -20,6 +20,7 @@ class DashboardHelper with ChangeNotifier{
       items: [
         CustomNavigationBarItem(icon: Icon(Icons.home)),
         CustomNavigationBarItem(icon: Icon(Icons.chat)),
+        CustomNavigationBarItem(icon: Icon(Icons.person)),
         // CustomNavigationBarItem(icon: CircleAvatar(child: Text(dc.getInitials(Provider.of<FirebaseOperations>(context, listen: false).getInitFullname),))),
         CustomNavigationBarItem(icon: Icon(Icons.note_add)),
       ],
