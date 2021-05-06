@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 
-class PostCard extends StatelessWidget {
+class PostCard extends StatefulWidget {
   String category;
   String image;
   String sender;
@@ -25,6 +25,11 @@ class PostCard extends StatelessWidget {
     // this.likes
   });
 
+  @override
+  _PostCardState createState() => _PostCardState();
+}
+
+class _PostCardState extends State<PostCard> {
   String timeStampToDate(Timestamp timeStamp) {
     var date = timeStamp.toDate();
     String month = DateFormat.d().add_MMM().format(date).toString();
@@ -32,7 +37,16 @@ class PostCard extends StatelessWidget {
     return '$month, $day';
   }
 
+  
+
   DashboardController dashboardController = Get.put(DashboardController());
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   dashboardController.getCurrentProfile();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -49,12 +63,11 @@ class PostCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    child: image != null
+                    child: widget.image != null
                         ? Container(
                             child: CircleAvatar(
 
-                              backgroundImage: NetworkImage(
-                                  image),
+                              backgroundImage: NetworkImage(widget.image),
                               // child:
                               // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
                             ),
@@ -62,7 +75,7 @@ class PostCard extends StatelessWidget {
                         : Container(
                             child: CircleAvatar(
                               child: Text(
-                                dashboardController.getInitials(sender),
+                                dashboardController.getInitials(widget.sender),
                               ),
                             ),
                           ),
@@ -97,7 +110,7 @@ class PostCard extends StatelessWidget {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          sender,
+                                          widget.sender,
                                           style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600),
@@ -116,7 +129,7 @@ class PostCard extends StatelessWidget {
                                     ),
                                     SizedBox(height: 5),
                                     Text(
-                                      title,
+                                      widget.title,
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w400),
@@ -126,7 +139,7 @@ class PostCard extends StatelessWidget {
                                 SizedBox(height: 10),
                                 Row(children: [
                                   InkWell(
-                                    onTap: onComment,
+                                    onTap: widget.onComment,
                                     child: Row(children: [
                                       ImageIcon(
                                           AssetImage('images/comment.png')),

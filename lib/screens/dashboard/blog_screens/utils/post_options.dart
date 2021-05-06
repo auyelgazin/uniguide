@@ -34,12 +34,14 @@ class PostFunctions {
         .doc(comment)
         .set({
       'comment': comment,
-      'fullName': dashboardController.fullName.value,
-      'avatar': dashboardController.avatar.value,
+      'fullName': dashboardController.getFullName(),
+      'avatar': dashboardController.getAvatar(),
       'uid': auth.currentUser.uid,
       'time': Timestamp.now(),
     });
   }
+
+  
 
   showCommentsPage(
       BuildContext context, DocumentSnapshot snapshot, String docID) {

@@ -12,7 +12,6 @@ class DashboardController extends GetxController {
       getCurrentProfile();
     }
     update();
-    
   }
 
   var fullName = ''.obs;
@@ -30,13 +29,37 @@ class DashboardController extends GetxController {
       email.value = details[1];
       position.value = details[2];
       avatar.value = details[3];
+    } else {
+      print('details == null');
     }
     print(details);
   }
 
   String getInitials(String displayName) => displayName.isNotEmpty
-    ? displayName.trim().split(' ').map((l) => l[0]).take(2).join()
-    : '';
+      ? displayName.trim().split(' ').map((l) => l[0]).take(2).join()
+      : '';
+
+  Future getFullName() async {
+    dynamic details = await FirestoreService(uid: firebaseAuth.currentUser.uid)
+        .getCurrentUserData();
+
+    if (details != null) {
+      return details[0].toString();
+    } else {
+      print("can't get fullName");
+    }
+  }
+
+  Future getAvatar() async {
+    dynamic details = await FirestoreService(uid: firebaseAuth.currentUser.uid)
+        .getCurrentUserData();
+
+    if (details != null) {
+      return details[3].toString();
+    } else {
+      print("can't get fullName");
+    }
+  }
 
 //   String getCurrentPassword(String passw){
 //     password.value = passw;
@@ -45,6 +68,5 @@ class DashboardController extends GetxController {
 
   // var initFullName = ''.obs;
   // var initAvatar = ''.obs;
-
 
 }

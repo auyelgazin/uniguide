@@ -4,14 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/screens/dashboard/blog_screens/comments_screen.dart';
+import 'package:uniguide/screens/dashboard/blog_screens/utils/post_options.dart';
 import 'package:uniguide/screens/dashboard/controllers/blog_controller.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/screens/dashboard/models/dashboard_model.dart';
-import 'package:uniguide/screens/utils/post_options.dart';
+
 import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/widgets/dashboard_widgets/post_card.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
 import 'package:intl/intl.dart';
+
+DashboardController dc = Get.put(DashboardController());
 
 class BlogScreen extends StatefulWidget {
   @override
@@ -22,7 +25,7 @@ class _BlogScreenState extends State<BlogScreen> {
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   BlogController controller = BlogController();
-  DashboardController dc = Get.put(DashboardController());
+  
 
   @override
   void initState() {
@@ -179,7 +182,8 @@ class _BlogScreenState extends State<BlogScreen> {
           sender: documentSnapshot.data()['fullName'],
           title: documentSnapshot.data()['title'],
           onComment: () {
-            PostFunctions().addComment(context, documentSnapshot.data()['title'], 'opawa');
+            // dc.getCurrentProfile();
+            PostFunctions().addComment(context, documentSnapshot.data()['title'], 'kuka');
             PostFunctions().showCommentsPage(context, documentSnapshot, documentSnapshot.data()['title']);
             // Get.to(() => CommentsScreen());
           },

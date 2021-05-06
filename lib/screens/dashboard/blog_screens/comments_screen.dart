@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/constants/font_styles.dart';
-import 'package:uniguide/screens/utils/post_options.dart';
+import 'package:uniguide/screens/dashboard/blog_screens/utils/post_options.dart';
+
 import 'package:uniguide/widgets/dashboard_widgets/comment_card.dart';
+import 'package:uniguide/widgets/dashboard_widgets/post_card.dart';
 
 class CommentsScreen extends StatefulWidget {
   @override
@@ -35,6 +37,15 @@ class _CommentsScreenState extends State<CommentsScreen> {
         ),
         backgroundColor: Colors.white,
         elevation: 0,
+      ),
+
+      body: Container(
+        child: Column(
+          children: [
+            PostCard(image: null, sender: 'POST_SENDER', title: 'POST_TITLE', onComment: (){}, category: null,),
+            Text('Начало обсуждения'),
+          ],
+        ),
       ),
       // body: showCommentsPage(context, snapshot, docID),
       // body: PostFunctions().showCommentsPage(context, snapshot, docID),
@@ -93,6 +104,24 @@ class _CommentsScreenState extends State<CommentsScreen> {
           // ),
         ],
       ),
+    );
+  }
+  Widget loadComments(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+
+    return ListView(
+      children: snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
+        return PostCard(
+          category: documentSnapshot.data()['category'],
+          image: documentSnapshot.data()['avatar'],
+          sender: documentSnapshot.data()['fullName'],
+          title: documentSnapshot.data()['title'],
+          onComment: () {
+            PostFunctions().addComment(context, documentSnapshot.data()['title'], 'opawa');
+            PostFunctions().showCommentsPage(context, documentSnapshot, documentSnapshot.data()['title']);
+            // Get.to(() => CommentsScreen());
+          },
+        );
+      }).toList(),
     );
   }
 }
