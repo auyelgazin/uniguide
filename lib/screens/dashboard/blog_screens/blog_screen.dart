@@ -2,7 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:uniguide/constants/font_styles.dart';
+import 'package:uniguide/provider_files/authentication.dart';
+import 'package:uniguide/provider_files/post_functions.dart';
 import 'package:uniguide/screens/dashboard/blog_screens/comments_screen.dart';
 import 'package:uniguide/screens/dashboard/blog_screens/utils/post_options.dart';
 import 'package:uniguide/screens/dashboard/controllers/blog_controller.dart';
@@ -25,7 +28,8 @@ class _BlogScreenState extends State<BlogScreen> {
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   BlogController controller = BlogController();
-  
+
+  TextEditingController commentC = TextEditingController();
 
   @override
   void initState() {
@@ -59,45 +63,50 @@ class _BlogScreenState extends State<BlogScreen> {
                         color: Color(0xFF232195),
                         iconSize: 20,
                         onPressed: () async {
-                          Get.bottomSheet(Container(
-                            height: 500,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(20.0),
-                                  topLeft: Radius.circular(20.0)),
-                              color: Colors.white,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0, vertical: 40),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  WideButtonBox(
-                                    ElevatedButton(
-                                      child: Text(
-                                        'Choose',
-                                        style: TextStyle(
-                                            color: Color(0xFF141619),
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      onPressed: () {
-                                        Get.back();
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Color(0xFFB7C1F4),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ));
+                          Provider.of<Authentication>(context,
+                                              listen: false)
+                                          .logOutViaEmail();
+                          // - - - - DONT DELETE - - - -
+
+                          // Get.bottomSheet(Container(
+                          //   height: 500,
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.only(
+                          //         topRight: Radius.circular(20.0),
+                          //         topLeft: Radius.circular(20.0)),
+                          //     color: Colors.white,
+                          //   ),
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.symmetric(
+                          //         horizontal: 20.0, vertical: 40),
+                          //     child: Column(
+                          //       mainAxisAlignment: MainAxisAlignment.end,
+                          //       children: [
+                          //         WideButtonBox(
+                          //           ElevatedButton(
+                          //             child: Text(
+                          //               'Choose',
+                          //               style: TextStyle(
+                          //                   color: Color(0xFF141619),
+                          //                   fontSize: 16,
+                          //                   fontWeight: FontWeight.w500),
+                          //             ),
+                          //             onPressed: () {
+                          //               Get.back();
+                          //             },
+                          //             style: ElevatedButton.styleFrom(
+                          //               primary: Color(0xFFB7C1F4),
+                          //               shape: RoundedRectangleBorder(
+                          //                 borderRadius:
+                          //                     BorderRadius.circular(10),
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         )
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ));
                         }),
                   )
                 ],
@@ -110,18 +119,17 @@ class _BlogScreenState extends State<BlogScreen> {
               ),
               height: 400,
               child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+                stream:
+                    FirebaseFirestore.instance.collection('posts').snapshots(),
                 builder: (context, snapshot) {
-                  if(snapshot.connectionState == ConnectionState.waiting){
+                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
                       child: CircularProgressIndicator(
                         backgroundColor: Colors.black,
                       ),
                     );
-                  }
-                  else {
+                  } else {
                     return loadPosts(context, snapshot);
-
                   }
                 },
               ),
@@ -172,8 +180,8 @@ class _BlogScreenState extends State<BlogScreen> {
     );
   }
 
-  Widget loadPosts(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-
+  Widget loadPosts(
+      BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     return ListView(
       children: snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
         return PostCard(
@@ -182,6 +190,61 @@ class _BlogScreenState extends State<BlogScreen> {
           sender: documentSnapshot.data()['fullname'],
           title: documentSnapshot.data()['title'],
           onComment: () {
+            // Provider.of<PostFunctions>(context, listen: false)
+            //     .showComments(context, documentSnapshot, documentSnapshot.data()['title']);
+            // Get.to(() => CommentsScreen());
+
+            Get.to(
+              () => Scaffold(
+                appBar: AppBar(
+                  title: Text('comments secwn'),
+                ),
+                body: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Начало обсуждения'),
+                      Container(
+                        height: 400,
+                        child:
+                            Provider.of<PostFunctions>(context, listen: false)
+                                .showComments(context, documentSnapshot,
+                                    documentSnapshot.data()['title']),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 4,
+                              child: TextField(
+                                controller: commentC,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  print('adding comment');
+                                  Provider.of<PostFunctions>(context,
+                                          listen: false)
+                                      .addComment(
+                                          context,
+                                          documentSnapshot.data()['title'],
+                                          commentC.text);
+                                },
+                                child: Text('->'),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+
             // dc.getCurrentProfile();
             // PostFunctions().addComment(context, documentSnapshot.data()['title'], 'kuka');
             // PostFunctions().showCommentsPage(context, documentSnapshot, documentSnapshot.data()['title']);

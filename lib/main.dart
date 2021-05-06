@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
             initScreen == 0 || initScreen == null ? '/chooseLang' : authWrap(),
       ),
       providers: [
-        // ChangeNotifierProvider(create: (_) => PostFunctions()),
+        ChangeNotifierProvider(create: (_) => PostFunctions()),
         ChangeNotifierProvider(create: (_) => FirebaseOperations()),
         ChangeNotifierProvider(create: (_) => Authentication()),
         ChangeNotifierProvider(create: (_) => DashboardHelper()),

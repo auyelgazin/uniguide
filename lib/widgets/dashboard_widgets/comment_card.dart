@@ -6,14 +6,14 @@ import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart
 
 class CommentCard extends StatelessWidget {
 
-  String image;
+  // String image;
   String sender;
   // Timestamp sendTime;
   String comment;
 
 
   CommentCard({
-    this.image,
+    // this.image,
     this.sender,
     // this.sendTime,
     this.comment,
@@ -43,25 +43,28 @@ class CommentCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    child: image != null
-                        ? Container(
-                            child: CircleAvatar(
+                  CircleAvatar(
+                    child: Text('ess'),
+                  )
+                  // Container(
+                  //   child: image != null
+                  //       ? Container(
+                  //           child: CircleAvatar(
 
-                              backgroundImage: NetworkImage(
-                                  image),
-                              // child:
-                              // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
-                            ),
-                          )
-                        : Container(
-                            child: CircleAvatar(
-                              child: Text(
-                                dashboardController.getInitials(sender),
-                              ),
-                            ),
-                          ),
-                  ),
+                  //             backgroundImage: NetworkImage(
+                  //                 image),
+                  //             // child:
+                  //             // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
+                  //           ),
+                  //         )
+                  //       : Container(
+                  //           child: CircleAvatar(
+                  //             child: Text(
+                  //               dashboardController.getInitials(sender),
+                  //             ),
+                  //           ),
+                  //         ),
+                  // ),
                 ],
               ),
             ),

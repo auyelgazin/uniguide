@@ -74,7 +74,7 @@ class PostOptions {
                               .map((DocumentSnapshot documentSnapshot) {
                         return CommentCard(
                           sender: documentSnapshot.data()['fullName'],
-                          image: documentSnapshot.data()['avatar'],
+                          // image: documentSnapshot.data()['avatar'],
                           comment: documentSnapshot.data()['comment'],
                         );
                       }).toList());
