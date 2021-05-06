@@ -13,6 +13,9 @@ class PostCard extends StatefulWidget {
   // var comments = [];
   // int likes;
   Function onComment;
+  Function onLike;
+
+  Widget likes;
 
   PostCard({
     this.category,
@@ -20,7 +23,9 @@ class PostCard extends StatefulWidget {
     this.sender,
     // this.sendTime,
     this.title,
-    this.onComment
+    this.onComment,
+    this.onLike,
+    this.likes,
     // this.comments,
     // this.likes
   });
@@ -36,8 +41,6 @@ class _PostCardState extends State<PostCard> {
     String day = DateFormat.Hm().format(date).toString();
     return '$month, $day';
   }
-
-  
 
   DashboardController dashboardController = Get.put(DashboardController());
 
@@ -164,6 +167,7 @@ class _PostCardState extends State<PostCard> {
                                     width: 30,
                                   ),
                                   InkWell(
+                                    onTap: widget.onLike,
                                     child: Row(
                                       children: [
                                         ImageIcon(
@@ -172,13 +176,7 @@ class _PostCardState extends State<PostCard> {
                                         SizedBox(
                                           width: 6,
                                         ),
-                                        Text(
-                                          '1040',
-                                          style: TextStyle(
-                                              color: Color(0xFF687684),
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400),
-                                        )
+                                        widget.likes,
                                       ],
                                     ),
                                   )

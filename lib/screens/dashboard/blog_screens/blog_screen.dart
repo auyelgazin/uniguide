@@ -63,9 +63,9 @@ class _BlogScreenState extends State<BlogScreen> {
                         color: Color(0xFF232195),
                         iconSize: 20,
                         onPressed: () async {
-                          Provider.of<Authentication>(context,
-                                              listen: false)
-                                          .logOutViaEmail();
+                          Provider.of<Authentication>(context, listen: false)
+                              .logOutViaEmail();
+                          Get.offNamed('/login');
                           // - - - - DONT DELETE - - - -
 
                           // Get.bottomSheet(Container(
@@ -185,72 +185,107 @@ class _BlogScreenState extends State<BlogScreen> {
     return ListView(
       children: snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
         return PostCard(
-          category: documentSnapshot.data()['category'],
-          // image: documentSnapshot.data()['avatar'],
-          sender: documentSnapshot.data()['fullname'],
-          title: documentSnapshot.data()['title'],
-          onComment: () {
-            // Provider.of<PostFunctions>(context, listen: false)
-            //     .showComments(context, documentSnapshot, documentSnapshot.data()['title']);
-            // Get.to(() => CommentsScreen());
+            category: documentSnapshot.data()['category'],
+            // image: documentSnapshot.data()['avatar'],
+            sender: documentSnapshot.data()['fullname'],
+            title: documentSnapshot.data()['title'],
+            likes: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('posts')
+                  .doc(documentSnapshot.data()['title'])
+                  .collection('likes')
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  return Text(
+                    snapshot.data.docs.length.toString(),
+                    style: TextStyle(
+                        color: Color(0xFF687684),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400),
+                  );
+                }
+              },
+            ),
+            onComment: () {
+              // Provider.of<PostFunctions>(context, listen: false)
+              //     .showComments(context, documentSnapshot, documentSnapshot.data()['title']);
+              // Get.to(() => CommentsScreen());
 
-            Get.to(
-              () => Scaffold(
-                appBar: AppBar(
-                  title: Text('comments secwn'),
-                ),
-                body: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Начало обсуждения'),
-                      Container(
-                        height: 400,
-                        child:
-                            Provider.of<PostFunctions>(context, listen: false)
+              Get.to(
+                () => Scaffold(
+                  appBar: AppBar(
+                    title: Text('comments secwn'),
+                  ),
+                  body: SingleChildScrollView(
+                    child: Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          PostCard(
+                            category: documentSnapshot.data()['category'],
+                            // image: documentSnapshot.data()['avatar'],
+                            sender: documentSnapshot.data()['fullname'],
+                            title: documentSnapshot.data()['title'],
+                          ),
+                          Text('Начало обсуждения'),
+                          Container(
+                            height: 300,
+                            child: Provider.of<PostFunctions>(context,
+                                    listen: false)
                                 .showComments(context, documentSnapshot,
                                     documentSnapshot.data()['title']),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 4,
-                              child: TextField(
-                                controller: commentC,
-                              ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 4,
+                                  child: TextField(
+                                    controller: commentC,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      print('adding comment');
+                                      Provider.of<PostFunctions>(context,
+                                              listen: false)
+                                          .addComment(
+                                              context,
+                                              documentSnapshot.data()['title'],
+                                              commentC.text);
+                                    },
+                                    child: Text('->'),
+                                  ),
+                                )
+                              ],
                             ),
-                            Expanded(
-                              flex: 1,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  print('adding comment');
-                                  Provider.of<PostFunctions>(context,
-                                          listen: false)
-                                      .addComment(
-                                          context,
-                                          documentSnapshot.data()['title'],
-                                          commentC.text);
-                                },
-                                child: Text('->'),
-                              ),
-                            )
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            );
+              );
 
-            // dc.getCurrentProfile();
-            // PostFunctions().addComment(context, documentSnapshot.data()['title'], 'kuka');
-            // PostFunctions().showCommentsPage(context, documentSnapshot, documentSnapshot.data()['title']);
-            // Get.to(() => CommentsScreen());
-          },
-        );
+              // dc.getCurrentProfile();
+              // PostFunctions().addComment(context, documentSnapshot.data()['title'], 'kuka');
+              // PostFunctions().showCommentsPage(context, documentSnapshot, documentSnapshot.data()['title']);
+              // Get.to(() => CommentsScreen());
+            },
+            onLike: () {
+              print('Liking post...');
+              Provider.of<PostFunctions>(context, listen: false).addLike(
+                  context,
+                  documentSnapshot.data()['title'],
+                  Provider.of<Authentication>(context, listen: false)
+                      .getUserUid);
+            });
       }).toList(),
     );
   }
