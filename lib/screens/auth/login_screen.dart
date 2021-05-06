@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:get/get.dart';
+import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/screens/auth/auth_controllers/login_controller.dart';
 import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_button.dart';
@@ -104,14 +106,13 @@ class LoginScreen extends StatelessWidget {
                     AuthButton(
                       'login'.tr,
                       () async {
-                        
-
-                        
-                          await AuthService(auth: firebaseAuth).Login(
-                              email: emailController.text,
-                              password: passwordController.text);
-                            
-                        
+                        Provider.of<Authentication>(context, listen: false).logIntoAccount(emailController.text, passwordController.text).whenComplete((){
+                          print('User logged in');
+                          Get.toNamed('/dashboard');
+                        });
+                        // await AuthService(auth: firebaseAuth).Login(
+                        //     email: emailController.text,
+                        //     password: passwordController.text);
                       },
                     ),
                   ),

@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:get/get.dart';
+import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/screens/auth/auth_controllers/signup_controller.dart';
 import 'package:uniguide/screens/auth/auth_models/position.dart';
 import 'package:uniguide/services/auth_service.dart';
@@ -227,13 +229,16 @@ class _SignupScreenState extends State<SignupScreen> {
                               controller.emptyAgain();
 
                               print('authed stud');
-                              await AuthService(auth: firebaseAuth).Signup(
-                                email: emailController.text,
-                                password: passwordController.text,
-                                fullName: fullName,
-                                position: chosenPosition,
-                                avatar: '',
-                              );
+                              // await AuthService(auth: firebaseAuth).Signup(
+                              //   email: emailController.text,
+                              //   password: passwordController.text,
+                              //   fullName: fullName,
+                              //   position: chosenPosition,
+                              //   avatar: '',
+                              // );
+                              Provider.of<Authentication>(context, listen: false).createAccount(email, password).whenComplete(() {
+                                Get.toNamed('/dashboard');
+                              });
                             } else {
                               controller.useSDUmail();
                               
@@ -245,13 +250,16 @@ class _SignupScreenState extends State<SignupScreen> {
                               controller.emptyAgain();
 
                               print('authed teacher & stuff');
-                                await AuthService(auth: firebaseAuth).Signup(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                  fullName: fullName,
-                                  position: chosenPosition,
-                                  avatar: '',
-                                );
+                                // await AuthService(auth: firebaseAuth).Signup(
+                                //   email: emailController.text,
+                                //   password: passwordController.text,
+                                //   fullName: fullName,
+                                //   position: chosenPosition,
+                                //   avatar: '',
+                                // );
+                                Provider.of<Authentication>(context, listen: false).createAccount(email, password).whenComplete(() {
+                                  Get.toNamed('/dashboard');
+                                });
                             }
                           }
                         } else {

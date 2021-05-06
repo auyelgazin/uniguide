@@ -9,6 +9,9 @@ import 'package:uniguide/screens/onboarding/choose_lang_screen.dart';
 import 'package:uniguide/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
+import 'provider_files/authentication.dart';
+import 'provider_files/firebase_operations.dart';
+
 int initScreen;
 
 Future<void> main() async {
@@ -26,21 +29,27 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      // Localization based properties:
-      locale: Locale('en', 'US'),
-      fallbackLocale: Locale('en', 'US'),
-      translations: Languages(),
+    return MultiProvider(
+      child: GetMaterialApp(
+        // Localization based properties:
+        locale: Locale('en', 'US'),
+        fallbackLocale: Locale('en', 'US'),
+        translations: Languages(),
 
-      title: 'UniGuide',
-      theme: ThemeData(
-        fontFamily: 'SFPro',
-        primarySwatch: Colors.blue,
-        unselectedWidgetColor: Color(0xFF232195),
+        title: 'UniGuide',
+        theme: ThemeData(
+          fontFamily: 'SFPro',
+          primarySwatch: Colors.blue,
+          unselectedWidgetColor: Color(0xFF232195),
+        ),
+        getPages: AppRoutes.list,
+        initialRoute:
+            initScreen == 0 || initScreen == null ? '/chooseLang' : authWrap(),
       ),
-      getPages: AppRoutes.list,
-      initialRoute:
-          initScreen == 0 || initScreen == null ? '/chooseLang' : authWrap(),
+      providers: [
+        ChangeNotifierProvider(create: (_) => FirebaseOperations()),
+        ChangeNotifierProvider(create: (_) => Authentication()),
+      ],
     );
   }
 }
