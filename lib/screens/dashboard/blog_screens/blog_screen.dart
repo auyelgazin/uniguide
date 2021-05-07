@@ -7,7 +7,7 @@ import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/post_functions.dart';
 import 'package:uniguide/screens/dashboard/blog_screens/comments_screen.dart';
-import 'package:uniguide/screens/dashboard/blog_screens/utils/post_options.dart';
+
 import 'package:uniguide/screens/dashboard/controllers/blog_controller.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/screens/dashboard/models/dashboard_model.dart';
@@ -314,7 +314,24 @@ class _BlogScreenState extends State<BlogScreen> {
               // PostFunctions().showCommentsPage(context, documentSnapshot, documentSnapshot.data()['title']);
               // Get.to(() => CommentsScreen());
             },
-            onLike: () {
+            onLikes: () {
+              Get.to(
+                () => Scaffold(
+                  appBar: AppBar(
+                    title: Text('likes secwn'),
+                  ),
+                  body: Container(
+                    height: 400,
+                    child: Provider.of<PostFunctions>(context, listen: false)
+                      .showLikes(
+                          context,
+                          documentSnapshot.data()['title'],
+                      ),
+                  ),
+                ),
+              );
+            },
+            onLikeButton: () {
               print('Liking post...');
               Provider.of<PostFunctions>(context, listen: false).addLike(
                   context,

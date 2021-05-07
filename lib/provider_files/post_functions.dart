@@ -73,4 +73,31 @@ class PostFunctions with ChangeNotifier {
           }
         });
   }
+
+  showLikes(BuildContext context, String docId) {
+    return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('posts')
+            .doc(docId)
+            .collection('likes')
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return new ListView(
+              children: snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
+                return ListTile(
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(documentSnapshot.data()['avatar']),
+                  ),
+                  title: Text(documentSnapshot.data()['fullname']),
+                );
+              }).toList()
+            );
+          }
+        });
+  }
 }

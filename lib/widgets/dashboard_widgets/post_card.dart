@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 
 class PostCard extends StatefulWidget {
@@ -14,7 +15,8 @@ class PostCard extends StatefulWidget {
   // var comments = [];
   // int likes;
   Function onComment;
-  Function onLike;
+  Function onLikeButton;
+  Function onLikes;
 
   Widget likes;
 
@@ -26,7 +28,8 @@ class PostCard extends StatefulWidget {
     // this.sendTime,
     this.title,
     this.onComment,
-    this.onLike,
+    this.onLikeButton,
+    this.onLikes,
     this.likes,
     // this.comments,
     // this.likes
@@ -169,19 +172,21 @@ class _PostCardState extends State<PostCard> {
                                   SizedBox(
                                     width: 30,
                                   ),
-                                  InkWell(
-                                    onTap: widget.onLike,
-                                    child: Row(
-                                      children: [
-                                        ImageIcon(
+                                  Row(
+                                    children: [
+                                      InkWell(
+                                        onTap: widget.onLikeButton,
+                                        child: ImageIcon(
                                           AssetImage('images/like.png'),
                                         ),
-                                        SizedBox(
-                                          width: 6,
-                                        ),
-                                        widget.likes,
-                                      ],
-                                    ),
+                                      ),
+                                      SizedBox(
+                                        width: 6,
+                                      ),
+                                      InkWell(
+                                          onTap: widget.onLikes,
+                                          child: widget.likes),
+                                    ],
                                   )
                                 ])
                               ],
