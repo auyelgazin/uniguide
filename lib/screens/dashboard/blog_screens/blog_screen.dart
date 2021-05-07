@@ -14,6 +14,7 @@ import 'package:uniguide/screens/dashboard/models/dashboard_model.dart';
 
 import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/widgets/dashboard_widgets/post_card.dart';
+import 'package:uniguide/widgets/dashboard_widgets/post_in_comment_card.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
 import 'package:intl/intl.dart';
 
@@ -41,77 +42,72 @@ class _BlogScreenState extends State<BlogScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: Text(
+          'Blog',
+          style: titleStyle,
+        ),
+        actions: [
+          IconButton(
+              icon: ImageIcon(
+                AssetImage('images/filter.png'),
+              ),
+              color: Color(0xFF232195),
+              iconSize: 20,
+              onPressed: () async {
+                Provider.of<Authentication>(context, listen: false)
+                    .logOutViaEmail();
+                Get.offNamed('/login');
+                // - - - - DONT DELETE - - - -
+
+                // Get.bottomSheet(Container(
+                //   height: 500,
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.only(
+                //         topRight: Radius.circular(20.0),
+                //         topLeft: Radius.circular(20.0)),
+                //     color: Colors.white,
+                //   ),
+                //   child: Padding(
+                //     padding: const EdgeInsets.symmetric(
+                //         horizontal: 20.0, vertical: 40),
+                //     child: Column(
+                //       mainAxisAlignment: MainAxisAlignment.end,
+                //       children: [
+                //         WideButtonBox(
+                //           ElevatedButton(
+                //             child: Text(
+                //               'Choose',
+                //               style: TextStyle(
+                //                   color: Color(0xFF141619),
+                //                   fontSize: 16,
+                //                   fontWeight: FontWeight.w500),
+                //             ),
+                //             onPressed: () {
+                //               Get.back();
+                //             },
+                //             style: ElevatedButton.styleFrom(
+                //               primary: Color(0xFFB7C1F4),
+                //               shape: RoundedRectangleBorder(
+                //                 borderRadius:
+                //                     BorderRadius.circular(10),
+                //               ),
+                //             ),
+                //           ),
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                // ));
+              }),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Text('Blogs', style: titleStyle),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20.0),
-                    child: IconButton(
-                        icon: ImageIcon(
-                          AssetImage('images/filter.png'),
-                        ),
-                        color: Color(0xFF232195),
-                        iconSize: 20,
-                        onPressed: () async {
-                          Provider.of<Authentication>(context, listen: false)
-                              .logOutViaEmail();
-                          Get.offNamed('/login');
-                          // - - - - DONT DELETE - - - -
-
-                          // Get.bottomSheet(Container(
-                          //   height: 500,
-                          //   decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.only(
-                          //         topRight: Radius.circular(20.0),
-                          //         topLeft: Radius.circular(20.0)),
-                          //     color: Colors.white,
-                          //   ),
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.symmetric(
-                          //         horizontal: 20.0, vertical: 40),
-                          //     child: Column(
-                          //       mainAxisAlignment: MainAxisAlignment.end,
-                          //       children: [
-                          //         WideButtonBox(
-                          //           ElevatedButton(
-                          //             child: Text(
-                          //               'Choose',
-                          //               style: TextStyle(
-                          //                   color: Color(0xFF141619),
-                          //                   fontSize: 16,
-                          //                   fontWeight: FontWeight.w500),
-                          //             ),
-                          //             onPressed: () {
-                          //               Get.back();
-                          //             },
-                          //             style: ElevatedButton.styleFrom(
-                          //               primary: Color(0xFFB7C1F4),
-                          //               shape: RoundedRectangleBorder(
-                          //                 borderRadius:
-                          //                     BorderRadius.circular(10),
-                          //               ),
-                          //             ),
-                          //           ),
-                          //         )
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ));
-                        }),
-                  )
-                ],
-              ),
-            ),
             Container(
               constraints: BoxConstraints(
                 maxHeight: 666,
@@ -187,6 +183,7 @@ class _BlogScreenState extends State<BlogScreen> {
         return PostCard(
             category: documentSnapshot.data()['category'],
             // image: documentSnapshot.data()['avatar'],
+            avatar: documentSnapshot.data()['avatar'],
             sender: documentSnapshot.data()['fullname'],
             title: documentSnapshot.data()['title'],
             likes: StreamBuilder<QuerySnapshot>(
@@ -224,12 +221,51 @@ class _BlogScreenState extends State<BlogScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          PostCard(
+                          PostInCommentCard(
                             category: documentSnapshot.data()['category'],
-                            // image: documentSnapshot.data()['avatar'],
+                            avatar: documentSnapshot.data()['avatar'],
                             sender: documentSnapshot.data()['fullname'],
                             title: documentSnapshot.data()['title'],
+                            onLike: () {
+                              print('Liking post...');
+                              Provider.of<PostFunctions>(context, listen: false)
+                                  .addLike(
+                                      context,
+                                      documentSnapshot.data()['title'],
+                                      Provider.of<Authentication>(context,
+                                              listen: false)
+                                          .getUserUid);
+                            },
+                            likes: StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('posts')
+                                  .doc(documentSnapshot.data()['title'])
+                                  .collection('likes')
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                } else {
+                                  return Text(
+                                    snapshot.data.docs.length.toString(),
+                                    style: TextStyle(
+                                        color: Color(0xFF687684),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400),
+                                  );
+                                }
+                              },
+                            ),
                           ),
+                          // PostCard(
+                          //   category: documentSnapshot.data()['category'],
+                          //   avatar: documentSnapshot.data()['avatar'],
+
+                          //   sender: documentSnapshot.data()['fullname'],
+                          //   title: documentSnapshot.data()['title'],
+                          // ),
                           Text('Начало обсуждения'),
                           Container(
                             height: 300,

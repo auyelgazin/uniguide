@@ -49,6 +49,7 @@ class _WriteScreenState extends State<WriteScreen> {
                           'title': titleController.text,
                           'category': chosenTopic,
                           'fullname': Provider.of<FirebaseOperations>(context, listen: false).getInitFullname,
+                          'avatar': Provider.of<FirebaseOperations>(context, listen: false).getInitAvatar,
                           'email': Provider.of<FirebaseOperations>(context, listen: false).geiInitEmail,
                           'useruid': Provider.of<Authentication>(context, listen: false).getUserUid,
                           'time': Timestamp.now(),

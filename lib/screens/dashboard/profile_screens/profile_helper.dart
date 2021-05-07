@@ -13,6 +13,10 @@ class ProfileHelper with ChangeNotifier {
   Widget accountInfo(BuildContext context, dynamic snapshot) {
     return Column(
       children: [
+        CircleAvatar(
+          radius: 35,
+          backgroundImage: NetworkImage(snapshot.data.data()['avatar']),
+        ),
         Text(
           snapshot.data.data()['fullname'],
           style: fullNameStyle,

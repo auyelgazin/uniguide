@@ -6,8 +6,9 @@ import 'authentication.dart';
 
 class FirebaseOperations with ChangeNotifier {
   UploadTask imageUploadTask;
-  String initEmail, initFullname, initPosition; //, initUserImage;
+  String initEmail, initAvatar, initFullname, initPosition; //, initUserImage;
   String get getInitFullname => initFullname;
+  String get getInitAvatar => initAvatar;
   String get geiInitEmail => initEmail;
   String get getInitPosition => initPosition;
   // String get getInitUserImage => initUserImage;
@@ -45,12 +46,12 @@ class FirebaseOperations with ChangeNotifier {
         .then((doc) {
       print('Fetching user data...');
       initFullname = doc.data()['fullname'];
+      initAvatar = doc.data()['avatar'];
       initEmail = doc.data()['email'];
       initPosition = doc.data()['position'];
       // initUserImage = doc.data()['userimage'];
-      print(initFullname);
-      print(initEmail);
-      print(initPosition);
+      print([initFullname, initAvatar, initEmail, initPosition]);
+      
       // print(initUserImage);
       notifyListeners();
     });

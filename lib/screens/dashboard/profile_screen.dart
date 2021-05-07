@@ -83,15 +83,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Container(
-                                child: CircleAvatar(
-                                  radius: 35.0,
-                                  child: Text(
-                                    dashboardController.getInitials(
-                                        Provider.of<FirebaseOperations>(context, listen: false).getInitFullname),
-                                  ),
-                                ),
-                              ),
+                              // Container(
+                              //   child: CircleAvatar(
+                              //     radius: 35.0,
+                              //     child: Text(
+                              //       dashboardController.getInitials(
+                              //           Provider.of<FirebaseOperations>(context, listen: false).getInitFullname),
+                              //     ),
+                              //   ),
+                              // ),
                               // Obx(
                               //   () => Container(
                               //     // child: CircleAvatar(

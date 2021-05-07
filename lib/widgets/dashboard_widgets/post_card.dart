@@ -7,6 +7,7 @@ import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart
 class PostCard extends StatefulWidget {
   String category;
   // String image;
+  String avatar;
   String sender;
   // Timestamp sendTime;
   String title;
@@ -20,6 +21,7 @@ class PostCard extends StatefulWidget {
   PostCard({
     this.category,
     // this.image,
+    this.avatar,
     this.sender,
     // this.sendTime,
     this.title,
@@ -67,9 +69,10 @@ class _PostCardState extends State<PostCard> {
                 children: [
                   Container(
                     child: CircleAvatar(
-                      child: Text(
-                        dashboardController.getInitials(widget.sender),
-                      ),
+                      backgroundImage: NetworkImage(widget.avatar),
+                      // child: Text(
+                      //   dashboardController.getInitials(widget.sender),
+                      // ),
                     ),
                     // child: widget.image != null
                     //     ? Container(

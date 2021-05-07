@@ -5,6 +5,15 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        title: Text(
+          'Chat',
+          style: titleStyle,
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: Column(
         children: [
           Padding(

@@ -19,6 +19,8 @@ class PostFunctions with ChangeNotifier {
       'likes': FieldValue.increment(1),
       'fullname': Provider.of<FirebaseOperations>(context, listen: false)
           .getInitFullname,
+      'avatar':
+          Provider.of<FirebaseOperations>(context, listen: false).getInitAvatar,
       'useruid': Provider.of<Authentication>(context, listen: false).getUserUid,
       'email':
           Provider.of<FirebaseOperations>(context, listen: false).geiInitEmail,
@@ -36,6 +38,8 @@ class PostFunctions with ChangeNotifier {
       'comment': comment,
       'fullname': Provider.of<FirebaseOperations>(context, listen: false)
           .getInitFullname,
+      'avatar':
+          Provider.of<FirebaseOperations>(context, listen: false).getInitAvatar,
       'useruid': Provider.of<Authentication>(context, listen: false).getUserUid,
       'email':
           Provider.of<FirebaseOperations>(context, listen: false).geiInitEmail,
@@ -58,14 +62,14 @@ class PostFunctions with ChangeNotifier {
             );
           } else {
             return new ListView(
-                children: snapshot.data.docs
-                    .map((DocumentSnapshot documentSnapshot) {
-                      return CommentCard(
-                        sender: documentSnapshot.data()['fullname'],
-                        comment: documentSnapshot.data()['comment'],
-                      );
-                    })
-                    .toList());
+                children:
+                    snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
+              return CommentCard(
+                sender: documentSnapshot.data()['fullname'],
+                avatar: documentSnapshot.data()['avatar'],
+                comment: documentSnapshot.data()['comment'],
+              );
+            }).toList());
           }
         });
   }

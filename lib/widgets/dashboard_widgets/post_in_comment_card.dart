@@ -4,24 +4,37 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 
-class CommentCard extends StatelessWidget {
-
+class PostInCommentCard extends StatefulWidget {
+  String category;
   // String image;
-  String sender;
   String avatar;
+  String sender;
   // Timestamp sendTime;
-  String comment;
+  String title;
+  // var comments = [];
+  // int likes;
+  Function onLike;
 
+  Widget likes;
 
-  CommentCard({
+  PostInCommentCard({
+    this.category,
     // this.image,
-    this.sender,
     this.avatar,
+    this.sender,
     // this.sendTime,
-    this.comment,
-
+    this.title,
+    this.onLike,
+    this.likes,
+    // this.comments,
+    // this.likes
   });
 
+  @override
+  _PostInCommentCardState createState() => _PostInCommentCardState();
+}
+
+class _PostInCommentCardState extends State<PostInCommentCard> {
   String timeStampToDate(Timestamp timeStamp) {
     var date = timeStamp.toDate();
     String month = DateFormat.d().add_MMM().format(date).toString();
@@ -30,6 +43,13 @@ class CommentCard extends StatelessWidget {
   }
 
   DashboardController dashboardController = Get.put(DashboardController());
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   dashboardController.getCurrentProfile();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -45,29 +65,30 @@ class CommentCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(avatar),
-                    // child: Text('ess'),
-                  )
-                  // Container(
-                  //   child: image != null
-                  //       ? Container(
-                  //           child: CircleAvatar(
+                  Container(
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(widget.avatar),
+                      // child: Text(
+                      //   dashboardController.getInitials(widget.sender),
+                      // ),
+                    ),
+                    // child: widget.image != null
+                    //     ? Container(
+                    //         child: CircleAvatar(
 
-                  //             backgroundImage: NetworkImage(
-                  //                 image),
-                  //             // child:
-                  //             // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
-                  //           ),
-                  //         )
-                  //       : Container(
-                  //           child: CircleAvatar(
-                  //             child: Text(
-                  //               dashboardController.getInitials(sender),
-                  //             ),
-                  //           ),
-                  //         ),
-                  // ),
+                    //           backgroundImage: NetworkImage(widget.image),
+                    //           // child:
+                    //           // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
+                    //         ),
+                    //       )
+                    //     : Container(
+                    //         child: CircleAvatar(
+                    //           child: Text(
+                    //             dashboardController.getInitials(widget.sender),
+                    //           ),
+                    //         ),
+                    //       ),
+                  ),
                 ],
               ),
             ),
@@ -98,7 +119,7 @@ class CommentCard extends StatelessWidget {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          sender,
+                                          widget.sender,
                                           style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600),
@@ -117,7 +138,7 @@ class CommentCard extends StatelessWidget {
                                     ),
                                     SizedBox(height: 5),
                                     Text(
-                                      comment,
+                                      widget.title,
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w400),
@@ -125,7 +146,41 @@ class CommentCard extends StatelessWidget {
                                   ],
                                 ),
                                 SizedBox(height: 10),
-                                
+                                Row(children: [
+                                  InkWell(
+                                    child: Row(children: [
+                                      ImageIcon(
+                                          AssetImage('images/comment.png')),
+                                      SizedBox(
+                                        width: 6,
+                                      ),
+                                      Text(
+                                        '12',
+                                        style: TextStyle(
+                                            color: Color(0xFF687684),
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400),
+                                      )
+                                    ]),
+                                  ),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  InkWell(
+                                    onTap: widget.onLike,
+                                    child: Row(
+                                      children: [
+                                        ImageIcon(
+                                          AssetImage('images/like.png'),
+                                        ),
+                                        SizedBox(
+                                          width: 6,
+                                        ),
+                                        widget.likes,
+                                      ],
+                                    ),
+                                  )
+                                ])
                               ],
                             ),
                           ),

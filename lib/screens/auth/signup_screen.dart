@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uniguide/constants/consants.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/provider_files/authentication.dart';
@@ -270,6 +271,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   print('creating USER collection');
                                 Provider.of<FirebaseOperations>(context, listen: false).createUserCollection(context, {
                                   'useruid': Provider.of<Authentication>(context, listen: false).getUserUid,
+                                  'avatar': noAvatarUrl,
                                   'email': email,
                                   'fullname': fullName,
                                   'position': chosenPosition,

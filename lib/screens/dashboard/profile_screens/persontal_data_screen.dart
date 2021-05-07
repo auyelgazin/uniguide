@@ -6,7 +6,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:uniguide/constants/font_styles.dart';
+import 'package:uniguide/provider_files/authentication.dart';
+import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/services/storage_service.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_button.dart';
@@ -100,30 +103,34 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
               children: [
                 Stack(
                   children: [
-                    Obx(
-                      () => Container(
-                        child: dashboardController.avatar.value != null
-                            ? Container(
-                                child: CircleAvatar(
-                                  radius: 50.0,
-                                  backgroundImage: NetworkImage(
-                                      dashboardController.avatar.value),
-                                  // backgroundImage:
-                                  //     FileImage(imageFile),
-                                  // child:
-                                  // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
-                                ),
-                              )
-                            : Container(
-                                child: CircleAvatar(
-                                  radius: 50.0,
-                                  child: Text(
-                                    dashboardController.getInitials(dashboardController.fullName.value),
-                                  ),
-                                ),
-                              ),
-                      ),
+                    CircleAvatar(
+                      radius: 50,
+                      backgroundImage: NetworkImage(Provider.of<FirebaseOperations>(context, listen: false).getInitAvatar),
                     ),
+                    // Obx(
+                    //   () => Container(
+                    //     child: dashboardController.avatar.value != null
+                    //         ? Container(
+                    //             child: CircleAvatar(
+                    //               radius: 50.0,
+                    //               backgroundImage: NetworkImage(
+                    //                   dashboardController.avatar.value),
+                    //               // backgroundImage:
+                    //               //     FileImage(imageFile),
+                    //               // child:
+                    //               // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
+                    //             ),
+                    //           )
+                    //         : Container(
+                    //             child: CircleAvatar(
+                    //               radius: 50.0,
+                    //               child: Text(
+                    //                 dashboardController.getInitials(dashboardController.fullName.value),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //   ),
+                    // ),
                     Positioned(
                       right: 0,
                       bottom: 0,
