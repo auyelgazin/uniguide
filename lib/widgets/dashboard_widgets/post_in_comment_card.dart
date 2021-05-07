@@ -16,6 +16,7 @@ class PostInCommentCard extends StatefulWidget {
   Function onLike;
 
   Widget likes;
+  Widget comments;
 
   PostInCommentCard({
     this.category,
@@ -26,6 +27,7 @@ class PostInCommentCard extends StatefulWidget {
     this.title,
     this.onLike,
     this.likes,
+    this.comments,
     // this.comments,
     // this.likes
   });
@@ -154,13 +156,7 @@ class _PostInCommentCardState extends State<PostInCommentCard> {
                                       SizedBox(
                                         width: 6,
                                       ),
-                                      Text(
-                                        '12',
-                                        style: TextStyle(
-                                            color: Color(0xFF687684),
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400),
-                                      )
+                                      widget.comments,
                                     ]),
                                   ),
                                   SizedBox(

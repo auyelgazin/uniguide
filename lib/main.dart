@@ -23,9 +23,11 @@ Future<void> main() async {
   // Firebase Core initialization
   await Firebase.initializeApp();
 
+  // SharedPreferences - for storing data in a file on the device
   SharedPreferences preferences = await SharedPreferences.getInstance();
   initScreen = await preferences.getInt('initScreen');
   await preferences.setInt('initScreen', 1);
+
   runApp(MyApp());
 }
 

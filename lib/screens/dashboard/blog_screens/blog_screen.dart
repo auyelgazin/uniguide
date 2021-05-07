@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/post_functions.dart';
-import 'package:uniguide/screens/dashboard/blog_screens/comments_screen.dart';
 
 import 'package:uniguide/screens/dashboard/controllers/blog_controller.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
@@ -206,6 +205,26 @@ class _BlogScreenState extends State<BlogScreen> {
                 }
               },
             ),
+            comments: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('posts')
+                  .doc(documentSnapshot.data()['title'])
+                  .collection('comments')
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  return Text(
+                    snapshot.data.docs.length.toString(),
+                    style: TextStyle(
+                        color: Color(0xFF687684),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400),
+                  );
+                }
+              },
+            ),
             onComment: () {
               // Provider.of<PostFunctions>(context, listen: false)
               //     .showComments(context, documentSnapshot, documentSnapshot.data()['title']);
@@ -214,6 +233,13 @@ class _BlogScreenState extends State<BlogScreen> {
               Get.to(
                 () => Scaffold(
                   appBar: AppBar(
+                    leading: IconButton(
+                      icon: Icon(Icons.close),
+                      onPressed: () {
+                        Get.back();
+                        commentC.clear();
+                      },
+                    ),
                     title: Text('comments secwn'),
                   ),
                   body: SingleChildScrollView(
@@ -226,6 +252,28 @@ class _BlogScreenState extends State<BlogScreen> {
                             avatar: documentSnapshot.data()['avatar'],
                             sender: documentSnapshot.data()['fullname'],
                             title: documentSnapshot.data()['title'],
+                            comments: StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('posts')
+                                  .doc(documentSnapshot.data()['title'])
+                                  .collection('comments')
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                } else {
+                                  return Text(
+                                    snapshot.data.docs.length.toString(),
+                                    style: TextStyle(
+                                        color: Color(0xFF687684),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400),
+                                  );
+                                }
+                              },
+                            ),
                             onLike: () {
                               print('Liking post...');
                               Provider.of<PostFunctions>(context, listen: false)
@@ -246,7 +294,8 @@ class _BlogScreenState extends State<BlogScreen> {
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
                                   return Center(
-                                      child: CircularProgressIndicator());
+                                    child: CircularProgressIndicator(),
+                                  );
                                 } else {
                                   return Text(
                                     snapshot.data.docs.length.toString(),
@@ -259,13 +308,6 @@ class _BlogScreenState extends State<BlogScreen> {
                               },
                             ),
                           ),
-                          // PostCard(
-                          //   category: documentSnapshot.data()['category'],
-                          //   avatar: documentSnapshot.data()['avatar'],
-
-                          //   sender: documentSnapshot.data()['fullname'],
-                          //   title: documentSnapshot.data()['title'],
-                          // ),
                           Text('Начало обсуждения'),
                           Container(
                             height: 300,
@@ -294,7 +336,10 @@ class _BlogScreenState extends State<BlogScreen> {
                                           .addComment(
                                               context,
                                               documentSnapshot.data()['title'],
-                                              commentC.text);
+                                              commentC.text)
+                                          .whenComplete(() {
+                                        commentC.clear();
+                                      });
                                     },
                                     child: Text('->'),
                                   ),
@@ -323,10 +368,10 @@ class _BlogScreenState extends State<BlogScreen> {
                   body: Container(
                     height: 400,
                     child: Provider.of<PostFunctions>(context, listen: false)
-                      .showLikes(
-                          context,
-                          documentSnapshot.data()['title'],
-                      ),
+                        .showLikes(
+                      context,
+                      documentSnapshot.data()['title'],
+                    ),
                   ),
                 ),
               );

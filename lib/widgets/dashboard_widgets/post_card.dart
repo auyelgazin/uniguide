@@ -19,6 +19,7 @@ class PostCard extends StatefulWidget {
   Function onLikes;
 
   Widget likes;
+  Widget comments;
 
   PostCard({
     this.category,
@@ -31,6 +32,7 @@ class PostCard extends StatefulWidget {
     this.onLikeButton,
     this.onLikes,
     this.likes,
+    this.comments,
     // this.comments,
     // this.likes
   });
@@ -160,13 +162,7 @@ class _PostCardState extends State<PostCard> {
                                       SizedBox(
                                         width: 6,
                                       ),
-                                      Text(
-                                        '12',
-                                        style: TextStyle(
-                                            color: Color(0xFF687684),
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400),
-                                      )
+                                      widget.comments,
                                     ]),
                                   ),
                                   SizedBox(
