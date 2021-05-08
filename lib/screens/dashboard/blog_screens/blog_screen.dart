@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:uniguide/constants/colors.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/post_functions.dart';
@@ -38,9 +39,20 @@ class _BlogScreenState extends State<BlogScreen> {
     dc.getCurrentProfile();
   }
 
+  // sorting widgets:
+  var newContColor = darPurple;
+  var newTextColor = white;
+
+  var intContColor = white;
+  var intTextColor = black.withOpacity(0.2);
+
+  var discContColor = white;
+  var discTextColor = black.withOpacity(0.2);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: white,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
@@ -107,12 +119,134 @@ class _BlogScreenState extends State<BlogScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              height: 30,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  SizedBox(
+                    width: 20,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        newContColor = darPurple;
+                        newTextColor = white;
+
+                        intContColor = white;
+                        intTextColor = black.withOpacity(0.2);
+
+                        discContColor = white;
+                        discTextColor = black.withOpacity(0.2);
+                      });
+                    },
+                    child: Container(
+                      height: 28,
+                      decoration: BoxDecoration(
+                        color: newContColor,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 9, vertical: 2),
+                        child: Text(
+                          '#новые',
+                          style: TextStyle(
+                            color: newTextColor,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        newContColor = white;
+                        newTextColor = black.withOpacity(0.2);
+
+                        intContColor = darPurple;
+                        intTextColor = white;
+
+                        discContColor = white;
+                        discTextColor = black.withOpacity(0.2);
+                      });
+                    },
+                    child: Container(
+                      height: 28,
+                      decoration: BoxDecoration(
+                        color: intContColor,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 9, vertical: 2),
+                        child: Text(
+                          '#интересные',
+                          style: TextStyle(
+                            color: intTextColor,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        newContColor = white;
+                        newTextColor = black.withOpacity(0.2);
+
+                        intContColor = white;
+                        intTextColor = black.withOpacity(0.2);
+
+                        discContColor = darPurple;
+                        discTextColor = white;
+                      });
+                    },
+                    child: Container(
+                      height: 28,
+                      decoration: BoxDecoration(
+                        color: discContColor,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 9, vertical: 2),
+                        child: Text(
+                          '#обсуждаемые',
+                          style: TextStyle(
+                            color: discTextColor,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
             Container(
               constraints: BoxConstraints(
                 maxHeight: 666,
                 minHeight: 400,
               ),
-              height: 400,
+              height: 700,
               child: StreamBuilder<QuerySnapshot>(
                 stream:
                     FirebaseFirestore.instance.collection('posts').snapshots(),
