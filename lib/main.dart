@@ -6,6 +6,7 @@ import 'package:uniguide/constants/language/languages.dart';
 import 'package:uniguide/provider_files/post_functions.dart';
 import 'package:uniguide/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uniguide/screens/dashboard/controllers/dashboard_provider.dart';
 import 'package:uniguide/screens/dashboard/dashboard_helper.dart';
 import 'package:uniguide/screens/dashboard/profile_screens/profile_helper.dart';
 import 'package:uniguide/screens/onboarding/choose_lang_screen.dart';
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => FirebaseOperations()),
         ChangeNotifierProvider(create: (_) => Authentication()),
         ChangeNotifierProvider(create: (_) => DashboardHelper()),
+        ChangeNotifierProvider(create: (_) => DashboardProvider()),
         ChangeNotifierProvider(create: (_) => ProfileHelper()),
       ],
     );

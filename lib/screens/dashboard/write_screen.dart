@@ -56,38 +56,6 @@ class _WriteScreenState extends State<WriteScreen> {
                         }).whenComplete(() {
                           print('Post uploaded');
                         });
-                        // await AuthService(auth: auth).initUserData();
-                        // AuthService(auth: auth).uploadPostData(titleController.text, {
-                        //   'title': titleController.text,
-                        //   'category': chosenTopic,
-                        //   'fullName': dc.fullName.value,
-                        //   'avatar': dc.avatar.value,
-                        //   'uid': auth.currentUser.uid,
-                        //   'time': Timestamp.now(),
-                        // }).whenComplete(() {
-                        //   print('post uploaded');
-                        // });
-
-                        // await FirebaseFirestore.instance
-                        //     .collection('blogs')
-                        //     .add({
-                        //   'category': 'Category not chosen',
-                        //   'comments': [
-                        //     {
-                        //       'comment': 'bash',
-                        //       'sendTime': '12:45',
-                        //     }
-                        //   ],
-                        //   'likes': 40,
-                        //   'sendTime': FieldValue.serverTimestamp(),
-                        //   'sender': {
-                        //     'fullName': 'Shawn Carter',
-                        //     'image': 'null',
-                        //   },
-                        //   'title': titleController.text.trim(),
-                        // });
-                        // Get.defaultDialog(
-                        //     title: 'You sent request', middleText: 'OK');
                       },
                       child: Text(
                         'Send',
@@ -110,23 +78,7 @@ class _WriteScreenState extends State<WriteScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
                           color: Color(0xFFB7C1F4).withOpacity(0.3)),
-                      // child: Padding(
-                      //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     crossAxisAlignment: CrossAxisAlignment.center,
-                      //     children: [
-                      //       Text(
-                      //         'Choose a community',
-                      //         style: TextStyle(
-                      //           fontSize: 18,
-                      //           fontWeight: FontWeight.w500,
-                      //         ),
-                      //       ),
-                      //       Icon(Icons.arrow_downward_outlined)
-                      //     ],
-                      //   ),
-                      // ),
+                   
                       child: DropdownButton(
                         hint: Text('Choose a topic'),
                         value: chosenTopic,

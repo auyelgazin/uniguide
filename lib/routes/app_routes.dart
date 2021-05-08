@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:uniguide/bindings/dashboard_binding.dart';
 import 'package:uniguide/screens/auth/congratz_screen.dart';
 import 'package:uniguide/screens/auth/login_screen.dart';
 import 'package:uniguide/screens/auth/signup_screen.dart';
@@ -35,7 +34,6 @@ class AppRoutes {
     GetPage(
       name: '/dashboard',
       page: () => DashboardScreen(),
-      binding: DashboardBinding(),
     ),
     GetPage(
       name: '/profile',

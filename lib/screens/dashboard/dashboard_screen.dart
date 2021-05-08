@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
+import 'package:uniguide/screens/dashboard/controllers/dashboard_provider.dart';
 import 'package:uniguide/screens/dashboard/dashboard_helper.dart';
 import 'blog_screens/blog_screen.dart';
 import 'chat_screen.dart';
@@ -16,20 +17,20 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-
+  DashboardController dc = Get.put(DashboardController());
   final PageController pageController = PageController();
   int pageIndex = 0;
 
   @override
   void initState() {
-    Provider.of<FirebaseOperations>(context, listen: false).initUserData(context);
+    Provider.of<FirebaseOperations>(context, listen: false)
+        .initUserData(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: PageView(
         controller: pageController,
         children: [
@@ -39,14 +40,49 @@ class _DashboardScreenState extends State<DashboardScreen> {
           WriteScreen(),
         ],
         physics: NeverScrollableScrollPhysics(),
-        onPageChanged: (page){
+        onPageChanged: (page) {
           setState(() {
             pageIndex = page;
+      
+            switch (pageIndex) {
+              case 0:
+                {
+                  Provider.of<DashboardProvider>(context, listen: false).blogT = '__';
+                  Provider.of<DashboardProvider>(context, listen: false).chatT = '';
+                  Provider.of<DashboardProvider>(context, listen: false).profileT = '';
+                  Provider.of<DashboardProvider>(context, listen: false).writeT = '';
+                }
+                break;
+              case 1:
+                {
+                  Provider.of<DashboardProvider>(context, listen: false).blogT = '';
+                  Provider.of<DashboardProvider>(context, listen: false).chatT = '__';
+                  Provider.of<DashboardProvider>(context, listen: false).profileT = '';
+                  Provider.of<DashboardProvider>(context, listen: false).writeT = '';
+                }
+                break;
+                case 2:
+                {
+                  Provider.of<DashboardProvider>(context, listen: false).blogT = '';
+                  Provider.of<DashboardProvider>(context, listen: false).chatT = '';
+                  Provider.of<DashboardProvider>(context, listen: false).profileT = '__';
+                  Provider.of<DashboardProvider>(context, listen: false).writeT = '';
+                }
+                break;
+                case 3:
+                {
+                  Provider.of<DashboardProvider>(context, listen: false).blogT = '';
+                  Provider.of<DashboardProvider>(context, listen: false).chatT = '';
+                  Provider.of<DashboardProvider>(context, listen: false).profileT = '';
+                  Provider.of<DashboardProvider>(context, listen: false).writeT = '__';
+                }
+                break;
+            }
           });
         },
       ),
-      bottomNavigationBar: Provider.of<DashboardHelper>(context, listen: false).bottomNav(context, pageIndex, pageController),
-      
+      bottomNavigationBar: Provider.of<DashboardHelper>(context, listen: false)
+          .bottomNav(context, pageIndex, pageController),
     );
   }
 }
@@ -62,9 +98,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
 //     Provider.of<FirebaseOperations>(context, listen: false).initUserData(context);
 //     // TODO: implement initState
 //     super.initState();
-    
+
 //   }
-  
+
 //   @override
 //   Widget build(BuildContext context) {
 //     return GetBuilder<DashboardController>(

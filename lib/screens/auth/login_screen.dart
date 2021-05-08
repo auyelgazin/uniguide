@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/provider_files/authentication.dart';
+import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/screens/auth/auth_controllers/login_controller.dart';
 import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_button.dart';
@@ -108,6 +109,8 @@ class LoginScreen extends StatelessWidget {
                       () async {
                         Provider.of<Authentication>(context, listen: false).logIntoAccount(emailController.text, passwordController.text).whenComplete((){
                           print('User logged in');
+                          // - - - ->
+                          Provider.of<FirebaseOperations>(context, listen: false).initUserData(context);
                           Get.toNamed('/dashboard');
                         });
                         // await AuthService(auth: firebaseAuth).Login(

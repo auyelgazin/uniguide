@@ -185,25 +185,28 @@ class _BlogScreenState extends State<BlogScreen> {
             avatar: documentSnapshot.data()['avatar'],
             sender: documentSnapshot.data()['fullname'],
             title: documentSnapshot.data()['title'],
-            likes: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection('posts')
-                  .doc(documentSnapshot.data()['title'])
-                  .collection('likes')
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else {
-                  return Text(
-                    snapshot.data.docs.length.toString(),
-                    style: TextStyle(
-                        color: Color(0xFF687684),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400),
-                  );
-                }
-              },
+            likes: Container(
+              width: 40,
+              child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('posts')
+                    .doc(documentSnapshot.data()['title'])
+                    .collection('likes')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else {
+                    return Text(
+                      snapshot.data.docs.length.toString(),
+                      style: TextStyle(
+                          color: Color(0xFF687684),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400),
+                    );
+                  }
+                },
+              ),
             ),
             comments: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
