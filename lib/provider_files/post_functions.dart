@@ -16,7 +16,11 @@ class PostFunctions with ChangeNotifier {
   showTimeAgo(dynamic timedata){
     Timestamp time = timedata;
     DateTime dateTime = time.toDate();
-    timePosted = timeago.format(dateTime);
+
+    timeago.setLocaleMessages('ru', timeago.RuShortMessages());
+    timeago.setLocaleMessages('en', timeago.EnShortMessages());
+
+    timePosted = timeago.format(dateTime, locale: 'ru');
 
     notifyListeners();
   }
