@@ -32,6 +32,8 @@ class _BlogScreenState extends State<BlogScreen> {
 
   TextEditingController commentC = TextEditingController();
 
+  bool descendingSorting = true;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -133,6 +135,7 @@ class _BlogScreenState extends State<BlogScreen> {
                   InkWell(
                     onTap: () {
                       setState(() {
+                        descendingSorting = true;
                         newContColor = darPurple;
                         newTextColor = white;
 
@@ -167,6 +170,7 @@ class _BlogScreenState extends State<BlogScreen> {
                   ),
                   InkWell(
                     onTap: () {
+                      descendingSorting = false;
                       setState(() {
                         newContColor = white;
                         newTextColor = black.withOpacity(0.2);
@@ -188,7 +192,7 @@ class _BlogScreenState extends State<BlogScreen> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 9, vertical: 2),
                         child: Text(
-                          '#интересные',
+                          '#old',
                           style: TextStyle(
                             color: intTextColor,
                             fontSize: 18,
@@ -249,7 +253,7 @@ class _BlogScreenState extends State<BlogScreen> {
               height: 700,
               child: StreamBuilder<QuerySnapshot>(
                 stream:
-                    FirebaseFirestore.instance.collection('posts').orderBy('time', descending: true).snapshots(),
+                    FirebaseFirestore.instance.collection('posts').orderBy('time', descending: descendingSorting).snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(

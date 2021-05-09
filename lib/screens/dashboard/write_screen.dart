@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -35,9 +36,10 @@ class _WriteScreenState extends State<WriteScreen> {
   List<String> topics = Topic.topics;
 
   File file;
+  String imageUrl;
 
   Future selectFile(ImageSource source) async {
-    final result = await ImagePicker.platform.pickImage(source: source);
+    final result = await ImagePicker.platform.pickImage(source: source, imageQuality: 60);
 
     if (result == null) return;
     final path = result.path;
@@ -45,6 +47,12 @@ class _WriteScreenState extends State<WriteScreen> {
     setState(() {
       file = File(path);
     });
+  }
+
+  Future sendImage() async {
+    var storageImage = FirebaseStorage.instance.ref().child(file.path);
+    var task = storageImage.putFile(file);
+    imageUrl = await (await task).ref.getDownloadURL();
   }
 
   @override
@@ -123,7 +131,10 @@ class _WriteScreenState extends State<WriteScreen> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  selectFile(ImageSource.gallery);
+                                  selectFile(ImageSource.gallery)
+                                      .whenComplete(() {
+                                    Get.back();
+                                  });
                                   //   Get.to(
                                   //     () => Scaffold(
                                   //       backgroundColor: white,
@@ -169,11 +180,13 @@ class _WriteScreenState extends State<WriteScreen> {
             color: Color(0xFF232195),
             iconSize: 20,
             onPressed: () async {
-              Provider.of<FirebaseOperations>(context, listen: false)
+             sendImage().whenComplete(() {
+                Provider.of<FirebaseOperations>(context, listen: false)
                   .uploadPostData(titleController.text, {
                 'title': titleController.text,
-                'image':
-                    'https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/const_image.png?alt=media&token=6e7d4e3e-4efc-41a2-b182-58ec059b2a80',
+                'image': file == null
+                    ? 'https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/const_image.png?alt=media&token=6e7d4e3e-4efc-41a2-b182-58ec059b2a80'
+                    : imageUrl,
                 'category': chosenTopic,
                 'fullname':
                     Provider.of<FirebaseOperations>(context, listen: false)
@@ -189,12 +202,13 @@ class _WriteScreenState extends State<WriteScreen> {
               }).whenComplete(() {
                 print('Post uploaded');
               });
+             });
             },
           ),
         ],
       ),
       body: SingleChildScrollView(
-              child: Padding(
+        child: Padding(
           padding: const EdgeInsets.only(top: 20.0),
           child: Column(
             children: [
@@ -227,9 +241,17 @@ class _WriteScreenState extends State<WriteScreen> {
                   file == null
                       ? Container()
                       : Container(
-                        height: 200,
-                          child: Image(
-                            image: FileImage(file),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('attachedFile: '),
+                              Container(
+                                height: 250,
+                                child: Image(
+                                  image: FileImage(file),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                   Padding(
