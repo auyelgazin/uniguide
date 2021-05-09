@@ -21,6 +21,8 @@ class PostCard extends StatefulWidget {
   Widget likes;
   Widget comments;
 
+  String timeAgo;
+
   PostCard({
     this.category,
     // this.image,
@@ -33,6 +35,8 @@ class PostCard extends StatefulWidget {
     this.onLikes,
     this.likes,
     this.comments,
+
+    this.timeAgo,
     // this.comments,
     // this.likes
   });
@@ -132,13 +136,15 @@ class _PostCardState extends State<PostCard> {
                                               fontWeight: FontWeight.w600),
                                         ),
                                         SizedBox(width: 8),
-                                        Text(
-                                          '12 Hours ago',
-                                          // timeStampToDate(sendTime),
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400,
-                                            color: Color(0xFF687684),
+                                        FittedBox(
+                                                                                  child: Text(
+                                            widget.timeAgo,
+                                            // timeStampToDate(sendTime),
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w400,
+                                              color: Color(0xFF687684),
+                                            ),
                                           ),
                                         )
                                       ],

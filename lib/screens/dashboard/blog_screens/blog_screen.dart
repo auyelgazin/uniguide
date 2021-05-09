@@ -249,7 +249,7 @@ class _BlogScreenState extends State<BlogScreen> {
               height: 700,
               child: StreamBuilder<QuerySnapshot>(
                 stream:
-                    FirebaseFirestore.instance.collection('posts').snapshots(),
+                    FirebaseFirestore.instance.collection('posts').orderBy('time', descending: false).snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
@@ -313,12 +313,14 @@ class _BlogScreenState extends State<BlogScreen> {
       BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     return ListView(
       children: snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
+        Provider.of<PostFunctions>(context, listen: false).showTimeAgo(documentSnapshot.data()['time']);
         return PostCard(
             category: documentSnapshot.data()['category'],
             // image: documentSnapshot.data()['avatar'],
             avatar: documentSnapshot.data()['avatar'],
             sender: documentSnapshot.data()['fullname'],
             title: documentSnapshot.data()['title'],
+            timeAgo: Provider.of<PostFunctions>(context, listen: false).getTimePosted.toString(),
             likes: Container(
               width: 40,
               child: StreamBuilder<QuerySnapshot>(

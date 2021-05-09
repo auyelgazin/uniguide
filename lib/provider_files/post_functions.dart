@@ -9,6 +9,18 @@ import 'authentication.dart';
 import 'firebase_operations.dart';
 
 class PostFunctions with ChangeNotifier {
+
+  String timePosted;
+  String get getTimePosted => timePosted;
+
+  showTimeAgo(dynamic timedata){
+    Timestamp time = timedata;
+    DateTime dateTime = time.toDate();
+    timePosted = timeago.format(dateTime);
+    print(timePosted);
+    notifyListeners();
+  }
+
   Future addLike(BuildContext context, String postId, String subDocId) async {
     return FirebaseFirestore.instance
         .collection('posts')
