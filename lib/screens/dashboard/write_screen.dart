@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:uniguide/constants/colors.dart';
 import 'package:uniguide/constants/font_styles.dart';
@@ -31,6 +34,19 @@ class _WriteScreenState extends State<WriteScreen> {
   String chosenTopic;
   List<String> topics = Topic.topics;
 
+  File file;
+
+  Future selectFile(ImageSource source) async {
+    final result = await ImagePicker.platform.pickImage(source: source);
+
+    if (result == null) return;
+    final path = result.path;
+
+    setState(() {
+      file = File(path);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,8 +67,99 @@ class _WriteScreenState extends State<WriteScreen> {
             color: Color(0xFF232195),
             iconSize: 20,
             onPressed: () async {
-              Provider.of<UploadPost>(context, listen: false)
-                  .selectPostType(context);
+              showModalBottomSheet(
+                  backgroundColor: Colors.transparent,
+                  context: context,
+                  builder: (BuildContext parentContext) {
+                    return Container(
+                      height: MediaQuery.of(context).size.width / 2 + 40,
+                      decoration: BoxDecoration(
+                        color: white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20)),
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 40,
+                            child: IconButton(
+                              icon: Icon(Icons.keyboard_arrow_down),
+                              onPressed: () {},
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  selectFile(ImageSource.camera);
+                                  // Get.to(
+                                  //   () => Scaffold(
+                                  //     backgroundColor: white,
+                                  //     appBar: AppBar(
+                                  //       leading: IconButton(
+                                  //         icon: Icon(Icons.arrow_back_ios,
+                                  //             color: black),
+                                  //         onPressed: () {},
+                                  //       ),
+                                  //       centerTitle: true,
+                                  //       elevation: 0,
+                                  //       title: Text(
+                                  //         'cameraFile',
+                                  //         style: titleStyle,
+                                  //       ),
+                                  //       backgroundColor: white,
+                                  //     ),
+                                  //   ),
+                                  // );
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width / 2,
+                                  height: MediaQuery.of(context).size.width / 2,
+                                  child: Center(
+                                    child: Text('camera'),
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  selectFile(ImageSource.gallery);
+                                //   Get.to(
+                                //     () => Scaffold(
+                                //       backgroundColor: white,
+                                //       appBar: AppBar(
+                                //         leading: IconButton(
+                                //           icon: Icon(Icons.arrow_back_ios,
+                                //               color: black),
+                                //           onPressed: () {
+                                //             Navigator.pop(context);
+                                //           },
+                                //         ),
+                                //         centerTitle: true,
+                                //         elevation: 0,
+                                //         title: Text(
+                                //           'galleryFile',
+                                //           style: titleStyle,
+                                //         ),
+                                //         backgroundColor: white,
+                                //       ),
+                                //     ),
+                                //   );
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width / 2,
+                                  height: MediaQuery.of(context).size.width / 2,
+                                  child: Center(
+                                    child: Text('gallery'),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    );
+                  });
             },
           ),
           IconButton(
@@ -86,64 +193,61 @@ class _WriteScreenState extends State<WriteScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20.0),
-          child: Column(
-            children: [
-             
-
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Container(
-                      height: 54,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          color: Color(0xFFB7C1F4).withOpacity(0.3)),
-                      child: DropdownButton(
-                        hint: Text('Choose a topic'),
-                        value: chosenTopic,
-                        onChanged: (newValue) {
-                          setState(() {
-                            chosenTopic = newValue;
-                          });
-                        },
-                        items: topics.map((valueItem) {
-                          return DropdownMenuItem(
-                            value: valueItem,
-                            child: Text(valueItem),
-                          );
-                        }).toList(),
-                      ),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 20.0),
+        child: Column(
+          children: [
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Container(
+                    height: 54,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Color(0xFFB7C1F4).withOpacity(0.3)),
+                    child: DropdownButton(
+                      hint: Text('Choose a topic'),
+                      value: chosenTopic,
+                      onChanged: (newValue) {
+                        setState(() {
+                          chosenTopic = newValue;
+                        });
+                      },
+                      items: topics.map((valueItem) {
+                        return DropdownMenuItem(
+                          value: valueItem,
+                          child: Text(valueItem),
+                        );
+                      }).toList(),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: Color(0xFFB7C1F4).withOpacity(0.3),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 15),
-                        child: TextField(
-                          controller: titleController,
-                          maxLines: 25,
-                          decoration: new InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Write please your problem',
-                          ),
+                ),
+                // _image == null ? Container() : 
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: Color(0xFFB7C1F4).withOpacity(0.3),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 15),
+                      child: TextField(
+                        controller: titleController,
+                        maxLines: 20,
+                        decoration: new InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Write please your problem',
                         ),
                       ),
                     ),
                   ),
-                ],
-              )
-            ],
-          ),
+                ),
+              ],
+            )
+          ],
         ),
       ),
     );
