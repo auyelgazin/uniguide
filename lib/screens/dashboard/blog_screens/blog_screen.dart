@@ -36,7 +36,7 @@ class _BlogScreenState extends State<BlogScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    dc.getCurrentProfile();
+    // dc.getCurrentProfile();
   }
 
   // sorting widgets:
@@ -249,7 +249,7 @@ class _BlogScreenState extends State<BlogScreen> {
               height: 700,
               child: StreamBuilder<QuerySnapshot>(
                 stream:
-                    FirebaseFirestore.instance.collection('posts').orderBy('time', descending: false).snapshots(),
+                    FirebaseFirestore.instance.collection('posts').orderBy('time', descending: true).snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
@@ -316,7 +316,7 @@ class _BlogScreenState extends State<BlogScreen> {
         Provider.of<PostFunctions>(context, listen: false).showTimeAgo(documentSnapshot.data()['time']);
         return PostCard(
             category: documentSnapshot.data()['category'],
-            // image: documentSnapshot.data()['avatar'],
+            image: documentSnapshot.data()['image'],
             avatar: documentSnapshot.data()['avatar'],
             sender: documentSnapshot.data()['fullname'],
             title: documentSnapshot.data()['title'],

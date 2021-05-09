@@ -44,6 +44,7 @@ dependencies:
   #firebase_messaging: ^9.1.2
   custom_navigation_bar: ^0.8.1
   timeago: ^3.0.2
+  auto_size_text: ^2.1.0
 
 
 dev_dependencies:

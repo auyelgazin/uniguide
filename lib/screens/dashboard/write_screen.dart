@@ -47,6 +47,7 @@ class _WriteScreenState extends State<WriteScreen> {
                       onPressed: () async {
                         Provider.of<FirebaseOperations>(context, listen: false).uploadPostData(titleController.text, {
                           'title': titleController.text,
+                          'image': 'https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/const_image.png?alt=media&token=6e7d4e3e-4efc-41a2-b182-58ec059b2a80',
                           'category': chosenTopic,
                           'fullname': Provider.of<FirebaseOperations>(context, listen: false).getInitFullname,
                           'avatar': Provider.of<FirebaseOperations>(context, listen: false).getInitAvatar,

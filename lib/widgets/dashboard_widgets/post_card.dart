@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -7,7 +8,7 @@ import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart
 
 class PostCard extends StatefulWidget {
   String category;
-  // String image;
+  String image;
   String avatar;
   String sender;
   // Timestamp sendTime;
@@ -25,7 +26,7 @@ class PostCard extends StatefulWidget {
 
   PostCard({
     this.category,
-    // this.image,
+    this.image,
     this.avatar,
     this.sender,
     // this.sendTime,
@@ -35,7 +36,6 @@ class PostCard extends StatefulWidget {
     this.onLikes,
     this.likes,
     this.comments,
-
     this.timeAgo,
     // this.comments,
     // this.likes
@@ -136,15 +136,14 @@ class _PostCardState extends State<PostCard> {
                                               fontWeight: FontWeight.w600),
                                         ),
                                         SizedBox(width: 8),
-                                        FittedBox(
-                                                                                  child: Text(
-                                            widget.timeAgo,
-                                            // timeStampToDate(sendTime),
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w400,
-                                              color: Color(0xFF687684),
-                                            ),
+                                        AutoSizeText(
+                                          widget.timeAgo,
+
+                                          // timeStampToDate(sendTime),
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w400,
+                                            color: Color(0xFF687684),
                                           ),
                                         )
                                       ],
@@ -155,6 +154,9 @@ class _PostCardState extends State<PostCard> {
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w400),
+                                    ),
+                                    Image(
+                                      image: NetworkImage(widget.image),
                                     ),
                                   ],
                                 ),

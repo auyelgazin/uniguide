@@ -17,7 +17,7 @@ class PostFunctions with ChangeNotifier {
     Timestamp time = timedata;
     DateTime dateTime = time.toDate();
     timePosted = timeago.format(dateTime);
-    print(timePosted);
+
     notifyListeners();
   }
 
