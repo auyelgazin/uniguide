@@ -19,7 +19,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   DashboardController dc = Get.put(DashboardController());
   final PageController pageController = PageController();
-  int pageIndex = 0;
+  
 
   @override
   void initState() {
@@ -42,9 +42,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         physics: NeverScrollableScrollPhysics(),
         onPageChanged: (page) {
           setState(() {
-            pageIndex = page;
+            Provider.of<DashboardHelper>(context, listen: false).pageIndex = page;
       
-            switch (pageIndex) {
+            switch (Provider.of<DashboardHelper>(context, listen: false).pageIndex) {
               case 0:
                 {
                   Provider.of<DashboardProvider>(context, listen: false).blogT = '__';
@@ -82,7 +82,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         },
       ),
       bottomNavigationBar: Provider.of<DashboardHelper>(context, listen: false)
-          .bottomNav(context, pageIndex, pageController),
+          .bottomNav(context, Provider.of<DashboardHelper>(context, listen: false).pageIndex, pageController),
     );
   }
 }

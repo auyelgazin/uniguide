@@ -14,6 +14,8 @@ import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart
 import 'package:uniguide/screens/dashboard/models/topic.dart';
 import 'package:uniguide/services/auth_service.dart';
 
+import 'dashboard_helper.dart';
+
 class WriteScreen extends StatefulWidget {
   @override
   _WriteScreenState createState() => _WriteScreenState();
