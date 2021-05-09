@@ -124,27 +124,27 @@ class _WriteScreenState extends State<WriteScreen> {
                               InkWell(
                                 onTap: () {
                                   selectFile(ImageSource.gallery);
-                                //   Get.to(
-                                //     () => Scaffold(
-                                //       backgroundColor: white,
-                                //       appBar: AppBar(
-                                //         leading: IconButton(
-                                //           icon: Icon(Icons.arrow_back_ios,
-                                //               color: black),
-                                //           onPressed: () {
-                                //             Navigator.pop(context);
-                                //           },
-                                //         ),
-                                //         centerTitle: true,
-                                //         elevation: 0,
-                                //         title: Text(
-                                //           'galleryFile',
-                                //           style: titleStyle,
-                                //         ),
-                                //         backgroundColor: white,
-                                //       ),
-                                //     ),
-                                //   );
+                                  //   Get.to(
+                                  //     () => Scaffold(
+                                  //       backgroundColor: white,
+                                  //       appBar: AppBar(
+                                  //         leading: IconButton(
+                                  //           icon: Icon(Icons.arrow_back_ios,
+                                  //               color: black),
+                                  //           onPressed: () {
+                                  //             Navigator.pop(context);
+                                  //           },
+                                  //         ),
+                                  //         centerTitle: true,
+                                  //         elevation: 0,
+                                  //         title: Text(
+                                  //           'galleryFile',
+                                  //           style: titleStyle,
+                                  //         ),
+                                  //         backgroundColor: white,
+                                  //       ),
+                                  //     ),
+                                  //   );
                                 },
                                 child: Container(
                                   width: MediaQuery.of(context).size.width / 2,
@@ -193,61 +193,70 @@ class _WriteScreenState extends State<WriteScreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 20.0),
-        child: Column(
-          children: [
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Container(
-                    height: 54,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: Color(0xFFB7C1F4).withOpacity(0.3)),
-                    child: DropdownButton(
-                      hint: Text('Choose a topic'),
-                      value: chosenTopic,
-                      onChanged: (newValue) {
-                        setState(() {
-                          chosenTopic = newValue;
-                        });
-                      },
-                      items: topics.map((valueItem) {
-                        return DropdownMenuItem(
-                          value: valueItem,
-                          child: Text(valueItem),
-                        );
-                      }).toList(),
+      body: SingleChildScrollView(
+              child: Padding(
+          padding: const EdgeInsets.only(top: 20.0),
+          child: Column(
+            children: [
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Container(
+                      height: 54,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          color: Color(0xFFB7C1F4).withOpacity(0.3)),
+                      child: DropdownButton(
+                        hint: Text('Choose a topic'),
+                        value: chosenTopic,
+                        onChanged: (newValue) {
+                          setState(() {
+                            chosenTopic = newValue;
+                          });
+                        },
+                        items: topics.map((valueItem) {
+                          return DropdownMenuItem(
+                            value: valueItem,
+                            child: Text(valueItem),
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ),
-                ),
-                // _image == null ? Container() : 
-                Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: Color(0xFFB7C1F4).withOpacity(0.3),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 15),
-                      child: TextField(
-                        controller: titleController,
-                        maxLines: 20,
-                        decoration: new InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Write please your problem',
+                  file == null
+                      ? Container()
+                      : Container(
+                        height: 200,
+                          child: Image(
+                            image: FileImage(file),
+                          ),
+                        ),
+                  Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Color(0xFFB7C1F4).withOpacity(0.3),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 15),
+                        child: TextField(
+                          controller: titleController,
+                          maxLines: 20,
+                          decoration: new InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Write please your problem',
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            )
-          ],
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

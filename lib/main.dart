@@ -28,7 +28,7 @@ int initScreen;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final cameras = await availableCameras();
+  // final cameras = await availableCameras();
 
   // Firebase Core initialization
   await Firebase.initializeApp();
