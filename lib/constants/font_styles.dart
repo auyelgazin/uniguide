@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uniguide/constants/colors.dart';
 
 var titleStyle = TextStyle(
   fontSize: 28,
@@ -60,4 +61,16 @@ var settingsStyle = TextStyle(
   fontSize: 17,
   fontWeight: FontWeight.w300,
   color: Color(0xFF151522),
+);
+
+var commentsStyle = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.w500,
+  color: darPurple,
+);
+
+var commentHint = TextStyle(
+  color: black.withOpacity(0.5),
+  fontSize: 16,
+  fontWeight: FontWeight.w400,
 );

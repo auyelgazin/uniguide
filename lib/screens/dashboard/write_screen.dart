@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:uniguide/constants/colors.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/provider_files/upload_post.dart';

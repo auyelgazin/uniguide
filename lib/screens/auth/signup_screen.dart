@@ -231,17 +231,12 @@ class _SignupScreenState extends State<SignupScreen> {
                               controller.emptyAgain();
 
                               print('authed stud');
-                              // await AuthService(auth: firebaseAuth).Signup(
-                              //   email: emailController.text,
-                              //   password: passwordController.text,
-                              //   fullName: fullName,
-                              //   position: chosenPosition,
-                              //   avatar: '',
-                              // );
+                     
                               Provider.of<Authentication>(context, listen: false).createAccount(email, password).whenComplete(() {
                                 print('creating USER collection');
                                 Provider.of<FirebaseOperations>(context, listen: false).createUserCollection(context, {
                                   'useruid': Provider.of<Authentication>(context, listen: false).getUserUid,
+                                  'avatar': noAvatarUrl,
                                   'email': email,
                                   'fullname': fullName,
                                   'position': chosenPosition,
@@ -260,13 +255,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               controller.emptyAgain();
 
                               print('authed teacher & stuff');
-                                // await AuthService(auth: firebaseAuth).Signup(
-                                //   email: emailController.text,
-                                //   password: passwordController.text,
-                                //   fullName: fullName,
-                                //   position: chosenPosition,
-                                //   avatar: '',
-                                // );
+                  
                                 Provider.of<Authentication>(context, listen: false).createAccount(email, password).whenComplete(() {
                                   print('creating USER collection');
                                 Provider.of<FirebaseOperations>(context, listen: false).createUserCollection(context, {

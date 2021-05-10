@@ -7,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:uniguide/constants/consants.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/firebase_operations.dart';
+import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_button.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_textfield.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
@@ -26,6 +28,31 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
   final TextEditingController fullNameController = TextEditingController();
 
   String editedFullName;
+
+  DashboardController dc = Get.put(DashboardController());
+
+  File file;
+  String imageUrl;
+
+  Future selectFile(ImageSource source) async {
+    var result =
+        await ImagePicker.platform.pickImage(source: source, imageQuality: 40);
+
+    if (result == null)
+      file = null;
+    else {
+      final path = result.path;
+      setState(() {
+        file = File(path);
+      });
+    }
+  }
+
+  Future sendImage() async {
+    var storageImage = FirebaseStorage.instance.ref().child(file.path);
+    var task = storageImage.putFile(file);
+    imageUrl = await (await task).ref.getDownloadURL();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,18 +88,56 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
               children: [
                 Stack(
                   children: [
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundImage: NetworkImage(
-                          Provider.of<FirebaseOperations>(context,
-                                  listen: false)
-                              .getInitAvatar),
-                    ),
+                    Provider.of<FirebaseOperations>(context, listen: false)
+                                .getInitAvatar ==
+                            noAvatarUrl
+                        ? CircleAvatar(
+                            radius: 50,
+                            child: Text(
+                              dc.getInitials(Provider.of<FirebaseOperations>(
+                                      context,
+                                      listen: false)
+                                  .getInitFullname),
+                            ),
+                          )
+                        : (file == null
+                            ? CircleAvatar(
+                                radius: 50,
+                                backgroundImage: NetworkImage(
+                                    Provider.of<FirebaseOperations>(context,
+                                            listen: false)
+                                        .getInitAvatar),
+                              )
+                            : CircleAvatar(
+                                radius: 50,
+                                backgroundImage: FileImage(file),
+                              )),
                     Positioned(
                       right: 0,
                       bottom: 0,
                       child: GestureDetector(
-                        onTap: () async {},
+                        onTap: () async {
+                          print('updating user avatar...');
+                          try {
+                            selectFile(ImageSource.gallery).whenComplete(() {
+                              print('image selected');
+                              Get.defaultDialog();
+
+                              sendImage().whenComplete(() {
+                                print('image sent to FStorage');
+                                Provider.of<FirebaseOperations>(context,
+                                        listen: false)
+                                    .updateAvatar(context, {
+                                  'avatar': imageUrl,
+                                });
+                              });
+                            });
+                          } catch (e) {
+                            print(e);
+                            return null;
+
+                          }
+                        },
                         child: Container(
                           width: 36,
                           height: 36,

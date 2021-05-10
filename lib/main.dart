@@ -53,10 +53,12 @@ class MyApp extends StatelessWidget {
 
         title: 'UniGuide',
         theme: ThemeData(
+          
           fontFamily: 'SFPro',
           primarySwatch: Colors.blue,
           unselectedWidgetColor: Color(0xFF232195),
         ),
+        debugShowCheckedModeBanner: false,
         getPages: AppRoutes.list,
         initialRoute:
             initScreen == 0 || initScreen == null ? '/chooseLang' : authWrap(),
