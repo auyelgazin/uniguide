@@ -84,11 +84,11 @@ class AuthService {
     return FirebaseFirestore.instance.collection('users').doc(auth.currentUser.uid).get().then((doc) {
       print('fetching user data');
 
-      dashboardController.fullName.value = doc.data()['fullName'];
-      dashboardController.avatar.value = doc.data()['avatar'];
+      // dashboardController.fullName.value = doc.data()['fullName'];
+      // dashboardController.avatar.value = doc.data()['avatar'];
 
-      print(dashboardController.fullName.value);
-      print(dashboardController.avatar.value);
+      // print(dashboardController.fullName.value);
+      // print(dashboardController.avatar.value);
     });
   }
 

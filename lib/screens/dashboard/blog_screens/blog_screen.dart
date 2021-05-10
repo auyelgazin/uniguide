@@ -8,9 +8,7 @@ import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/post_functions.dart';
 
-import 'package:uniguide/screens/dashboard/controllers/blog_controller.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
-import 'package:uniguide/screens/dashboard/models/dashboard_model.dart';
 
 import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/widgets/dashboard_widgets/post_card.dart';
@@ -27,8 +25,6 @@ class BlogScreen extends StatefulWidget {
 
 class _BlogScreenState extends State<BlogScreen> {
   FirebaseAuth _auth = FirebaseAuth.instance;
-
-  BlogController controller = BlogController();
 
   TextEditingController commentC = TextEditingController();
 
@@ -252,8 +248,10 @@ class _BlogScreenState extends State<BlogScreen> {
               ),
               height: 700,
               child: StreamBuilder<QuerySnapshot>(
-                stream:
-                    FirebaseFirestore.instance.collection('posts').orderBy('time', descending: descendingSorting).snapshots(),
+                stream: FirebaseFirestore.instance
+                    .collection('posts')
+                    .orderBy('time', descending: descendingSorting)
+                    .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
@@ -317,14 +315,16 @@ class _BlogScreenState extends State<BlogScreen> {
       BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     return ListView(
       children: snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
-        Provider.of<PostFunctions>(context, listen: false).showTimeAgo(documentSnapshot.data()['time']);
+        // Provider.of<PostFunctions>(context, listen: false).showTimeAgo(documentSnapshot.data()['time']);
         return PostCard(
             category: documentSnapshot.data()['category'],
             image: documentSnapshot.data()['image'],
             avatar: documentSnapshot.data()['avatar'],
             sender: documentSnapshot.data()['fullname'],
             title: documentSnapshot.data()['title'],
-            timeAgo: Provider.of<PostFunctions>(context, listen: false).getTimePosted.toString(),
+            timeAgo: Provider.of<PostFunctions>(context, listen: false)
+                .getTimePosted
+                .toString(),
             likes: Container(
               width: 40,
               child: StreamBuilder<QuerySnapshot>(

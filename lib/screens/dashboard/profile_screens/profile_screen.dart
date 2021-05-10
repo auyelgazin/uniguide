@@ -10,7 +10,6 @@ import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
-import 'package:uniguide/screens/dashboard/models/user_model.dart';
 import 'package:uniguide/screens/dashboard/profile_screens/language_screen.dart';
 import 'package:uniguide/screens/dashboard/profile_screens/persontal_data_screen.dart';
 import 'package:uniguide/screens/dashboard/profile_screens/profile_helper.dart';
@@ -32,12 +31,6 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   DashboardController dashboardController = Get.put(DashboardController());
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -255,7 +248,6 @@ class ProfileButtonsColumn extends StatelessWidget {
           avatarImage: 'images/account.png',
           title: 'Personal Data',
           onTap: () async {
-            await dashboardController.getCurrentProfile();
             Get.to(() => PersonalDataScreen());
           },
         ),

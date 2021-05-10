@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DashboardProvider with ChangeNotifier{
-
+class DashboardProvider with ChangeNotifier {
   String blogT = '__';
   String chatT = '';
   String profileT = '';

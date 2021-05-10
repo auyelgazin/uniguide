@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/firebase_operations.dart';
-import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/services/storage_service.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_button.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_textfield.dart';
@@ -27,50 +26,10 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
   FirebaseAuth auth = FirebaseAuth.instance;
   final TextEditingController fullNameController = TextEditingController();
 
-  DashboardController dashboardController = Get.put(DashboardController());
-
   String editedFullName;
-
-  File imageFile;
-  UploadTask task;
-
-  String urlDownload;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    
-  }
-  // final picker = ImagePicker();
-  // String url;
-
-  // chooseImage() async {
-  //   final pickedFile = await picker.getImage(source: ImageSource.gallery);
-  //   print(pickedFile.path);
-
-  //   setState(() {
-  //     imageFile = File(pickedFile.path);
-  //   });
-  // }
-
-  //  uploadFile() async {
-  //   Reference storageRef = FirebaseStorage.instance
-  //       .ref()
-  //       .child('avatars/${Path.basename(imageFile.path)}');
-  //   UploadTask uploadTask = storageRef.putFile(imageFile);
-
-  //   var imageUrl = await (await uploadTask).ref.getDownloadURL();
-  //   url = imageUrl.toString();
-  //   print(url);
-  // }
-  
 
   @override
   Widget build(BuildContext context) {
-    final fileName =
-        imageFile != null ? Path.basename(imageFile.path) : "No file selected";
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -105,41 +64,16 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   children: [
                     CircleAvatar(
                       radius: 50,
-                      backgroundImage: NetworkImage(Provider.of<FirebaseOperations>(context, listen: false).getInitAvatar),
+                      backgroundImage: NetworkImage(
+                          Provider.of<FirebaseOperations>(context,
+                                  listen: false)
+                              .getInitAvatar),
                     ),
-                    // Obx(
-                    //   () => Container(
-                    //     child: dashboardController.avatar.value != null
-                    //         ? Container(
-                    //             child: CircleAvatar(
-                    //               radius: 50.0,
-                    //               backgroundImage: NetworkImage(
-                    //                   dashboardController.avatar.value),
-                    //               // backgroundImage:
-                    //               //     FileImage(imageFile),
-                    //               // child:
-                    //               // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
-                    //             ),
-                    //           )
-                    //         : Container(
-                    //             child: CircleAvatar(
-                    //               radius: 50.0,
-                    //               child: Text(
-                    //                 dashboardController.getInitials(dashboardController.fullName.value),
-                    //               ),
-                    //             ),
-                    //           ),
-                    //   ),
-                    // ),
                     Positioned(
                       right: 0,
                       bottom: 0,
                       child: GestureDetector(
-                        onTap: () async {
-
-                          await selectFile();
-                          uploadFile();
-                        },
+                        onTap: () async {},
                         child: Container(
                           width: 36,
                           height: 36,
@@ -158,7 +92,6 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                 SizedBox(height: 5),
                 Container(
                   height: 20,
-                  child: task != null ? buildUploadStatus(task) : Container(),
                 ),
                 SizedBox(height: 10),
                 Padding(
@@ -172,7 +105,9 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                       ),
                       AuthTextField(
                         labelText: null,
-                        hintText: dashboardController.fullName.value,
+                        hintText: Provider.of<FirebaseOperations>(context,
+                                listen: false)
+                            .getInitFullname,
                         hidePassword: false,
                         controller: fullNameController,
                         trailingIcon: null,
@@ -193,12 +128,10 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                 editedFullName = fullNameController.text.trim();
 
                 if (editedFullName.length >= 3) {
-                  dashboardController.fullName.value = editedFullName;
                   await FirestoreService(uid: auth.currentUser.uid)
                       .updateUserData(
                     fullName: editedFullName,
                     email: auth.currentUser.email,
-                    position: dashboardController.position.value,
                   );
                   Get.back();
                 }
@@ -209,40 +142,6 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
         ],
       ),
     );
-  }
-
-  Future selectFile() async {
-    final result =
-        await ImagePicker.platform.pickImage(source: ImageSource.gallery);
-
-    if (result == null) return;
-
-    final path = result.path;
-
-    setState(() {
-      imageFile = File(path);
-    });
-  }
-
-  Future uploadFile() async {
-    if (imageFile == null) return;
-
-    final fileName = Path.basename(imageFile.path);
-    final destination = 'avatars/$fileName';
-
-    task = StorageService.uploadFile(destination, imageFile);
-    setState(() {});
-
-    if (task == null) return;
-
-    final snapshot = await task.whenComplete(() {});
-    urlDownload = await snapshot.ref.getDownloadURL();
-    dashboardController.avatar.value = urlDownload;
-
-    await FirestoreService(uid: auth.currentUser.uid)
-        .setAvatar(avatar: dashboardController.avatar.value);
-
-    print('DOWNLOAD LINK => => => $urlDownload');
   }
 
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
