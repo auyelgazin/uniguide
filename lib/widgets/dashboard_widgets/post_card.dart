@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uniguide/constants/colors.dart';
 import 'package:uniguide/constants/consants.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
@@ -45,6 +46,8 @@ class PostCard extends StatefulWidget {
 class _PostCardState extends State<PostCard> {
   DashboardController dc = Get.put(DashboardController());
 
+  
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -62,8 +65,10 @@ class _PostCardState extends State<PostCard> {
                   Container(
                     child: widget.avatar == noAvatarUrl
                         ? CircleAvatar(
+                          backgroundColor: darPurple,
                             child: Text(
                               dc.getInitials(widget.sender),
+                              style: initialsStyle,
                             ),
                           )
                         : CircleAvatar(

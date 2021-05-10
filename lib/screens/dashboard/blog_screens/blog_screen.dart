@@ -222,6 +222,38 @@ class _BlogScreenState extends State<BlogScreen> {
                       ),
                     ),
                   ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        newContColor = white;
+                        newTextColor = black.withOpacity(0.2);
+
+                        intContColor = white;
+                        intTextColor = black.withOpacity(0.2);
+
+                        discContColor = darPurple;
+                        discTextColor = white;
+                      });
+                    },
+                    child: Container(
+                      height: 28,
+                      decoration: BoxDecoration(
+                        color: discContColor,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 9, vertical: 2),
+                        child: Text(
+                          '#интересные',
+                          style: TextStyle(
+                            color: discTextColor,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     width: 20,
                   ),
@@ -265,7 +297,8 @@ class _BlogScreenState extends State<BlogScreen> {
       BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     return ListView(
       children: snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
-        // Provider.of<PostFunctions>(context, listen: false).showTimeAgo(documentSnapshot.data()['time']);
+        Provider.of<PostFunctions>(context, listen: false)
+            .showTimeAgo(documentSnapshot.data()['time']);
         return PostCard(
             category: documentSnapshot.data()['category'],
             image: documentSnapshot.data()['image'],
@@ -299,6 +332,7 @@ class _BlogScreenState extends State<BlogScreen> {
               ),
             ),
             comments: StreamBuilder<QuerySnapshot>(
+              
               stream: FirebaseFirestore.instance
                   .collection('posts')
                   .doc(documentSnapshot.data()['title'])
@@ -308,6 +342,7 @@ class _BlogScreenState extends State<BlogScreen> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
                 } else {
+
                   return Text(
                     snapshot.data.docs.length.toString(),
                     style: TextStyle(
@@ -347,79 +382,90 @@ class _BlogScreenState extends State<BlogScreen> {
                   body: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Column(
-                        children: [
-                          PostInCommentCard(
-                            category: documentSnapshot.data()['category'],
-                            avatar: documentSnapshot.data()['avatar'],
-                            sender: documentSnapshot.data()['fullname'],
-                            title: documentSnapshot.data()['title'],
-                            comments: StreamBuilder<QuerySnapshot>(
-                              stream: FirebaseFirestore.instance
-                                  .collection('posts')
-                                  .doc(documentSnapshot.data()['title'])
-                                  .collection('comments')
-                                  .snapshots(),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Center(
-                                      child: CircularProgressIndicator());
-                                } else {
-                                  return Text(
-                                    snapshot.data.docs.length.toString(),
-                                    style: TextStyle(
-                                        color: Color(0xFF687684),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400),
-                                  );
-                                }
+                      Expanded(
+                        child: ListView(
+                          
+                          children: [
+                            PostInCommentCard(
+                              category: documentSnapshot.data()['category'],
+                              avatar: documentSnapshot.data()['avatar'],
+                              sender: documentSnapshot.data()['fullname'],
+                              title: documentSnapshot.data()['title'],
+                              // timeAgo: Provider.of<PostFunctions>(context,
+                              //         listen: false)
+                              //     .getTimePosted
+                              //     .toString(),
+                              comments: StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('posts')
+                                    .doc(documentSnapshot.data()['title'])
+                                    .collection('comments')
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  } else {
+                                    
+                                    return Text(
+                                      snapshot.data.docs.length.toString(),
+                                      style: TextStyle(
+                                          color: Color(0xFF687684),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400),
+                                    );
+                                  }
+                                },
+                              ),
+                              onLike: () {
+                                print('Liking post...');
+                                Provider.of<PostFunctions>(context,
+                                        listen: false)
+                                    .addLike(
+                                        context,
+                                        documentSnapshot.data()['title'],
+                                        Provider.of<Authentication>(context,
+                                                listen: false)
+                                            .getUserUid);
                               },
+                              likes: StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('posts')
+                                    .doc(documentSnapshot.data()['title'])
+                                    .collection('likes')
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  } else {
+                                    return Text(
+                                      snapshot.data.docs.length.toString(),
+                                      style: TextStyle(
+                                          color: Color(0xFF687684),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400),
+                                    );
+                                  }
+                                },
+                              ),
                             ),
-                            onLike: () {
-                              print('Liking post...');
-                              Provider.of<PostFunctions>(context,
+                            Text(
+                              'Начало обсуждения',
+                              textAlign: TextAlign.center,
+                            ),
+                            Container(
+                              height: 300,
+                              child: Provider.of<PostFunctions>(context,
                                       listen: false)
-                                  .addLike(
-                                      context,
-                                      documentSnapshot.data()['title'],
-                                      Provider.of<Authentication>(context,
-                                              listen: false)
-                                          .getUserUid);
-                            },
-                            likes: StreamBuilder<QuerySnapshot>(
-                              stream: FirebaseFirestore.instance
-                                  .collection('posts')
-                                  .doc(documentSnapshot.data()['title'])
-                                  .collection('likes')
-                                  .snapshots(),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                } else {
-                                  return Text(
-                                    snapshot.data.docs.length.toString(),
-                                    style: TextStyle(
-                                        color: Color(0xFF687684),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400),
-                                  );
-                                }
-                              },
+                                  .showComments(context, documentSnapshot,
+                                      documentSnapshot.data()['title']),
                             ),
-                          ),
-                          Text('Начало обсуждения'),
-                          Container(
-                            height: 300,
-                            child: Provider.of<PostFunctions>(context,
-                                    listen: false)
-                                .showComments(context, documentSnapshot,
-                                    documentSnapshot.data()['title']),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       Container(
                         height: 90,

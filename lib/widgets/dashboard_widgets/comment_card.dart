@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uniguide/constants/colors.dart';
+import 'package:uniguide/constants/consants.dart';
+import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 
 class CommentCard extends StatelessWidget {
@@ -11,6 +14,7 @@ class CommentCard extends StatelessWidget {
   String avatar;
   // Timestamp sendTime;
   String comment;
+  String timeAgo;
 
 
   CommentCard({
@@ -19,6 +23,7 @@ class CommentCard extends StatelessWidget {
     this.avatar,
     // this.sendTime,
     this.comment,
+    this.timeAgo,
 
   });
 
@@ -29,7 +34,7 @@ class CommentCard extends StatelessWidget {
     return '$month, $day';
   }
 
-  DashboardController dashboardController = Get.put(DashboardController());
+  DashboardController dc = Get.put(DashboardController());
 
   @override
   Widget build(BuildContext context) {
@@ -45,29 +50,19 @@ class CommentCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(avatar),
-                    // child: Text('ess'),
-                  )
-                  // Container(
-                  //   child: image != null
-                  //       ? Container(
-                  //           child: CircleAvatar(
-
-                  //             backgroundImage: NetworkImage(
-                  //                 image),
-                  //             // child:
-                  //             // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
-                  //           ),
-                  //         )
-                  //       : Container(
-                  //           child: CircleAvatar(
-                  //             child: Text(
-                  //               dashboardController.getInitials(sender),
-                  //             ),
-                  //           ),
-                  //         ),
-                  // ),
+                 Container(
+                    child: avatar == noAvatarUrl
+                        ? CircleAvatar(
+                          backgroundColor: darPurple,
+                            child: Text(
+                              dc.getInitials(sender),
+                              style: initialsStyle,
+                            ),
+                          )
+                        : CircleAvatar(
+                            backgroundImage: NetworkImage(avatar),
+                          ),
+                  ),
                 ],
               ),
             ),
@@ -105,7 +100,7 @@ class CommentCard extends StatelessWidget {
                                         ),
                                         SizedBox(width: 8),
                                         Text(
-                                          '12 Hours ago',
+                                          timeAgo,
                                           // timeStampToDate(sendTime),
                                           style: TextStyle(
                                             fontSize: 16,

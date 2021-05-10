@@ -1,7 +1,11 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uniguide/constants/colors.dart';
+import 'package:uniguide/constants/consants.dart';
+import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 
 class PostInCommentCard extends StatefulWidget {
@@ -18,6 +22,9 @@ class PostInCommentCard extends StatefulWidget {
   Widget likes;
   Widget comments;
 
+  // String timeAgo;
+
+
   PostInCommentCard({
     this.category,
     // this.image,
@@ -30,6 +37,7 @@ class PostInCommentCard extends StatefulWidget {
     this.comments,
     // this.comments,
     // this.likes
+    // this.timeAgo,
   });
 
   @override
@@ -37,21 +45,8 @@ class PostInCommentCard extends StatefulWidget {
 }
 
 class _PostInCommentCardState extends State<PostInCommentCard> {
-  String timeStampToDate(Timestamp timeStamp) {
-    var date = timeStamp.toDate();
-    String month = DateFormat.d().add_MMM().format(date).toString();
-    String day = DateFormat.Hm().format(date).toString();
-    return '$month, $day';
-  }
 
-  DashboardController dashboardController = Get.put(DashboardController());
-
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   dashboardController.getCurrentProfile();
-  // }
+  DashboardController dc = Get.put(DashboardController());
 
   @override
   Widget build(BuildContext context) {
@@ -68,28 +63,17 @@ class _PostInCommentCardState extends State<PostInCommentCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(widget.avatar),
-                      // child: Text(
-                      //   dashboardController.getInitials(widget.sender),
-                      // ),
-                    ),
-                    // child: widget.image != null
-                    //     ? Container(
-                    //         child: CircleAvatar(
-
-                    //           backgroundImage: NetworkImage(widget.image),
-                    //           // child:
-                    //           // FittedBox(child: Image.network('https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/avatars%2Fimage_picker3446361867049242902.jpg?alt=media&token=90777e73-9f3d-41cc-a30e-3b8d7fb4c181')),
-                    //         ),
-                    //       )
-                    //     : Container(
-                    //         child: CircleAvatar(
-                    //           child: Text(
-                    //             dashboardController.getInitials(widget.sender),
-                    //           ),
-                    //         ),
-                    //       ),
+                    child: widget.avatar == noAvatarUrl
+                        ? CircleAvatar(
+                          backgroundColor: darPurple,
+                            child: Text(
+                              dc.getInitials(widget.sender),
+                              style: initialsStyle,
+                            ),
+                          )
+                        : CircleAvatar(
+                            backgroundImage: NetworkImage(widget.avatar),
+                          ),
                   ),
                 ],
               ),
@@ -127,15 +111,14 @@ class _PostInCommentCardState extends State<PostInCommentCard> {
                                               fontWeight: FontWeight.w600),
                                         ),
                                         SizedBox(width: 8),
-                                        Text(
-                                          '12 Hours ago',
-                                          // timeStampToDate(sendTime),
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400,
-                                            color: Color(0xFF687684),
-                                          ),
-                                        )
+                                        //  AutoSizeText(
+                                        //   widget.timeAgo,
+                                        //   style: TextStyle(
+                                        //     fontSize: 16,
+                                        //     fontWeight: FontWeight.w400,
+                                        //     color: Color(0xFF687684),
+                                        //   ),
+                                        // )
                                       ],
                                     ),
                                     SizedBox(height: 5),

@@ -80,10 +80,15 @@ class PostFunctions with ChangeNotifier {
             return new ListView(
                 children:
                     snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
+                      Provider.of<PostFunctions>(context, listen: false)
+            .showTimeAgo(documentSnapshot.data()['time']);
               return CommentCard(
                 sender: documentSnapshot.data()['fullname'],
                 avatar: documentSnapshot.data()['avatar'],
                 comment: documentSnapshot.data()['comment'],
+                timeAgo:  Provider.of<PostFunctions>(context, listen: false)
+                .getTimePosted
+                .toString(),
               );
             }).toList());
           }

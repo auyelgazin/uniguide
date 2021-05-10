@@ -74,3 +74,9 @@ var commentHint = TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.w400,
 );
+
+var initialsStyle = TextStyle(
+  color: white,
+  fontSize: 14,
+  fontWeight: FontWeight.w600,
+);
