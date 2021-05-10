@@ -39,7 +39,8 @@ class _WriteScreenState extends State<WriteScreen> {
   String imageUrl;
 
   Future selectFile(ImageSource source) async {
-    final result = await ImagePicker.platform.pickImage(source: source, imageQuality: 60);
+    final result =
+        await ImagePicker.platform.pickImage(source: source, imageQuality: 60);
 
     if (result == null) return;
     final path = result.path;
@@ -180,29 +181,30 @@ class _WriteScreenState extends State<WriteScreen> {
             color: Color(0xFF232195),
             iconSize: 20,
             onPressed: () async {
-             sendImage().whenComplete(() {
+              sendImage().whenComplete(() {
                 Provider.of<FirebaseOperations>(context, listen: false)
-                  .uploadPostData(titleController.text, {
-                'title': titleController.text,
-                'image': file == null
-                    ? 'https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/const_image.png?alt=media&token=6e7d4e3e-4efc-41a2-b182-58ec059b2a80'
-                    : imageUrl,
-                'category': chosenTopic,
-                'fullname':
-                    Provider.of<FirebaseOperations>(context, listen: false)
-                        .getInitFullname,
-                'avatar':
-                    Provider.of<FirebaseOperations>(context, listen: false)
-                        .getInitAvatar,
-                'email': Provider.of<FirebaseOperations>(context, listen: false)
-                    .geiInitEmail,
-                'useruid': Provider.of<Authentication>(context, listen: false)
-                    .getUserUid,
-                'time': Timestamp.now(),
-              }).whenComplete(() {
-                print('Post uploaded');
+                    .uploadPostData(titleController.text, {
+                  'title': titleController.text,
+                  'image': file == null
+                      ? 'https://firebasestorage.googleapis.com/v0/b/uniguide-a6633.appspot.com/o/const_image.png?alt=media&token=6e7d4e3e-4efc-41a2-b182-58ec059b2a80'
+                      : imageUrl,
+                  'category': chosenTopic,
+                  'fullname':
+                      Provider.of<FirebaseOperations>(context, listen: false)
+                          .getInitFullname,
+                  'avatar':
+                      Provider.of<FirebaseOperations>(context, listen: false)
+                          .getInitAvatar,
+                  'email':
+                      Provider.of<FirebaseOperations>(context, listen: false)
+                          .geiInitEmail,
+                  'useruid': Provider.of<Authentication>(context, listen: false)
+                      .getUserUid,
+                  'time': Timestamp.now(),
+                }).whenComplete(() {
+                  print('Post uploaded');
+                });
               });
-             });
             },
           ),
         ],

@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/firebase_operations.dart';
-import 'package:uniguide/services/storage_service.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_button.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_textfield.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';

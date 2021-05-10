@@ -16,11 +16,10 @@ import 'package:uniguide/screens/dashboard/profile_screens/profile_helper.dart';
 import 'package:uniguide/screens/dashboard/profile_screens/settings_screen.dart';
 import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/services/firestore_service.dart';
-import 'package:uniguide/services/storage_service.dart';
 import 'package:uniguide/widgets/profile_button.dart';
 import 'package:get/get.dart';
 
-import 'profile_screens/survey_screen.dart';
+import 'survey_screen.dart';
 
 final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 

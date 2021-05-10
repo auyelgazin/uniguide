@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:uniguide/screens/auth/congratz_screen.dart';
 import 'package:uniguide/screens/auth/login_screen.dart';
 import 'package:uniguide/screens/auth/signup_screen.dart';
-import 'package:uniguide/screens/dashboard/profile_screen.dart';
+import 'package:uniguide/screens/dashboard/profile_screens/profile_screen.dart';
 import 'package:uniguide/screens/dashboard/profile_screens/persontal_data_screen.dart';
 import 'package:uniguide/screens/dashboard/profile_screens/settings_screen.dart';
 import 'package:uniguide/screens/onboarding/choose_lang_screen.dart';

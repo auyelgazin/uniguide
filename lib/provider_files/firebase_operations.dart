@@ -68,38 +68,11 @@ class FirebaseOperations with ChangeNotifier {
         .delete();
   }
 
-  Future addAward(String postId, dynamic data) async {
-    return FirebaseFirestore.instance
-        .collection('posts')
-        .doc(postId)
-        .collection('awards')
-        .add(data);
-  }
-
   Future updateCaption(String postId, dynamic data) async {
     return FirebaseFirestore.instance
         .collection('posts')
         .doc(postId)
         .update(data);
-  }
-
-  Future followUser(
-      String followingUid,
-      String followingDocId,
-      dynamic followingData,
-      String followerUid,
-      String followerDocId,
-      dynamic followerData) async {
-    return FirebaseFirestore.instance
-        .collection('users').doc(followingUid).collection('followers')
-        .doc(followingDocId).set(followingData).whenComplete(() async {
-      return FirebaseFirestore.instance
-          .collection('users')
-          .doc(followerUid)
-          .collection('following')
-          .doc(followerDocId)
-          .set(followerData);
-    });
   }
 
   Future submitChatroomData(String chatRoomName, dynamic chatRoomData) async {

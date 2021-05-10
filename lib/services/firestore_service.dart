@@ -18,33 +18,13 @@ class FirestoreService {
     });
   }
 
-  Future setAvatar(
-      {String avatar}) async {
+  Future setAvatar({String avatar}) async {
     return await usersCollection.doc(uid).update({
       'avatar': avatar,
-      
     });
   }
 
   updateProfilePic(picUrl) async {
     await FirebaseAuth.instance.currentUser.updateProfile(photoURL: picUrl);
-  }
-
-  Stream<QuerySnapshot> get users {
-    return usersCollection.snapshots();
-  }
-
-  Future getCurrentUserData() async {
-    try {
-      DocumentSnapshot ds = await usersCollection.doc(uid).get();
-      String fullName = ds.get('fullName');
-      String email = ds.get('email');
-      String position = ds.get('position');
-      String avatar = ds.get('avatar');
-      return [fullName, email, position, avatar];
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
   }
 }

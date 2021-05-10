@@ -49,11 +49,4 @@ class UploadPost with ChangeNotifier {
     notifyListeners();
   }
 
-  selectPostType(BuildContext context) {
-    return showModalBottomSheet(
-        backgroundColor: Colors.transparent,
-        context: context,
-        builder: (context) {
-        });
-  }
 }

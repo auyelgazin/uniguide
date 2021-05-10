@@ -8,7 +8,7 @@ import 'package:uniguide/screens/dashboard/controllers/dashboard_provider.dart';
 import 'package:uniguide/screens/dashboard/dashboard_helper.dart';
 import 'blog_screens/blog_screen.dart';
 import 'chat_screen.dart';
-import 'profile_screen.dart';
+import 'profile_screens/profile_screen.dart';
 import 'write_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
