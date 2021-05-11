@@ -35,7 +35,11 @@ class _ChatScreenState extends State<ChatScreen> {
               decoration: InputDecoration(
                 fillColor: lightPurple.withOpacity(0.3),
                 filled: true,
-                // border: 
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide.none,
+                ),
+                // border:
               ),
               controller: searchC,
               onChanged: (val) {

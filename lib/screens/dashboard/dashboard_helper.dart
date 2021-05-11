@@ -6,29 +6,40 @@ import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_provider.dart';
 
+import '../../constants/colors.dart';
+import '../../constants/colors.dart';
+
 class DashboardHelper with ChangeNotifier {
   DashboardController dc = DashboardController();
   int pageIndex = 0;
 
   Widget bottomNav(
+    
       BuildContext context, int index, PageController pageController) {
     return Container(
-      child: CustomNavigationBar(
+      height: 90,
+      
+      child: BottomNavigationBar(
+        
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: darPurple,
+        unselectedItemColor: white,
+
         backgroundColor: lightPurple,
-        selectedColor: darPurple,
-        unSelectedColor: white,
+        // selectedColor: darPurple,
+        // unSelectedColor: white,
+        
 
         currentIndex: index,
         // bubbleCurve: Curves.bounceIn,
         // scaleCurve: Curves.decelerate,
         onTap: (val) {
-          Provider.of<FirebaseOperations>(context, listen: false).initUserData(context);
           index = val;
           pageController.jumpToPage(val);
           notifyListeners();
         },
         items: [
-          CustomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: ImageIcon(
               AssetImage('images/blog.png'),
             ),
@@ -37,7 +48,7 @@ class DashboardHelper with ChangeNotifier {
               style: TextStyle(fontWeight: FontWeight.w900, color: darPurple),
             ),
           ),
-          CustomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: ImageIcon(
               AssetImage('images/chat.png'),
             ),
@@ -46,7 +57,7 @@ class DashboardHelper with ChangeNotifier {
               style: TextStyle(fontWeight: FontWeight.w900, color: darPurple),
             ),
           ),
-          CustomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: ImageIcon(
               AssetImage('images/profile.png'),
             ),
@@ -55,7 +66,7 @@ class DashboardHelper with ChangeNotifier {
               style: TextStyle(fontWeight: FontWeight.w900, color: darPurple),
             ),
           ),
-          CustomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: ImageIcon(
               AssetImage('images/write.png'),
             ),
