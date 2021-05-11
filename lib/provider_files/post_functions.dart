@@ -1,14 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:uniguide/widgets/dashboard_widgets/comment_card.dart';
 
+import '../constants/colors.dart';
+import '../constants/consants.dart';
+import '../constants/font_styles.dart';
+import '../screens/dashboard/controllers/dashboard_controller.dart';
+import '../screens/dashboard/controllers/dashboard_controller.dart';
 import 'authentication.dart';
 import 'firebase_operations.dart';
 
 class PostFunctions with ChangeNotifier {
+
+  DashboardController dc = Get.put(DashboardController());
 
   String timePosted;
   String get getTimePosted => timePosted;
@@ -110,11 +118,26 @@ class PostFunctions with ChangeNotifier {
           } else {
             return new ListView(
               children: snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
-                return ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(documentSnapshot.data()['avatar']),
-                  ),
-                  title: Text(documentSnapshot.data()['fullname']),
+                return Column(
+                  children: [
+                    ListTile(
+                      leading: Container(
+                        child: documentSnapshot.data()['avatar'] == noAvatarUrl
+                            ? CircleAvatar(
+                              backgroundColor: darPurple,
+                                child: Text(
+                                  dc.getInitials(documentSnapshot.data()['fullname']),
+                                  style: initialsStyle,
+                                ),
+                              )
+                            : CircleAvatar(
+                                backgroundImage: NetworkImage(documentSnapshot.data()['avatar']),
+                              ),
+                      ),
+                      title: Text(documentSnapshot.data()['fullname']),
+                    ),
+                    Divider(),
+                  ],
                 );
               }).toList()
             );

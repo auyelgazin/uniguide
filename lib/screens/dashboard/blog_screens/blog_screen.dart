@@ -43,11 +43,15 @@ class _BlogScreenState extends State<BlogScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        title: Text(
-          'Blog',
-          style: titleStyle,
+        leadingWidth: 0,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 5),
+          child: Text(
+            'Blog',
+            style: titleStyle,
+          ),
         ),
-        centerTitle: true,
+        centerTitle: false,
         actions: [
           IconButton(
               icon: ImageIcon(
@@ -367,15 +371,19 @@ class _BlogScreenState extends State<BlogScreen> {
                   appBar: AppBar(
                     backgroundColor: white,
                     elevation: 0,
-                    leading: IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: Color(0xFF232195).withOpacity(0.3),
+                    centerTitle: true,
+                    leading: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_back_ios,
+                          color: Color(0xFF232195).withOpacity(0.5),
+                        ),
+                        onPressed: () {
+                          Get.back();
+                          commentC.clear();
+                        },
                       ),
-                      onPressed: () {
-                        Get.back();
-                        commentC.clear();
-                      },
                     ),
                     title: Text(
                       'Коментарии',
@@ -524,6 +532,7 @@ class _BlogScreenState extends State<BlogScreen> {
                     ],
                   ),
                 ),
+                transition: Transition.cupertino
               );
 
               // dc.getCurrentProfile();
@@ -534,8 +543,28 @@ class _BlogScreenState extends State<BlogScreen> {
             onLikes: () {
               Get.to(
                 () => Scaffold(
+                  backgroundColor: white,
                   appBar: AppBar(
-                    title: Text('likes secwn'),
+                    backgroundColor: white,
+                    elevation: 0,
+                    centerTitle: true,
+                    leading: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_back_ios,
+                          color: Color(0xFF232195).withOpacity(0.5),
+                        ),
+                        onPressed: () {
+                          Get.back();
+                          commentC.clear();
+                        },
+                      ),
+                    ),
+                    title: Text(
+                      'Likes',
+                      style: commentsStyle,
+                    ),
                   ),
                   body: Container(
                     height: 400,

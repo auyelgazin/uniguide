@@ -19,7 +19,13 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   DashboardController dc = Get.put(DashboardController());
   final PageController pageController = PageController();
-  
+
+  var pages = [
+    BlogScreen(),
+    ChatScreen(),
+    ProfileScreen(),
+    WriteScreen(),
+  ];
 
   @override
   void initState() {
@@ -33,48 +39,63 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
       body: PageView(
         controller: pageController,
-        children: [
-          BlogScreen(),
-          ChatScreen(),
-          ProfileScreen(),
-          WriteScreen(),
-        ],
+        children: pages,
         physics: NeverScrollableScrollPhysics(),
-        onPageChanged: (page) {
+        onPageChanged: (index) {
           setState(() {
-            Provider.of<DashboardHelper>(context, listen: false).pageIndex = page;
-      
-            switch (Provider.of<DashboardHelper>(context, listen: false).pageIndex) {
+
+
+            Provider.of<DashboardHelper>(context, listen: false).pageIndex =
+                index;
+
+            switch (Provider.of<DashboardHelper>(context, listen: false)
+                .pageIndex) {
               case 0:
                 {
-                  Provider.of<DashboardProvider>(context, listen: false).blogT = '__';
-                  Provider.of<DashboardProvider>(context, listen: false).chatT = '';
-                  Provider.of<DashboardProvider>(context, listen: false).profileT = '';
-                  Provider.of<DashboardProvider>(context, listen: false).writeT = '';
+                  Provider.of<DashboardProvider>(context, listen: false).blogT =
+                      '__';
+                  Provider.of<DashboardProvider>(context, listen: false).chatT =
+                      '';
+                  Provider.of<DashboardProvider>(context, listen: false)
+                      .profileT = '';
+                  Provider.of<DashboardProvider>(context, listen: false)
+                      .writeT = '';
                 }
                 break;
               case 1:
                 {
-                  Provider.of<DashboardProvider>(context, listen: false).blogT = '';
-                  Provider.of<DashboardProvider>(context, listen: false).chatT = '__';
-                  Provider.of<DashboardProvider>(context, listen: false).profileT = '';
-                  Provider.of<DashboardProvider>(context, listen: false).writeT = '';
+                  Provider.of<DashboardProvider>(context, listen: false).blogT =
+                      '';
+                  Provider.of<DashboardProvider>(context, listen: false).chatT =
+                      '__';
+                  Provider.of<DashboardProvider>(context, listen: false)
+                      .profileT = '';
+                  Provider.of<DashboardProvider>(context, listen: false)
+                      .writeT = '';
                 }
                 break;
-                case 2:
+              case 2:
                 {
-                  Provider.of<DashboardProvider>(context, listen: false).blogT = '';
-                  Provider.of<DashboardProvider>(context, listen: false).chatT = '';
-                  Provider.of<DashboardProvider>(context, listen: false).profileT = '__';
-                  Provider.of<DashboardProvider>(context, listen: false).writeT = '';
+                  Provider.of<DashboardProvider>(context, listen: false).blogT =
+                      '';
+                  Provider.of<DashboardProvider>(context, listen: false).chatT =
+                      '';
+                  Provider.of<DashboardProvider>(context, listen: false)
+                      .profileT = '__';
+                  Provider.of<DashboardProvider>(context, listen: false)
+                      .writeT = '';
                 }
                 break;
-                case 3:
+              case 3:
                 {
-                  Provider.of<DashboardProvider>(context, listen: false).blogT = '';
-                  Provider.of<DashboardProvider>(context, listen: false).chatT = '';
-                  Provider.of<DashboardProvider>(context, listen: false).profileT = '';
-                  Provider.of<DashboardProvider>(context, listen: false).writeT = '__';
+                  Provider.of<DashboardProvider>(context, listen: false).blogT =
+                      '';
+                  Provider.of<DashboardProvider>(context, listen: false).chatT =
+                      '';
+                  Provider.of<DashboardProvider>(context, listen: false)
+                      .profileT = '';
+                  Provider.of<DashboardProvider>(context, listen: false)
+                      .writeT = '__';
                 }
                 break;
             }
@@ -82,7 +103,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         },
       ),
       bottomNavigationBar: Provider.of<DashboardHelper>(context, listen: false)
-          .bottomNav(context, Provider.of<DashboardHelper>(context, listen: false).pageIndex, pageController),
+          .bottomNav(
+              context,
+              Provider.of<DashboardHelper>(context, listen: false).pageIndex,
+              pageController),
     );
   }
 }
