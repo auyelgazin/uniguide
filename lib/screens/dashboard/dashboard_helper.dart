@@ -13,7 +13,6 @@ class DashboardHelper with ChangeNotifier {
   Widget bottomNav(
       BuildContext context, int index, PageController pageController) {
     return Container(
-      height: 90,
       child: CustomNavigationBar(
         backgroundColor: lightPurple,
         selectedColor: darPurple,

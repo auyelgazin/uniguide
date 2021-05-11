@@ -44,8 +44,9 @@ class _SignupScreenState extends State<SignupScreen> {
     getFullameIndex(String fullname) {
       List<String> splitList = fullname.split(' ');
 
+      indexList.add(fullname.toLowerCase());
       for (int i = 0; i < splitList.length; i++) {
-        for (int j = 0; j < splitList[i].length; j++) {
+        for (int j = 0; j <= splitList[i].length; j++) {
           indexList.add(splitList[i].substring(0, j).toLowerCase());
         }
       }
@@ -226,11 +227,11 @@ class _SignupScreenState extends State<SignupScreen> {
                     AuthButton(
                       'signup'.tr,
                       () async {
-                        String email = emailController.text.trim();
+                        String email = emailController.text.trim().toLowerCase();
                         String fullName = fullNameController.text.trim();
                         String password = passwordController.text.trim();
                         
-                        
+                        getFullameIndex(fullName);
 
                         if (fullName.isNotEmpty &&
                             password.isNotEmpty &&
@@ -261,6 +262,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   'email': email,
                                   'fullname': fullName,
                                   'position': chosenPosition,
+                                  'searchIndex': indexList,
                                 });
                               }).whenComplete(() {
                                 Get.toNamed('/dashboard');
@@ -275,7 +277,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               controller.emptyAgain();
 
                               print('signing up teacher & stuff...');
-                              getFullameIndex(fullName);
+                              
 
                               Provider.of<Authentication>(context, listen: false).createAccount(email, password).whenComplete(() {
                                 print('creating USER collection');
