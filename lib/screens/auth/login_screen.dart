@@ -107,12 +107,16 @@ class LoginScreen extends StatelessWidget {
                     AuthButton(
                       'login'.tr,
                       () async {
-                        Provider.of<Authentication>(context, listen: false).logIntoAccount(emailController.text, passwordController.text).whenComplete((){
+                        try {
+                          Provider.of<Authentication>(context, listen: false).logIntoAccount(emailController.text, passwordController.text).whenComplete((){
                           print('User logged in');
                           // - - - ->
                           Provider.of<FirebaseOperations>(context, listen: false).initUserData(context);
                           Get.toNamed('/dashboard');
                         });
+                        } catch (e) {
+                          print(e);
+                        }
                         // await AuthService(auth: firebaseAuth).Login(
                         //     email: emailController.text,
                         //     password: passwordController.text);

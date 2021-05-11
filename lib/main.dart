@@ -4,22 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/constants/language/languages.dart';
 import 'package:uniguide/provider_files/post_functions.dart';
-import 'package:uniguide/provider_files/upload_post.dart';
 import 'package:uniguide/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_provider.dart';
 import 'package:uniguide/screens/dashboard/dashboard_helper.dart';
 import 'package:uniguide/screens/dashboard/profile_screens/profile_helper.dart';
-import 'package:uniguide/screens/onboarding/choose_lang_screen.dart';
-import 'package:uniguide/services/auth_service.dart';
+
 import 'package:provider/provider.dart';
 
 import 'provider_files/authentication.dart';
 import 'provider_files/firebase_operations.dart';
 
-import 'package:camera/camera.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart';
+
 
 
 
@@ -28,14 +24,12 @@ int initScreen;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // final cameras = await availableCameras();
-
   // Firebase Core initialization
   await Firebase.initializeApp();
 
   // SharedPreferences - for storing data in a file on the device
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  initScreen = await preferences.getInt('initScreen');
+  initScreen = preferences.getInt('initScreen');
   await preferences.setInt('initScreen', 1);
 
   runApp(MyApp());
@@ -65,7 +59,6 @@ class MyApp extends StatelessWidget {
       ),
       providers: [
         ChangeNotifierProvider(create: (_) => PostFunctions()),
-        ChangeNotifierProvider(create: (_) => UploadPost()),
         ChangeNotifierProvider(create: (_) => FirebaseOperations()),
         ChangeNotifierProvider(create: (_) => Authentication()),
         ChangeNotifierProvider(create: (_) => DashboardHelper()),

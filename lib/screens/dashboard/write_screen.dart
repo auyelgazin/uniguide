@@ -11,7 +11,6 @@ import 'package:uniguide/constants/font_styles.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/firebase_operations.dart';
-import 'package:uniguide/provider_files/upload_post.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/screens/dashboard/models/topic.dart';
 import 'package:uniguide/services/auth_service.dart';
@@ -38,7 +37,7 @@ class _WriteScreenState extends State<WriteScreen> {
 
   Future selectFile(ImageSource source) async {
     final result =
-        await ImagePicker.platform.pickImage(source: source, imageQuality: 60);
+        await ImagePicker.platform.pickImage(source: source, imageQuality: 40);
 
     if (result == null) return;
     final path = result.path;

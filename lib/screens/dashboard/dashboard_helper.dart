@@ -23,6 +23,7 @@ class DashboardHelper with ChangeNotifier {
         // bubbleCurve: Curves.bounceIn,
         // scaleCurve: Curves.decelerate,
         onTap: (val) {
+          Provider.of<FirebaseOperations>(context, listen: false).initUserData(context);
           index = val;
           pageController.jumpToPage(val);
           notifyListeners();

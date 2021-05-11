@@ -103,192 +103,191 @@ class _BlogScreenState extends State<BlogScreen> {
               }),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              height: 30,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  SizedBox(
-                    width: 20,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        descendingSorting = true;
-                        newContColor = darPurple;
-                        newTextColor = white;
+      body: ListView(
+        shrinkWrap: true,
+        // crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            height: 30,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                SizedBox(
+                  width: 20,
+                ),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      descendingSorting = true;
+                      newContColor = darPurple;
+                      newTextColor = white;
 
-                        intContColor = white;
-                        intTextColor = black.withOpacity(0.2);
+                      intContColor = white;
+                      intTextColor = black.withOpacity(0.2);
 
-                        discContColor = white;
-                        discTextColor = black.withOpacity(0.2);
-                      });
-                    },
-                    child: Container(
-                      height: 28,
-                      decoration: BoxDecoration(
-                        color: newContColor,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 9, vertical: 2),
-                        child: Text(
-                          '#новые',
-                          style: TextStyle(
-                            color: newTextColor,
-                            fontSize: 18,
-                          ),
+                      discContColor = white;
+                      discTextColor = black.withOpacity(0.2);
+                    });
+                  },
+                  child: Container(
+                    height: 28,
+                    decoration: BoxDecoration(
+                      color: newContColor,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 9, vertical: 2),
+                      child: Text(
+                        '#новые',
+                        style: TextStyle(
+                          color: newTextColor,
+                          fontSize: 18,
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      descendingSorting = false;
-                      setState(() {
-                        newContColor = white;
-                        newTextColor = black.withOpacity(0.2);
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                InkWell(
+                  onTap: () {
+                    descendingSorting = false;
+                    setState(() {
+                      newContColor = white;
+                      newTextColor = black.withOpacity(0.2);
 
-                        intContColor = darPurple;
-                        intTextColor = white;
+                      intContColor = darPurple;
+                      intTextColor = white;
 
-                        discContColor = white;
-                        discTextColor = black.withOpacity(0.2);
-                      });
-                    },
-                    child: Container(
-                      height: 28,
-                      decoration: BoxDecoration(
-                        color: intContColor,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 9, vertical: 2),
-                        child: Text(
-                          '#old',
-                          style: TextStyle(
-                            color: intTextColor,
-                            fontSize: 18,
-                          ),
+                      discContColor = white;
+                      discTextColor = black.withOpacity(0.2);
+                    });
+                  },
+                  child: Container(
+                    height: 28,
+                    decoration: BoxDecoration(
+                      color: intContColor,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 9, vertical: 2),
+                      child: Text(
+                        '#old',
+                        style: TextStyle(
+                          color: intTextColor,
+                          fontSize: 18,
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        newContColor = white;
-                        newTextColor = black.withOpacity(0.2);
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      newContColor = white;
+                      newTextColor = black.withOpacity(0.2);
 
-                        intContColor = white;
-                        intTextColor = black.withOpacity(0.2);
+                      intContColor = white;
+                      intTextColor = black.withOpacity(0.2);
 
-                        discContColor = darPurple;
-                        discTextColor = white;
-                      });
-                    },
-                    child: Container(
-                      height: 28,
-                      decoration: BoxDecoration(
-                        color: discContColor,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 9, vertical: 2),
-                        child: Text(
-                          '#обсуждаемые',
-                          style: TextStyle(
-                            color: discTextColor,
-                            fontSize: 18,
-                          ),
+                      discContColor = darPurple;
+                      discTextColor = white;
+                    });
+                  },
+                  child: Container(
+                    height: 28,
+                    decoration: BoxDecoration(
+                      color: discContColor,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 9, vertical: 2),
+                      child: Text(
+                        '#обсуждаемые',
+                        style: TextStyle(
+                          color: discTextColor,
+                          fontSize: 18,
                         ),
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        newContColor = white;
-                        newTextColor = black.withOpacity(0.2);
+                ),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      newContColor = white;
+                      newTextColor = black.withOpacity(0.2);
 
-                        intContColor = white;
-                        intTextColor = black.withOpacity(0.2);
+                      intContColor = white;
+                      intTextColor = black.withOpacity(0.2);
 
-                        discContColor = darPurple;
-                        discTextColor = white;
-                      });
-                    },
-                    child: Container(
-                      height: 28,
-                      decoration: BoxDecoration(
-                        color: discContColor,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 9, vertical: 2),
-                        child: Text(
-                          '#интересные',
-                          style: TextStyle(
-                            color: discTextColor,
-                            fontSize: 18,
-                          ),
+                      discContColor = darPurple;
+                      discTextColor = white;
+                    });
+                  },
+                  child: Container(
+                    height: 28,
+                    decoration: BoxDecoration(
+                      color: discContColor,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 9, vertical: 2),
+                      child: Text(
+                        '#интересные',
+                        style: TextStyle(
+                          color: discTextColor,
+                          fontSize: 18,
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+              ],
             ),
-            SizedBox(
-              height: 30,
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Container(
+            constraints: BoxConstraints(
+              maxHeight: 570,
+              minHeight: 400,
             ),
-            Container(
-              constraints: BoxConstraints(
-                maxHeight: 666,
-                minHeight: 400,
-              ),
-              height: 700,
-              child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection('posts')
-                    .orderBy('time', descending: descendingSorting)
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        backgroundColor: Colors.black,
-                      ),
-                    );
-                  } else {
-                    return loadPosts(context, snapshot);
-                  }
-                },
-              ),
+            height: 700,
+            child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('posts')
+                  .orderBy('time', descending: descendingSorting)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.black,
+                    ),
+                  );
+                } else {
+                  return loadPosts(context, snapshot);
+                }
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

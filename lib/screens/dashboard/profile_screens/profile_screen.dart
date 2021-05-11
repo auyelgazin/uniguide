@@ -67,7 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Container(
                   color: Colors.white,
                   child: Column(
-                    children: [
+                    children: [ 
                       Expanded(
                         flex: 1,
                         child: Container(
