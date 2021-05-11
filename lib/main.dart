@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         getPages: AppRoutes.list,
         initialRoute:
-            initScreen == 0 || initScreen == null ? '/chooseLang' : authWrap(),
+            initScreen == 0 || initScreen == null ? '/chooseLang' : authWrap() //'/chat',
       ),
       providers: [
         ChangeNotifierProvider(create: (_) => PostFunctions()),

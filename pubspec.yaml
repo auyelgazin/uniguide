@@ -45,6 +45,7 @@ dependencies:
   custom_navigation_bar: ^0.8.1
   timeago: ^3.0.2
   auto_size_text: ^2.1.0
+  random_string: ^2.1.0
 
   camera:
   path_provider:

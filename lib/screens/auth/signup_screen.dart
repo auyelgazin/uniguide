@@ -8,8 +8,6 @@ import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/screens/auth/auth_controllers/signup_controller.dart';
 import 'package:uniguide/screens/auth/auth_models/position.dart';
-import 'package:uniguide/services/auth_service.dart';
-import 'package:uniguide/services/firestore_service.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_button.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_checkbox.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_textfield.dart';
@@ -40,6 +38,19 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    List<String> indexList = [];
+
+    getFullameIndex(String fullname) {
+      List<String> splitList = fullname.split(' ');
+
+      for (int i = 0; i < splitList.length; i++) {
+        for (int j = 0; j < splitList[i].length; j++) {
+          indexList.add(splitList[i].substring(0, j).toLowerCase());
+        }
+      }
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -218,6 +229,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         String email = emailController.text.trim();
                         String fullName = fullNameController.text.trim();
                         String password = passwordController.text.trim();
+                        
+                        
 
                         if (fullName.isNotEmpty &&
                             password.isNotEmpty &&
@@ -231,11 +244,19 @@ class _SignupScreenState extends State<SignupScreen> {
                               controller.emptyAgain();
 
                               print('authed stud');
-                     
-                              Provider.of<Authentication>(context, listen: false).createAccount(email, password).whenComplete(() {
+
+                              Provider.of<Authentication>(context,
+                                      listen: false)
+                                  .createAccount(email, password)
+                                  .whenComplete(() {
                                 print('creating USER collection');
-                                Provider.of<FirebaseOperations>(context, listen: false).createUserCollection(context, {
-                                  'useruid': Provider.of<Authentication>(context, listen: false).getUserUid,
+                                Provider.of<FirebaseOperations>(context,
+                                        listen: false)
+                                    .createUserCollection(context, {
+                                  'useruid': Provider.of<Authentication>(
+                                          context,
+                                          listen: false)
+                                      .getUserUid,
                                   'avatar': noAvatarUrl,
                                   'email': email,
                                   'fullname': fullName,
@@ -246,7 +267,6 @@ class _SignupScreenState extends State<SignupScreen> {
                               });
                             } else {
                               controller.useSDUmail();
-                              
                             }
                           } else {
                             if (!email.endsWith('@sdu.edu.kz')) {
@@ -254,16 +274,18 @@ class _SignupScreenState extends State<SignupScreen> {
                             } else {
                               controller.emptyAgain();
 
-                              print('authed teacher & stuff');
-                  
-                                Provider.of<Authentication>(context, listen: false).createAccount(email, password).whenComplete(() {
-                                  print('creating USER collection');
-                                Provider.of<FirebaseOperations>(context, listen: false).createUserCollection(context, {
-                                  'useruid': Provider.of<Authentication>(context, listen: false).getUserUid,
-                                  'avatar': noAvatarUrl,
-                                  'email': email,
-                                  'fullname': fullName,
-                                  'position': chosenPosition,
+                              print('signing up teacher & stuff...');
+                              getFullameIndex(fullName);
+
+                              Provider.of<Authentication>(context, listen: false).createAccount(email, password).whenComplete(() {
+                                print('creating USER collection');
+                              Provider.of<FirebaseOperations>(context, listen: false).createUserCollection(context, {
+                                'useruid': Provider.of<Authentication>(context, listen: false).getUserUid,
+                                'avatar': noAvatarUrl,
+                                'email': email,
+                                'fullname': fullName,
+                                'position': chosenPosition,
+                                'searchIndex': indexList,
                                 });
                               }).whenComplete(() {
                                 Get.toNamed('/dashboard');

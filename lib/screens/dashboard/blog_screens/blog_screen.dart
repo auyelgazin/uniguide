@@ -317,7 +317,13 @@ class _BlogScreenState extends State<BlogScreen> {
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return Text(
+                      '-',
+                      style: TextStyle(
+                          color: Color(0xFF687684),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400),
+                    );
                   } else {
                     return Text(
                       snapshot.data.docs.length.toString(),
@@ -331,7 +337,6 @@ class _BlogScreenState extends State<BlogScreen> {
               ),
             ),
             comments: StreamBuilder<QuerySnapshot>(
-              
               stream: FirebaseFirestore.instance
                   .collection('posts')
                   .doc(documentSnapshot.data()['title'])
@@ -339,9 +344,8 @@ class _BlogScreenState extends State<BlogScreen> {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: Container(child: CircularProgressIndicator(strokeWidth: 2,), width: 10, height: 10,),);
                 } else {
-
                   return Text(
                     snapshot.data.docs.length.toString(),
                     style: TextStyle(
@@ -383,7 +387,6 @@ class _BlogScreenState extends State<BlogScreen> {
                     children: [
                       Expanded(
                         child: ListView(
-                          
                           children: [
                             PostInCommentCard(
                               category: documentSnapshot.data()['category'],
@@ -406,7 +409,6 @@ class _BlogScreenState extends State<BlogScreen> {
                                     return Center(
                                         child: CircularProgressIndicator());
                                   } else {
-                                    
                                     return Text(
                                       snapshot.data.docs.length.toString(),
                                       style: TextStyle(

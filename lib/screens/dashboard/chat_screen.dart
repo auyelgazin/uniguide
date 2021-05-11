@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:uniguide/constants/colors.dart';
 import 'package:uniguide/constants/font_styles.dart';
 
 class ChatScreen extends StatelessWidget {
+  TextEditingController searchC = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: white,
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
@@ -14,22 +17,15 @@ class ChatScreen extends StatelessWidget {
         ),
         backgroundColor: Colors.white,
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 30.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Text('Chat', style: titleStyle),
-                ),
-                
-              ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            TextField(
+              controller: searchC,
             ),
-          )
-        ],
+          ],
+        ),
       ),
       
     );
