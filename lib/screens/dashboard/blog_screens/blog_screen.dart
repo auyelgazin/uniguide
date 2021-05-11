@@ -7,6 +7,7 @@ import 'package:uniguide/constants/colors.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/post_functions.dart';
+import 'package:uniguide/provider_files/survey_functions.dart';
 
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 
@@ -60,9 +61,10 @@ class _BlogScreenState extends State<BlogScreen> {
               color: Color(0xFF232195),
               iconSize: 20,
               onPressed: () async {
-                Provider.of<Authentication>(context, listen: false)
-                    .logOutViaEmail();
-                Get.offNamed('/login');
+
+                // Provider.of<SurveyFunctions>(context, listen: false)
+                //     .showSurveys();
+                // Get.offNamed('/login');
                 // - - - - DONT DELETE - - - -
 
                 // Get.bottomSheet(Container(

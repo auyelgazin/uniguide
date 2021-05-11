@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:uniguide/provider_files/firebase_operations.dart';
+import 'package:uniguide/provider_files/survey_functions.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_provider.dart';
 import 'package:uniguide/screens/dashboard/dashboard_helper.dart';
@@ -34,6 +35,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,8 +46,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         physics: NeverScrollableScrollPhysics(),
         onPageChanged: (index) {
           setState(() {
-
-
             Provider.of<DashboardHelper>(context, listen: false).pageIndex =
                 index;
 

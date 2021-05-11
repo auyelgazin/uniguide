@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/constants/language/languages.dart';
 import 'package:uniguide/provider_files/post_functions.dart';
+import 'package:uniguide/provider_files/survey_functions.dart';
 import 'package:uniguide/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_provider.dart';
@@ -14,10 +15,6 @@ import 'package:provider/provider.dart';
 
 import 'provider_files/authentication.dart';
 import 'provider_files/firebase_operations.dart';
-
-
-
-
 
 int initScreen;
 
@@ -58,6 +55,7 @@ class MyApp extends StatelessWidget {
             initScreen == 0 || initScreen == null ? '/chooseLang' : authWrap() //'/chat',
       ),
       providers: [
+        ChangeNotifierProvider(create: (_) => SurveyFunctions()),
         ChangeNotifierProvider(create: (_) => PostFunctions()),
         ChangeNotifierProvider(create: (_) => FirebaseOperations()),
         ChangeNotifierProvider(create: (_) => Authentication()),
