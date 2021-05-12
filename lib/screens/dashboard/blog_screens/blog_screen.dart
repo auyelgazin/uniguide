@@ -21,8 +21,7 @@ class BlogScreen extends StatefulWidget {
 class _BlogScreenState extends State<BlogScreen> {
   TextEditingController commentC = TextEditingController();
 
-  bool descendingSorting = true;
-
+  String orderBy = 'time';
   // sorting widgets:
   var newContColor = darPurple;
   var newTextColor = white;
@@ -57,53 +56,50 @@ class _BlogScreenState extends State<BlogScreen> {
               color: Color(0xFF232195),
               iconSize: 20,
               onPressed: () async {
-
-                
-
                 // Provider.of<SurveyFunctions>(context, listen: false)
                 //     .showSurveys();
                 // Get.offNamed('/login');
                 // - - - - DONT DELETE - - - -
 
-              //   Get.bottomSheet(Container(
-              //     height: 500,
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.only(
-              //           topRight: Radius.circular(20.0),
-              //           topLeft: Radius.circular(20.0)),
-              //       color: Colors.white,
-              //     ),
-              //     child: Padding(
-              //       padding: const EdgeInsets.symmetric(
-              //           horizontal: 20.0, vertical: 40),
-              //       child: Column(
-              //         mainAxisAlignment: MainAxisAlignment.end,
-              //         children: [
-              //           WideButtonBox(
-              //             ElevatedButton(
-              //               child: Text(
-              //                 'Choose',
-              //                 style: TextStyle(
-              //                     color: Color(0xFF141619),
-              //                     fontSize: 16,
-              //                     fontWeight: FontWeight.w500),
-              //               ),
-              //               onPressed: () {
-              //                 Get.back();
-              //               },
-              //               style: ElevatedButton.styleFrom(
-              //                 primary: Color(0xFFB7C1F4),
-              //                 shape: RoundedRectangleBorder(
-              //                   borderRadius:
-              //                       BorderRadius.circular(10),
-              //                 ),
-              //               ),
-              //             ),
-              //           )
-              //         ],
-              //       ),
-              //     ),
-              //   ));
+                //   Get.bottomSheet(Container(
+                //     height: 500,
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.only(
+                //           topRight: Radius.circular(20.0),
+                //           topLeft: Radius.circular(20.0)),
+                //       color: Colors.white,
+                //     ),
+                //     child: Padding(
+                //       padding: const EdgeInsets.symmetric(
+                //           horizontal: 20.0, vertical: 40),
+                //       child: Column(
+                //         mainAxisAlignment: MainAxisAlignment.end,
+                //         children: [
+                //           WideButtonBox(
+                //             ElevatedButton(
+                //               child: Text(
+                //                 'Choose',
+                //                 style: TextStyle(
+                //                     color: Color(0xFF141619),
+                //                     fontSize: 16,
+                //                     fontWeight: FontWeight.w500),
+                //               ),
+                //               onPressed: () {
+                //                 Get.back();
+                //               },
+                //               style: ElevatedButton.styleFrom(
+                //                 primary: Color(0xFFB7C1F4),
+                //                 shape: RoundedRectangleBorder(
+                //                   borderRadius:
+                //                       BorderRadius.circular(10),
+                //                 ),
+                //               ),
+                //             ),
+                //           )
+                //         ],
+                //       ),
+                //     ),
+                //   ));
               }),
         ],
       ),
@@ -125,7 +121,7 @@ class _BlogScreenState extends State<BlogScreen> {
                 InkWell(
                   onTap: () {
                     setState(() {
-                      descendingSorting = true;
+                      orderBy = 'time';
                       newContColor = darPurple;
                       newTextColor = white;
 
@@ -160,8 +156,8 @@ class _BlogScreenState extends State<BlogScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                    descendingSorting = false;
                     setState(() {
+                      orderBy = 'likes';
                       newContColor = white;
                       newTextColor = black.withOpacity(0.2);
 
@@ -182,7 +178,7 @@ class _BlogScreenState extends State<BlogScreen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 9, vertical: 2),
                       child: Text(
-                        '#old',
+                        '#лучшие',
                         style: TextStyle(
                           color: intTextColor,
                           fontSize: 18,
@@ -271,7 +267,7 @@ class _BlogScreenState extends State<BlogScreen> {
             child: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('posts')
-                  .orderBy('time', descending: descendingSorting)
+                  .orderBy(orderBy, descending: true)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -435,7 +431,7 @@ class _BlogScreenState extends State<BlogScreen> {
                                     ),
                                     onLike: () {
                                       print('Liking post...');
-                                      
+
                                       Provider.of<PostFunctions>(context,
                                               listen: false)
                                           .addLike(
@@ -444,9 +440,10 @@ class _BlogScreenState extends State<BlogScreen> {
                                               Provider.of<Authentication>(
                                                       context,
                                                       listen: false)
-                                                  .getUserUid).whenComplete(() {
-                                                    print('liked');
-                                                  });
+                                                  .getUserUid)
+                                          .whenComplete(() {
+                                        print('liked');
+                                      });
                                     },
                                     likes: StreamBuilder<QuerySnapshot>(
                                       stream: FirebaseFirestore.instance
@@ -478,9 +475,7 @@ class _BlogScreenState extends State<BlogScreen> {
                                     textAlign: TextAlign.center,
                                   ),
                                   Container(
-
                                     height: 520,
-
                                     child: Provider.of<PostFunctions>(context,
                                             listen: false)
                                         .showComments(context, documentSnapshot,
@@ -559,6 +554,7 @@ class _BlogScreenState extends State<BlogScreen> {
               // Get.to(() => CommentsScreen());
             },
             onLikes: () {
+              print('going to Likes page...');
               Get.to(
                 () => Scaffold(
                   backgroundColor: white,
