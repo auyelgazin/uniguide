@@ -61,7 +61,8 @@ class _BlogScreenState extends State<BlogScreen> {
               color: Color(0xFF232195),
               iconSize: 20,
               onPressed: () async {
-                print(Provider.of<Authentication>(context, listen: false).getUserUid);
+                print(Provider.of<Authentication>(context, listen: false)
+                    .getUserUid);
 
                 // Provider.of<SurveyFunctions>(context, listen: false)
                 //     .showSurveys();
@@ -351,7 +352,15 @@ class _BlogScreenState extends State<BlogScreen> {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: Container(child: CircularProgressIndicator(strokeWidth: 2,), width: 10, height: 10,),);
+                  return Center(
+                    child: Container(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                      ),
+                      width: 10,
+                      height: 10,
+                    ),
+                  );
                 } else {
                   return Text(
                     snapshot.data.docs.length.toString(),
@@ -369,174 +378,180 @@ class _BlogScreenState extends State<BlogScreen> {
               // Get.to(() => CommentsScreen());
 
               Get.to(
-                () => Scaffold(
-                  backgroundColor: white,
-                  appBar: AppBar(
-                    backgroundColor: white,
-                    elevation: 0,
-                    centerTitle: true,
-                    leading: Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.arrow_back_ios,
-                          color: Color(0xFF232195).withOpacity(0.5),
-                        ),
-                        onPressed: () {
-                          Get.back();
-                          commentC.clear();
-                        },
-                      ),
-                    ),
-                    title: Text(
-                      'Коментарии',
-                      style: commentsStyle,
-                    ),
-                  ),
-                  body: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: ListView(
-                          children: [
-                            PostInCommentCard(
-                              category: documentSnapshot.data()['category'],
-                              avatar: documentSnapshot.data()['avatar'],
-                              sender: documentSnapshot.data()['fullname'],
-                              title: documentSnapshot.data()['title'],
-                              // timeAgo: Provider.of<PostFunctions>(context,
-                              //         listen: false)
-                              //     .getTimePosted
-                              //     .toString(),
-                              comments: StreamBuilder<QuerySnapshot>(
-                                stream: FirebaseFirestore.instance
-                                    .collection('posts')
-                                    .doc(documentSnapshot.data()['title'])
-                                    .collection('comments')
-                                    .snapshots(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return Center(
-                                        child: CircularProgressIndicator());
-                                  } else {
-                                    return Text(
-                                      snapshot.data.docs.length.toString(),
-                                      style: TextStyle(
-                                          color: Color(0xFF687684),
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400),
-                                    );
-                                  }
-                                },
+                  () => Scaffold(
+                        backgroundColor: white,
+                        appBar: AppBar(
+                          backgroundColor: white,
+                          elevation: 0,
+                          centerTitle: true,
+                          leading: Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.arrow_back_ios,
+                                color: Color(0xFF232195).withOpacity(0.5),
                               ),
-                              onLike: () {
-                                print('Liking post...');
-                                Provider.of<PostFunctions>(context,
-                                        listen: false)
-                                    .addLike(
-                                        context,
-                                        documentSnapshot.data()['title'],
-                                        Provider.of<Authentication>(context,
-                                                listen: false)
-                                            .getUserUid);
+                              onPressed: () {
+                                Get.back();
+                                commentC.clear();
                               },
-                              likes: StreamBuilder<QuerySnapshot>(
-                                stream: FirebaseFirestore.instance
-                                    .collection('posts')
-                                    .doc(documentSnapshot.data()['title'])
-                                    .collection('likes')
-                                    .snapshots(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  } else {
-                                    return Text(
-                                      snapshot.data.docs.length.toString(),
-                                      style: TextStyle(
-                                          color: Color(0xFF687684),
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400),
-                                    );
-                                  }
-                                },
-                              ),
                             ),
-                            Text(
-                              'Начало обсуждения',
-                              textAlign: TextAlign.center,
-                            ),
-                            Container(
-                              height: 300,
-                              child: Provider.of<PostFunctions>(context,
-                                      listen: false)
-                                  .showComments(context, documentSnapshot,
-                                      documentSnapshot.data()['title']),
-                            ),
-                          ],
+                          ),
+                          title: Text(
+                            'Коментарии',
+                            style: commentsStyle,
+                          ),
                         ),
-                      ),
-                      Container(
-                        height: 90,
-                        color: lightPurple,
-                        child: Row(
+                        body: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.only(left: 20),
-                                child: Container(
-                                  height: 36,
-                                  child: TextField(
-                                    controller: commentC,
-                                    textAlignVertical: TextAlignVertical.bottom,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      fillColor: white,
-                                      filled: true,
-                                      hintText: 'Добавить комментарий...',
-                                      hintStyle: commentHint,
+                              child: ListView(
+                                children: [
+                                  PostInCommentCard(
+                                    category:
+                                        documentSnapshot.data()['category'],
+                                    avatar: documentSnapshot.data()['avatar'],
+                                    sender: documentSnapshot.data()['fullname'],
+                                    title: documentSnapshot.data()['title'],
+                                    // timeAgo: Provider.of<PostFunctions>(context,
+                                    //         listen: false)
+                                    //     .getTimePosted
+                                    //     .toString(),
+                                    comments: StreamBuilder<QuerySnapshot>(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('posts')
+                                          .doc(documentSnapshot.data()['title'])
+                                          .collection('comments')
+                                          .snapshots(),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return Center(
+                                              child:
+                                                  CircularProgressIndicator());
+                                        } else {
+                                          return Text(
+                                            snapshot.data.docs.length
+                                                .toString(),
+                                            style: TextStyle(
+                                                color: Color(0xFF687684),
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w400),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                    onLike: () {
+                                      print('Liking post...');
+                                      Provider.of<PostFunctions>(context,
+                                              listen: false)
+                                          .addLike(
+                                              context,
+                                              documentSnapshot.data()['title'],
+                                              Provider.of<Authentication>(
+                                                      context,
+                                                      listen: false)
+                                                  .getUserUid);
+                                    },
+                                    likes: StreamBuilder<QuerySnapshot>(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('posts')
+                                          .doc(documentSnapshot.data()['title'])
+                                          .collection('likes')
+                                          .snapshots(),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return Center(
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        } else {
+                                          return Text(
+                                            snapshot.data.docs.length
+                                                .toString(),
+                                            style: TextStyle(
+                                                color: Color(0xFF687684),
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w400),
+                                          );
+                                        }
+                                      },
                                     ),
                                   ),
-                                ),
-                              ),
-                              flex: 8,
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: IconButton(
-                                icon: ImageIcon(
-                                  AssetImage('images/addComment.png'),
-                                  color: darPurple,
-                                ),
-                                onPressed: () {
-                                  print('adding comment');
-                                  Provider.of<PostFunctions>(context,
-                                          listen: false)
-                                      .addComment(
-                                          context,
-                                          documentSnapshot.data()['title'],
-                                          commentC.text)
-                                      .whenComplete(() {
-                                    commentC.clear();
-                                  });
-                                },
+                                  Text(
+                                    'Начало обсуждения',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Container(
+                                    height: 300,
+                                    child: Provider.of<PostFunctions>(context,
+                                            listen: false)
+                                        .showComments(context, documentSnapshot,
+                                            documentSnapshot.data()['title']),
+                                  ),
+                                ],
                               ),
                             ),
+                            Container(
+                              height: 90,
+                              color: lightPurple,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: 20),
+                                      child: Container(
+                                        height: 36,
+                                        child: TextField(
+                                          controller: commentC,
+                                          textAlignVertical:
+                                              TextAlignVertical.bottom,
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                              borderSide: BorderSide.none,
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                            fillColor: white,
+                                            filled: true,
+                                            hintText: 'Добавить комментарий...',
+                                            hintStyle: commentHint,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    flex: 8,
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: IconButton(
+                                      icon: ImageIcon(
+                                        AssetImage('images/addComment.png'),
+                                        color: darPurple,
+                                      ),
+                                      onPressed: () {
+                                        print('adding comment');
+                                        Provider.of<PostFunctions>(context,
+                                                listen: false)
+                                            .addComment(
+                                                context,
+                                                documentSnapshot
+                                                    .data()['title'],
+                                                commentC.text)
+                                            .whenComplete(() {
+                                          commentC.clear();
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
                           ],
                         ),
-                      )
-                    ],
-                  ),
-                ),
-                transition: Transition.cupertino
-              );
+                      ),
+                  transition: Transition.cupertino);
 
               // dc.getCurrentProfile();
               // PostFunctions().addComment(context, documentSnapshot.data()['title'], 'kuka');

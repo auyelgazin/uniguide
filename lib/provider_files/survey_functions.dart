@@ -6,7 +6,7 @@ class SurveyFunctions with ChangeNotifier {
     List surveys = [];
 
     try {
-      await FirebaseFirestore.instance.collection('surveys').get().then((snap) {
+      await FirebaseFirestore.instance.collection('surveys').orderBy('time', descending: true).get().then((snap) {
         snap.docs.forEach((element) {
           surveys.add(element.data());
         });
@@ -17,5 +17,15 @@ class SurveyFunctions with ChangeNotifier {
     }
   }
 
-  
+  Future addSurvey(String doc, String link) async {
+    try {
+      await FirebaseFirestore.instance.collection('surveys').doc(doc).set({
+        'name': doc,
+        'link': link,
+        'time': Timestamp.now(),
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }

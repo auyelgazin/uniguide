@@ -80,3 +80,9 @@ var initialsStyle = TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.w600,
 );
+
+var surveyInfo = TextStyle(
+  color: darPurple,
+  fontSize: 14,
+  fontWeight: FontWeight.w400,
+);
