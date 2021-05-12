@@ -32,21 +32,24 @@ class FirebaseOperations with ChangeNotifier {
   }
 
   Future initUserData(BuildContext context) async {
-    return  FirebaseFirestore.instance
+    return await FirebaseFirestore.instance
         .collection('users')
-        .doc(Provider.of<Authentication>(context, listen: false).getUserUid)
+        .doc(Provider.of<Authentication>(context, listen: false).getUID())
         .get()
         .then((doc) {
       print('Fetching user data...');
+      
       initFullname = doc.data()['fullname'];
       initAvatar = doc.data()['avatar'];
       initEmail = doc.data()['email'];
       initPosition = doc.data()['position'];
       // initUserImage = doc.data()['userimage'];
+      
       print([initFullname, initAvatar, initEmail, initPosition]);
       
       // print(initUserImage);
       notifyListeners();
+      
     });
   }
 

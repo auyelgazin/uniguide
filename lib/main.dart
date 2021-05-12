@@ -67,10 +67,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Future authWrap(BuildContext context) async {
+String authWrap(BuildContext context)  {
   if (FirebaseAuth.instance.currentUser != null) {
     // Provider.of<FirebaseOperations>(context, listen: false).initUserData(context);
-    await FirebaseOperations().initUserData(context);
+    //  FirebaseOperations().initUserData(context);
     return '/dashboard';
   } else
     return '/login';

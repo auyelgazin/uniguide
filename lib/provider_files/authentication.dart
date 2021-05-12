@@ -7,6 +7,13 @@ class Authentication with ChangeNotifier {
   String userUid;
   String get getUserUid => userUid;
 
+  String getUID() {
+    String uid = firebaseAuth.currentUser.uid;
+    print('UID: $uid');
+    return uid;
+    
+  }
+
   Future logIntoAccount(String email, String password) async {
     UserCredential userCredential = await firebaseAuth
         .signInWithEmailAndPassword(email: email, password: password);
