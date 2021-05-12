@@ -36,13 +36,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        centerTitle: true,
         elevation: 0,
-        title: Text(
-          'profile'.tr,
-          style: titleStyle,
-        ),
         backgroundColor: Colors.white,
+        leadingWidth: 0,
+        centerTitle: false,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 5),
+          child: Text(
+            'Profile',
+            style: titleStyle,
+          ),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

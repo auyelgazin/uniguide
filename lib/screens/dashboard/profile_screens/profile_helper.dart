@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uniguide/constants/colors.dart';
 import 'package:uniguide/constants/consants.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
@@ -18,9 +19,11 @@ class ProfileHelper with ChangeNotifier {
       children: [
         snapshot.data.data()['avatar'] == noAvatarUrl
             ? CircleAvatar(
+              backgroundColor: darPurple,
                 radius: 35,
                 child: Text(
-                  dc.getInitials(snapshot.data.data()['fullname']),
+                  dc.getInitials(snapshot.data.data()['fullname'], ),
+                  style: initialsStyle,
                 ),
               )
             : CircleAvatar(

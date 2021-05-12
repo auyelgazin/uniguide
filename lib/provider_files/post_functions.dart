@@ -14,13 +14,12 @@ import 'authentication.dart';
 import 'firebase_operations.dart';
 
 class PostFunctions with ChangeNotifier {
-
   DashboardController dc = Get.put(DashboardController());
 
   String timePosted;
   String get getTimePosted => timePosted;
 
-  showTimeAgo(dynamic timedata){
+  showTimeAgo(dynamic timedata) {
     Timestamp time = timedata;
     DateTime dateTime = time.toDate();
 
@@ -29,7 +28,7 @@ class PostFunctions with ChangeNotifier {
 
     timePosted = timeago.format(dateTime, locale: 'ru');
 
-    notifyListeners();
+    // notifyListeners();
   }
 
   Future addLike(BuildContext context, String postId, String subDocId) async {
@@ -48,6 +47,30 @@ class PostFunctions with ChangeNotifier {
       'email':
           Provider.of<FirebaseOperations>(context, listen: false).geiInitEmail,
       'time': Timestamp.now()
+    }).whenComplete(() {
+      FirebaseFirestore.instance.collection('posts').doc(postId).collection('likes').doc(subDocId).get().then((doc) {
+
+        if (doc.exists) {
+          print('user already liked');
+        } else{
+          FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postId)
+        .update({'likes': FieldValue.increment(1)}).whenComplete(() {
+      print('like++');
+    });
+        }
+      });
+    });
+  }
+
+  void incrementLike(BuildContext context, String postId) {
+    // print('Func incrementLike called');
+    FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postId)
+        .update({'likes': FieldValue.increment(1)}).whenComplete(() {
+      print('like++');
     });
   }
 
@@ -87,15 +110,15 @@ class PostFunctions with ChangeNotifier {
             return new ListView(
                 children:
                     snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
-                      Provider.of<PostFunctions>(context, listen: false)
-            .showTimeAgo(documentSnapshot.data()['time']);
+              Provider.of<PostFunctions>(context, listen: false)
+                  .showTimeAgo(documentSnapshot.data()['time']);
               return CommentCard(
                 sender: documentSnapshot.data()['fullname'],
                 avatar: documentSnapshot.data()['avatar'],
                 comment: documentSnapshot.data()['comment'],
-                timeAgo:  Provider.of<PostFunctions>(context, listen: false)
-                .getTimePosted
-                .toString(),
+                timeAgo: Provider.of<PostFunctions>(context, listen: false)
+                    .getTimePosted
+                    .toString(),
               );
             }).toList());
           }
@@ -116,30 +139,32 @@ class PostFunctions with ChangeNotifier {
             );
           } else {
             return new ListView(
-              children: snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
-                return Column(
-                  children: [
-                    ListTile(
-                      leading: Container(
-                        child: documentSnapshot.data()['avatar'] == noAvatarUrl
-                            ? CircleAvatar(
+                children:
+                    snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
+              return Column(
+                children: [
+                  ListTile(
+                    leading: Container(
+                      child: documentSnapshot.data()['avatar'] == noAvatarUrl
+                          ? CircleAvatar(
                               backgroundColor: darPurple,
-                                child: Text(
-                                  dc.getInitials(documentSnapshot.data()['fullname']),
-                                  style: initialsStyle,
-                                ),
-                              )
-                            : CircleAvatar(
-                                backgroundImage: NetworkImage(documentSnapshot.data()['avatar']),
+                              child: Text(
+                                dc.getInitials(
+                                    documentSnapshot.data()['fullname']),
+                                style: initialsStyle,
                               ),
-                      ),
-                      title: Text(documentSnapshot.data()['fullname']),
+                            )
+                          : CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  documentSnapshot.data()['avatar']),
+                            ),
                     ),
-                    Divider(),
-                  ],
-                );
-              }).toList()
-            );
+                    title: Text(documentSnapshot.data()['fullname']),
+                  ),
+                  Divider(),
+                ],
+              );
+            }).toList());
           }
         });
   }

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:uniguide/constants/colors.dart';
 import 'package:uniguide/constants/consants.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/provider_files/authentication.dart';
@@ -92,12 +93,16 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                 .getInitAvatar ==
                             noAvatarUrl
                         ? CircleAvatar(
+                          backgroundColor: darPurple,
                             radius: 50,
                             child: Text(
                               dc.getInitials(Provider.of<FirebaseOperations>(
                                       context,
                                       listen: false)
                                   .getInitFullname),
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                  ),
                             ),
                           )
                         : (file == null

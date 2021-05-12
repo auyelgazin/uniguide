@@ -65,6 +65,7 @@ class _ChatScreenState extends State<ChatScreen> {
               },
             ),
             Expanded(
+
               child: StreamBuilder<QuerySnapshot>(
                 stream: (searchString == null || searchString.trim() == '')
                     ? FirebaseFirestore.instance.collection('users').snapshots()
@@ -119,10 +120,12 @@ class _ChatScreenState extends State<ChatScreen> {
                           ).toList(),
                         ),
                       );
+                      
                   }
                 },
               ),
             ),
+            SizedBox(height: 20,)
           ],
         ),
       ),

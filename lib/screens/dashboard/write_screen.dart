@@ -59,11 +59,15 @@ class _WriteScreenState extends State<WriteScreen> {
       backgroundColor: white,
       appBar: AppBar(
         elevation: 0,
-        centerTitle: true,
+        leadingWidth: 0,
+        centerTitle: false,
         backgroundColor: Colors.white,
-        title: Text(
-          'Write',
-          style: titleStyle,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 5),
+          child: Text(
+            'Write a Blog',
+            style: titleStyle,
+          ),
         ),
         actions: [
           IconButton(
@@ -198,6 +202,7 @@ class _WriteScreenState extends State<WriteScreen> {
                   'useruid': Provider.of<Authentication>(context, listen: false)
                       .getUserUid,
                   'time': Timestamp.now(),
+                  'likes': 0,
                 }).whenComplete(() {
                   print('Post uploaded');
                 });
@@ -216,12 +221,14 @@ class _WriteScreenState extends State<WriteScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Container(
+                      width: double.infinity,
                       height: 54,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
                           color: Color(0xFFB7C1F4).withOpacity(0.3)),
                       child: DropdownButton(
-                        hint: Text('Choose a topic'),
+                        isExpanded: true,
+                        hint: Center(child: Text('Choose a community')),
                         value: chosenTopic,
                         onChanged: (newValue) {
                           setState(() {
@@ -255,20 +262,22 @@ class _WriteScreenState extends State<WriteScreen> {
                         ),
                   Padding(
                     padding: EdgeInsets.all(20),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: Color(0xFFB7C1F4).withOpacity(0.3),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 15),
-                        child: TextField(
-                          controller: titleController,
-                          maxLines: 20,
-                          decoration: new InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Write please your problem',
+                    child: Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          color: Color(0xFFB7C1F4).withOpacity(0.3),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 15),
+                          child: TextField(
+                            controller: titleController,
+                            maxLines: 28,
+                            decoration: new InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Write please your problem',
+                            ),
                           ),
                         ),
                       ),
