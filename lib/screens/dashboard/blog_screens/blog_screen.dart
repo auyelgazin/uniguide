@@ -61,7 +61,7 @@ class _BlogScreenState extends State<BlogScreen> {
               color: Color(0xFF232195),
               iconSize: 20,
               onPressed: () async {
-                Provider.of<Authentication>(context, listen: false).getUID();
+                print(Provider.of<Authentication>(context, listen: false).getUserUid);
 
                 // Provider.of<SurveyFunctions>(context, listen: false)
                 //     .showSurveys();
@@ -586,7 +586,7 @@ class _BlogScreenState extends State<BlogScreen> {
                   context,
                   documentSnapshot.data()['title'],
                   Provider.of<Authentication>(context, listen: false)
-                      .getUID());
+                      .getUserUid);
             });
       }).toList(),
     );

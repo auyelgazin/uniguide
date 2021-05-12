@@ -34,7 +34,7 @@ class FirebaseOperations with ChangeNotifier {
   Future initUserData(BuildContext context) async {
     return await FirebaseFirestore.instance
         .collection('users')
-        .doc(Provider.of<Authentication>(context, listen: false).getUID())
+        .doc(Provider.of<Authentication>(context, listen: false).getUserUid)
         .get()
         .then((doc) {
       print('Fetching user data...');

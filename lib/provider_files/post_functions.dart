@@ -45,7 +45,7 @@ class PostFunctions with ChangeNotifier {
           .getInitFullname,
       'avatar':
           Provider.of<FirebaseOperations>(context, listen: false).getInitAvatar,
-      'useruid': Provider.of<Authentication>(context, listen: false).getUID(),
+      'useruid': Provider.of<Authentication>(context, listen: false).getUserUid,
       'email':
           Provider.of<FirebaseOperations>(context, listen: false).geiInitEmail,
       'time': Timestamp.now()
@@ -64,7 +64,7 @@ class PostFunctions with ChangeNotifier {
           .getInitFullname,
       'avatar':
           Provider.of<FirebaseOperations>(context, listen: false).getInitAvatar,
-      'useruid': Provider.of<Authentication>(context, listen: false).getUID(),
+      'useruid': Provider.of<Authentication>(context, listen: false).getUserUid,
       'email':
           Provider.of<FirebaseOperations>(context, listen: false).geiInitEmail,
       'time': Timestamp.now()

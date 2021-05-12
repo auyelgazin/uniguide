@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/provider_files/survey_functions.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
@@ -30,6 +31,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   void initState() {
+     Provider.of<Authentication>(context, listen: false)
+        .getUID();
     Provider.of<FirebaseOperations>(context, listen: false)
         .initUserData(context);
     super.initState();

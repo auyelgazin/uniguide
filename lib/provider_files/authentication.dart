@@ -7,10 +7,12 @@ class Authentication with ChangeNotifier {
   String userUid;
   String get getUserUid => userUid;
 
-  String getUID() {
-    String uid = firebaseAuth.currentUser.uid;
-    print('UID: $uid');
-    return uid;
+  void getUID() {
+    // String uid = firebaseAuth.currentUser.uid;
+    // print('UID: $uid');
+    // return uid;
+    userUid = firebaseAuth.currentUser.uid;
+    // return userUid;
     
   }
 

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:uniguide/constants/colors.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/provider_files/survey_functions.dart';
@@ -81,14 +82,48 @@ class _SurveyScreenState extends State<SurveyScreen> {
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Add survey', style: loginSignupInfo,),
+                      Text(
+                        'Add survey',
+                        style: loginSignupInfo,
+                      ),
                       IconButton(
                         icon: Icon(Icons.add_circle_outline),
-                        onPressed: () {},
+                        onPressed: () {
+                          // Provider.of<SurveyFunctions>(context, listen: false).addSurvey(doc, link)
+                          showModalBottomSheet(
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              builder: (context) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    color: white,
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20)),
+                                  ),
+                                  height:
+                                      MediaQuery.of(context).size.height / 2,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: 40,
+                                        child: IconButton(
+                                          icon: Icon(Icons.keyboard_arrow_down),
+                                          onPressed: () {},
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              });
+                        },
                       ),
                     ],
                   )
-                : Text('Take Survey', style: loginSignupInfo,),
+                : Text(
+                    'Take Survey',
+                    style: loginSignupInfo,
+                  ),
             Expanded(
               child: ListView.builder(
                 itemBuilder: (context, index) {
