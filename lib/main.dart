@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         getPages: AppRoutes.list,
         initialRoute:
-            initScreen == 0 || initScreen == null ? '/chooseLang' : authWrap() //'/chat',
+            initScreen == 0 || initScreen == null ? '/chooseLang' : authWrap(context) //'/chat',
       ),
       providers: [
         ChangeNotifierProvider(create: (_) => SurveyFunctions()),
@@ -67,8 +67,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
-String authWrap() {
+Future authWrap(BuildContext context) async {
   if (FirebaseAuth.instance.currentUser != null) {
+    // Provider.of<FirebaseOperations>(context, listen: false).initUserData(context);
+    await FirebaseOperations().initUserData(context);
     return '/dashboard';
   } else
     return '/login';

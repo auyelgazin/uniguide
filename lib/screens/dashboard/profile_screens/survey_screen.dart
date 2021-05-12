@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:uniguide/constants/font_styles.dart';
+import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/provider_files/survey_functions.dart';
 
 class SurveyScreen extends StatefulWidget {
@@ -12,10 +13,12 @@ class SurveyScreen extends StatefulWidget {
 
 class _SurveyScreenState extends State<SurveyScreen> {
   List surveysList = [];
+  bool isTeacherOrStuff;
 
   @override
   void initState() {
     getSurveys();
+    checkPosition();
     super.initState();
   }
 
@@ -32,6 +35,19 @@ class _SurveyScreenState extends State<SurveyScreen> {
     }
   }
 
+  checkPosition() {
+    String position =
+        Provider.of<FirebaseOperations>(context, listen: false).getInitPosition;
+
+    if (position == 'Teacher' || position == 'Stuff') {
+      isTeacherOrStuff = true;
+    } else {
+      isTeacherOrStuff = false;
+    }
+    print(position);
+    print(isTeacherOrStuff);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,8 +62,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
               color: Color(0xFF232195),
             ),
             onPressed: () {
-              // Get.back();
-              print(surveysList);
+              Get.back();
             },
           ),
         ),
@@ -58,17 +73,36 @@ class _SurveyScreenState extends State<SurveyScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: Container(
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            return Column(
-              children: [
-                Text(surveysList[index]['name']),
-                Text(surveysList[index]['link']),
-              ],
-            );
-          },
-          itemCount: surveysList.length,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            isTeacherOrStuff
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Add survey', style: loginSignupInfo,),
+                      IconButton(
+                        icon: Icon(Icons.add_circle_outline),
+                        onPressed: () {},
+                      ),
+                    ],
+                  )
+                : Text('Take Survey', style: loginSignupInfo,),
+            Expanded(
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      Text(surveysList[index]['name']),
+                      Text(surveysList[index]['link']),
+                    ],
+                  );
+                },
+                itemCount: surveysList.length,
+              ),
+            ),
+          ],
         ),
       ),
     );
