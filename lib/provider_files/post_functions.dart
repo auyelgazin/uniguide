@@ -71,16 +71,6 @@ class PostFunctions with ChangeNotifier {
     });
   }
 
-  void incrementLike(BuildContext context, String postId) {
-    // print('Func incrementLike called');
-    FirebaseFirestore.instance
-        .collection('posts')
-        .doc(postId)
-        .update({'likes': FieldValue.increment(1)}).whenComplete(() {
-      print('like++');
-    });
-  }
-
   Future addComment(BuildContext context, String postId, String comment) async {
     await FirebaseFirestore.instance
         .collection('posts')
@@ -97,6 +87,11 @@ class PostFunctions with ChangeNotifier {
       'email':
           Provider.of<FirebaseOperations>(context, listen: false).geiInitEmail,
       'time': Timestamp.now()
+    }).whenComplete(() {
+      FirebaseFirestore.instance
+          .collection('posts')
+          .doc(postId)
+          .update({'comments': FieldValue.increment(1)});
     });
   }
 

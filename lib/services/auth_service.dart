@@ -13,8 +13,4 @@ class AuthService {
   Future<void> signOut() async {
     await auth.signOut();
   }
-
-  Future uploadPostData(String postID, dynamic data) async {
-    return FirebaseFirestore.instance.collection('posts').doc(postID).set(data);
-  }
 }

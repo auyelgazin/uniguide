@@ -93,16 +93,16 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                 .getInitAvatar ==
                             noAvatarUrl
                         ? CircleAvatar(
-                          backgroundColor: darPurple,
+                            backgroundColor: darPurple,
                             radius: 50,
                             child: Text(
                               dc.getInitials(Provider.of<FirebaseOperations>(
                                       context,
                                       listen: false)
                                   .getInitFullname),
-                                  style: TextStyle(
-                                    fontSize: 30,
-                                  ),
+                              style: TextStyle(
+                                fontSize: 30,
+                              ),
                             ),
                           )
                         : (file == null
@@ -140,7 +140,6 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           } catch (e) {
                             print(e);
                             return null;
-
                           }
                         },
                         child: Container(
@@ -196,11 +195,25 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
               () async {
                 editedFullName = fullNameController.text.trim();
 
+                List<String> indexList = [];
+
+                getFullameIndex(String fullname) {
+                  List<String> splitList = fullname.split(' ');
+
+                  indexList.add(fullname.toLowerCase());
+                  for (int i = 0; i < splitList.length; i++) {
+                    for (int j = 0; j <= splitList[i].length; j++) {
+                      indexList.add(splitList[i].substring(0, j).toLowerCase());
+                    }
+                  }
+                }
+                getFullameIndex(editedFullName);
+
                 if (editedFullName.length >= 3) {
                   await FirestoreService(uid: auth.currentUser.uid)
-                      .updateUserData(
+                      .updateFullname(
                     fullName: editedFullName,
-                    email: auth.currentUser.email,
+                    searchIndex: indexList,
                   );
                   Get.back();
                 }

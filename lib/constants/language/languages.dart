@@ -7,7 +7,7 @@ class Languages extends Translations{
     'en_US': {
       // Onboarding
       'choose': 'Which language do you want to choose?',
-      'welcome': 'Welcome to Uniguide!',
+      'welcome': 'Welcome to SDUHelper!',
       'welcome_info': 'This application is a social network of the Suleyman Demirel University, to speed up the problem solving process!',
       'login': 'Log In',
       'have_acc?': 'Already have an account?',
@@ -28,7 +28,7 @@ class Languages extends Translations{
     },
     'ru_RU': {
       'choose': 'Какой язык вы хотите выбрать?',
-      'welcome': 'Добро пожаловать в UniGuide!',
+      'welcome': 'Добро пожаловать в SDUHelper!',
       'welcome_info': 'Данное приложение является социальной сетью университета им.Сулеймана Демиреля, для ускорения процесса решения проблем!',
       'login': 'Войти',
       'have_acc?': 'У вас уже есть аккаунт?',
@@ -39,14 +39,14 @@ class Languages extends Translations{
     },
     'kz_KZ': {
       'choose': 'Қай тілді таңдағыңыз келеді?',
-      'welcome': 'UniGuide-қа қош келдіңіз!',
+      'welcome': 'SDUHepler-ге қош келдіңіз!',
       'welcome_info': 'Бұл қосымша - мәселе шешу процессін жеделдетуге арналған Сүлеймен Демирел Университетінің әлеуметтік желісі!',
       'login': 'Кіру',
       'have_acc?': 'Аккаунтыңыз бар ма?',
       'signup': 'Тіркелу',
 
       // Profile
-      'profile': 'Профайыл 667',
+      'profile': 'Профиль',
     }
     
   };

@@ -13,9 +13,6 @@ import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/screens/dashboard/models/topic.dart';
-import 'package:uniguide/services/auth_service.dart';
-
-import 'dashboard_helper.dart';
 
 class WriteScreen extends StatefulWidget {
   @override
@@ -89,87 +86,120 @@ class _WriteScreenState extends State<WriteScreen> {
                             topLeft: Radius.circular(20),
                             topRight: Radius.circular(20)),
                       ),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 40,
-                            child: IconButton(
-                              icon: Icon(Icons.keyboard_arrow_down),
-                              onPressed: () {},
+                      child: SingleChildScrollView(
+                                              child: Column(
+                          children: [
+                            Container(
+                              height: 40,
+                              child: IconButton(
+                                icon: Icon(Icons.keyboard_arrow_down),
+                                onPressed: () {},
+                              ),
                             ),
-                          ),
-                          Row(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  selectFile(ImageSource.camera);
-                                  // Get.to(
-                                  //   () => Scaffold(
-                                  //     backgroundColor: white,
-                                  //     appBar: AppBar(
-                                  //       leading: IconButton(
-                                  //         icon: Icon(Icons.arrow_back_ios,
-                                  //             color: black),
-                                  //         onPressed: () {},
-                                  //       ),
-                                  //       centerTitle: true,
-                                  //       elevation: 0,
-                                  //       title: Text(
-                                  //         'cameraFile',
-                                  //         style: titleStyle,
-                                  //       ),
-                                  //       backgroundColor: white,
-                                  //     ),
-                                  //   ),
-                                  // );
-                                },
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width / 2,
-                                  height: MediaQuery.of(context).size.width / 2,
-                                  child: Center(
-                                    child: Text('camera'),
+                            SizedBox(height: 40,),
+                            Row(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    selectFile(ImageSource.camera);
+                                    // Get.to(
+                                    //   () => Scaffold(
+                                    //     backgroundColor: white,
+                                    //     appBar: AppBar(
+                                    //       leading: IconButton(
+                                    //         icon: Icon(Icons.arrow_back_ios,
+                                    //             color: black),
+                                    //         onPressed: () {},
+                                    //       ),
+                                    //       centerTitle: true,
+                                    //       elevation: 0,
+                                    //       title: Text(
+                                    //         'cameraFile',
+                                    //         style: titleStyle,
+                                    //       ),
+                                    //       backgroundColor: white,
+                                    //     ),
+                                    //   ),
+                                    // );
+                                  },
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width / 2,
+                                    height: MediaQuery.of(context).size.width / 2,
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.width / 8,
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                8,
+                                            child: Image(
+                                              color: darPurple,
+                                              image: AssetImage(
+                                                  'images/cameraIcon.png'),
+                                            ),
+                                          ),
+                                          SizedBox(height: 10),
+                                          Text('Camera')
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  selectFile(ImageSource.gallery)
-                                      .whenComplete(() {
-                                    Get.back();
-                                  });
-                                  //   Get.to(
-                                  //     () => Scaffold(
-                                  //       backgroundColor: white,
-                                  //       appBar: AppBar(
-                                  //         leading: IconButton(
-                                  //           icon: Icon(Icons.arrow_back_ios,
-                                  //               color: black),
-                                  //           onPressed: () {
-                                  //             Navigator.pop(context);
-                                  //           },
-                                  //         ),
-                                  //         centerTitle: true,
-                                  //         elevation: 0,
-                                  //         title: Text(
-                                  //           'galleryFile',
-                                  //           style: titleStyle,
-                                  //         ),
-                                  //         backgroundColor: white,
-                                  //       ),
-                                  //     ),
-                                  //   );
-                                },
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width / 2,
-                                  height: MediaQuery.of(context).size.width / 2,
-                                  child: Center(
-                                    child: Text('gallery'),
+                                InkWell(
+                                  onTap: () {
+                                    selectFile(ImageSource.gallery)
+                                        .whenComplete(() {
+                                      Get.back();
+                                    });
+                                    //   Get.to(
+                                    //     () => Scaffold(
+                                    //       backgroundColor: white,
+                                    //       appBar: AppBar(
+                                    //         leading: IconButton(
+                                    //           icon: Icon(Icons.arrow_back_ios,
+                                    //               color: black),
+                                    //           onPressed: () {
+                                    //             Navigator.pop(context);
+                                    //           },
+                                    //         ),
+                                    //         centerTitle: true,
+                                    //         elevation: 0,
+                                    //         title: Text(
+                                    //           'galleryFile',
+                                    //           style: titleStyle,
+                                    //         ),
+                                    //         backgroundColor: white,
+                                    //       ),
+                                    //     ),
+                                    //   );
+                                  },
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width / 2,
+                                    height: MediaQuery.of(context).size.width / 2,
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height:
+                                              MediaQuery.of(context).size.width /
+                                                  8,
+                                          child: Image(
+                                            image: AssetImage(
+                                                'images/galleryIcon.png'),
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Text('Gallery')
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          )
-                        ],
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     );
                   });
@@ -203,6 +233,7 @@ class _WriteScreenState extends State<WriteScreen> {
                       .getUserUid,
                   'time': Timestamp.now(),
                   'likes': 0,
+                  'comments': 0,
                 }).whenComplete(() {
                   print('Post uploaded');
                 });

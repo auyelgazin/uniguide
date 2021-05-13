@@ -7,10 +7,12 @@ import 'authentication.dart';
 class FirebaseOperations with ChangeNotifier {
   UploadTask imageUploadTask;
   String initEmail, initAvatar, initFullname, initPosition;
+  List<dynamic> initSearchIndex;
   String get getInitFullname => initFullname;
   String get getInitAvatar => initAvatar;
   String get geiInitEmail => initEmail;
   String get getInitPosition => initPosition;
+  List<dynamic> get getInitSearchIndex => initSearchIndex;
 
 
 
@@ -43,6 +45,7 @@ class FirebaseOperations with ChangeNotifier {
       initAvatar = doc.data()['avatar'];
       initEmail = doc.data()['email'];
       initPosition = doc.data()['position'];
+      initSearchIndex = doc.data()['searchIndex'];
       // initUserImage = doc.data()['userimage'];
       
       print([initFullname, initAvatar, initEmail, initPosition]);
@@ -55,26 +58,5 @@ class FirebaseOperations with ChangeNotifier {
 
   Future uploadPostData(String postId, dynamic data) async {
     return FirebaseFirestore.instance.collection('posts').doc(postId).set(data);
-  }
-
-  Future deleteUserData(String userUid, dynamic collection) async {
-    return FirebaseFirestore.instance
-        .collection(collection)
-        .doc(userUid)
-        .delete();
-  }
-
-  Future updateCaption(String postId, dynamic data) async {
-    return FirebaseFirestore.instance
-        .collection('posts')
-        .doc(postId)
-        .update(data);
-  }
-
-  Future submitChatroomData(String chatRoomName, dynamic chatRoomData) async {
-    return FirebaseFirestore.instance
-        .collection('chatrooms')
-        .doc(chatRoomName)
-        .set(chatRoomData);
   }
 }

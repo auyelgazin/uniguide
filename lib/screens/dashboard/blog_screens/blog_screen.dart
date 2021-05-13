@@ -192,6 +192,7 @@ class _BlogScreenState extends State<BlogScreen> {
                 ),
                 InkWell(
                   onTap: () {
+                    orderBy = 'comments';
                     setState(() {
                       newContColor = white;
                       newTextColor = black.withOpacity(0.2);
@@ -222,38 +223,7 @@ class _BlogScreenState extends State<BlogScreen> {
                     ),
                   ),
                 ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      newContColor = white;
-                      newTextColor = black.withOpacity(0.2);
-
-                      intContColor = white;
-                      intTextColor = black.withOpacity(0.2);
-
-                      discContColor = darPurple;
-                      discTextColor = white;
-                    });
-                  },
-                  child: Container(
-                    height: 28,
-                    decoration: BoxDecoration(
-                      color: discContColor,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 9, vertical: 2),
-                      child: Text(
-                        '#интересные',
-                        style: TextStyle(
-                          color: discTextColor,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                
                 SizedBox(
                   width: 20,
                 ),
@@ -474,13 +444,15 @@ class _BlogScreenState extends State<BlogScreen> {
                                     'Начало обсуждения',
                                     textAlign: TextAlign.center,
                                   ),
+                                  SizedBox(height: 20,),
                                   Container(
-                                    height: 520,
+                                    height: 480,
                                     child: Provider.of<PostFunctions>(context,
                                             listen: false)
                                         .showComments(context, documentSnapshot,
                                             documentSnapshot.data()['title']),
                                   ),
+                                  SizedBox(height: 20,),
                                 ],
                               ),
                             ),
@@ -509,7 +481,7 @@ class _BlogScreenState extends State<BlogScreen> {
                                               fillColor: white,
                                               filled: true,
                                               hintText:
-                                                  'Добавить комментарий...',
+                                                  'Add a comment...',
                                               hintStyle: commentHint,
                                             ),
                                           ),

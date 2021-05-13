@@ -7,14 +7,11 @@ class FirestoreService {
   final String uid;
   FirestoreService({this.uid});
 
-  Future updateUserData(
-      {String fullName, String email, String position, String avatar}) async {
-    return await usersCollection.doc(uid).set({
-      'uid': uid,
-      'fullName': fullName,
-      'email': email,
-      'position': position,
-      'avatar': avatar
+  Future updateFullname(
+      {String fullName, List searchIndex}) async {
+    return await usersCollection.doc(uid).update({
+      'fullname': fullName,
+      'searchIndex': searchIndex,
     });
   }
 

@@ -46,8 +46,6 @@ class PostCard extends StatefulWidget {
 class _PostCardState extends State<PostCard> {
   DashboardController dc = Get.put(DashboardController());
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -65,7 +63,7 @@ class _PostCardState extends State<PostCard> {
                   Container(
                     child: widget.avatar == noAvatarUrl
                         ? CircleAvatar(
-                          backgroundColor: darPurple,
+                            backgroundColor: darPurple,
                             child: Text(
                               dc.getInitials(widget.sender),
                               style: initialsStyle,
@@ -128,8 +126,13 @@ class _PostCardState extends State<PostCard> {
                                           fontSize: 14,
                                           fontWeight: FontWeight.w400),
                                     ),
-                                    Image(
-                                      image: NetworkImage(widget.image),
+                                    SizedBox(height: 5),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image(
+                                        
+                                        image: NetworkImage(widget.image),
+                                      ),
                                     ),
                                   ],
                                 ),
