@@ -11,7 +11,7 @@ class LanguageScreen extends StatefulWidget {
 }
 
 class _LanguageScreenState extends State<LanguageScreen> {
-  LanguageController languageController = Get.put(LanguageController());
+  LanguageController _languageController = Get.put(LanguageController());
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
               region: 'US',
               assetImage: 'images/en.png',
               langName: 'English  ',
-              languageController: languageController,
+              languageController: _languageController,
               getTo: () {
                 Get.back();
               }),
@@ -58,7 +58,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
               region: 'RU',
               assetImage: 'images/ru.png',
               langName: 'Русский',
-              languageController: languageController,
+              languageController: _languageController,
               getTo: () {
                 Get.back();
               }),
@@ -70,7 +70,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
               region: 'KZ',
               assetImage: 'images/kz.png',
               langName: 'Қазақша',
-              languageController: languageController,
+              languageController: _languageController,
               getTo: () {
                 Get.back();
               }),

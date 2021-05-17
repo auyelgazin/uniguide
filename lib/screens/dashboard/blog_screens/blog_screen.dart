@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -7,11 +6,9 @@ import 'package:uniguide/constants/colors.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/post_functions.dart';
-import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/widgets/dashboard_widgets/post_card.dart';
 import 'package:uniguide/widgets/dashboard_widgets/post_in_comment_card.dart';
-import 'package:uniguide/widgets/wide_button_box.dart';
-import 'package:intl/intl.dart';
+
 
 class BlogScreen extends StatefulWidget {
   @override
@@ -19,18 +16,18 @@ class BlogScreen extends StatefulWidget {
 }
 
 class _BlogScreenState extends State<BlogScreen> {
-  TextEditingController commentC = TextEditingController();
+  TextEditingController _commentC = TextEditingController();
 
-  String orderBy = 'time';
+  String _orderBy = 'time';
   // sorting widgets:
-  var newContColor = darPurple;
-  var newTextColor = white;
+  var _newContColor = darPurple;
+  var _newTextColor = white;
 
-  var intContColor = white;
-  var intTextColor = black.withOpacity(0.2);
+  var _intContColor = white;
+  var _intTextColor = black.withOpacity(0.2);
 
-  var discContColor = white;
-  var discTextColor = black.withOpacity(0.2);
+  var _discContColor = white;
+  var _discTextColor = black.withOpacity(0.2);
 
   @override
   Widget build(BuildContext context) {
@@ -121,21 +118,21 @@ class _BlogScreenState extends State<BlogScreen> {
                 InkWell(
                   onTap: () {
                     setState(() {
-                      orderBy = 'time';
-                      newContColor = darPurple;
-                      newTextColor = white;
+                      _orderBy = 'time';
+                      _newContColor = darPurple;
+                      _newTextColor = white;
 
-                      intContColor = white;
-                      intTextColor = black.withOpacity(0.2);
+                      _intContColor = white;
+                      _intTextColor = black.withOpacity(0.2);
 
-                      discContColor = white;
-                      discTextColor = black.withOpacity(0.2);
+                      _discContColor = white;
+                      _discTextColor = black.withOpacity(0.2);
                     });
                   },
                   child: Container(
                     height: 28,
                     decoration: BoxDecoration(
-                      color: newContColor,
+                      color: _newContColor,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Padding(
@@ -144,7 +141,7 @@ class _BlogScreenState extends State<BlogScreen> {
                       child: Text(
                         '#новые',
                         style: TextStyle(
-                          color: newTextColor,
+                          color: _newTextColor,
                           fontSize: 18,
                         ),
                       ),
@@ -157,21 +154,21 @@ class _BlogScreenState extends State<BlogScreen> {
                 InkWell(
                   onTap: () {
                     setState(() {
-                      orderBy = 'likes';
-                      newContColor = white;
-                      newTextColor = black.withOpacity(0.2);
+                      _orderBy = 'likes';
+                      _newContColor = white;
+                      _newTextColor = black.withOpacity(0.2);
 
-                      intContColor = darPurple;
-                      intTextColor = white;
+                      _intContColor = darPurple;
+                      _intTextColor = white;
 
-                      discContColor = white;
-                      discTextColor = black.withOpacity(0.2);
+                      _discContColor = white;
+                      _discTextColor = black.withOpacity(0.2);
                     });
                   },
                   child: Container(
                     height: 28,
                     decoration: BoxDecoration(
-                      color: intContColor,
+                      color: _intContColor,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Padding(
@@ -180,7 +177,7 @@ class _BlogScreenState extends State<BlogScreen> {
                       child: Text(
                         '#лучшие',
                         style: TextStyle(
-                          color: intTextColor,
+                          color: _intTextColor,
                           fontSize: 18,
                         ),
                       ),
@@ -192,22 +189,22 @@ class _BlogScreenState extends State<BlogScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                    orderBy = 'comments';
+                    _orderBy = 'comments';
                     setState(() {
-                      newContColor = white;
-                      newTextColor = black.withOpacity(0.2);
+                      _newContColor = white;
+                      _newTextColor = black.withOpacity(0.2);
 
-                      intContColor = white;
-                      intTextColor = black.withOpacity(0.2);
+                      _intContColor = white;
+                      _intTextColor = black.withOpacity(0.2);
 
-                      discContColor = darPurple;
-                      discTextColor = white;
+                      _discContColor = darPurple;
+                      _discTextColor = white;
                     });
                   },
                   child: Container(
                     height: 28,
                     decoration: BoxDecoration(
-                      color: discContColor,
+                      color: _discContColor,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Padding(
@@ -216,7 +213,7 @@ class _BlogScreenState extends State<BlogScreen> {
                       child: Text(
                         '#обсуждаемые',
                         style: TextStyle(
-                          color: discTextColor,
+                          color: _discTextColor,
                           fontSize: 18,
                         ),
                       ),
@@ -237,7 +234,7 @@ class _BlogScreenState extends State<BlogScreen> {
             child: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('posts')
-                  .orderBy(orderBy, descending: true)
+                  .orderBy(_orderBy, descending: true)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -350,7 +347,7 @@ class _BlogScreenState extends State<BlogScreen> {
                               ),
                               onPressed: () {
                                 Get.back();
-                                commentC.clear();
+                                _commentC.clear();
                               },
                             ),
                           ),
@@ -469,7 +466,7 @@ class _BlogScreenState extends State<BlogScreen> {
                                         child: Container(
                                           height: 36,
                                           child: TextField(
-                                            controller: commentC,
+                                            controller: _commentC,
                                             textAlignVertical:
                                                 TextAlignVertical.bottom,
                                             decoration: InputDecoration(
@@ -504,9 +501,9 @@ class _BlogScreenState extends State<BlogScreen> {
                                                   context,
                                                   documentSnapshot
                                                       .data()['title'],
-                                                  commentC.text)
+                                                  _commentC.text)
                                               .whenComplete(() {
-                                            commentC.clear();
+                                            _commentC.clear();
                                           });
                                         },
                                       ),
@@ -543,7 +540,7 @@ class _BlogScreenState extends State<BlogScreen> {
                         ),
                         onPressed: () {
                           Get.back();
-                          commentC.clear();
+                          _commentC.clear();
                         },
                       ),
                     ),

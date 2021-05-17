@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uniguide/constants/font_styles.dart';
-
 import 'change_password_screen.dart';
 
 class SettingsScreen extends StatefulWidget {

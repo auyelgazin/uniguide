@@ -21,16 +21,16 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  final TextEditingController fullNameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final SignupController controller = Get.put(SignupController());
 
-  String chosenPosition;
-  bool checkboxMarked = false;
-  bool agreement = false;
+  String _chosenPosition;
+  bool _checkboxMarked = false;
+  bool _agreement = false;
 
-  final positions = [
+  final _positions = [
     Position(title: 'Student'),
     Position(title: 'Teacher'),
     Position(title: 'Stuff'),
@@ -40,10 +40,8 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
 
     List<String> indexList = [];
-
     getFullameIndex(String fullname) {
       List<String> splitList = fullname.split(' ');
-
       indexList.add(fullname.toLowerCase());
       for (int i = 0; i < splitList.length; i++) {
         for (int j = 0; j <= splitList[i].length; j++) {
@@ -92,7 +90,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: AuthTextField(
                       labelText: 'full_name'.tr,
                       hidePassword: false,
-                      controller: fullNameController,
+                      controller: _fullNameController,
                       trailingIcon: null,
                       keyboardType: TextInputType.name,
                     ),
@@ -105,7 +103,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: AuthTextField(
                       labelText: 'email_address'.tr,
                       hidePassword: false,
-                      controller: emailController,
+                      controller: _emailController,
                       trailingIcon: null,
                       keyboardType: TextInputType.emailAddress,
                     ),
@@ -118,7 +116,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: AuthTextField(
                       labelText: 'password'.tr,
                       hidePassword: true,
-                      controller: passwordController,
+                      controller: _passwordController,
                       trailingIcon: Icon(Icons.remove_red_eye),
                       keyboardType: TextInputType.visiblePassword,
                     ),
@@ -151,58 +149,58 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       child: Column(
                         children: [
-                          buildSingleCheckbox(positions[0], () {
+                          buildSingleCheckbox(_positions[0], () {
                             setState(() {
-                              positions[1].value = false;
-                              positions[2].value = false;
+                              _positions[1].value = false;
+                              _positions[2].value = false;
 
-                              final newValue = !positions[0].value;
-                              positions[0].value = newValue;
+                              final newValue = !_positions[0].value;
+                              _positions[0].value = newValue;
 
-                              if (positions[0].value == true) {
-                                chosenPosition = positions[0].title;
-                                checkboxMarked = true;
+                              if (_positions[0].value == true) {
+                                _chosenPosition = _positions[0].title;
+                                _checkboxMarked = true;
                               } else {
-                                chosenPosition = null;
-                                checkboxMarked = false;
+                                _chosenPosition = null;
+                                _checkboxMarked = false;
                               }
-                              print('chosen position is: $chosenPosition');
+                              print('chosen position is: $_chosenPosition');
                             });
                           }),
-                          buildSingleCheckbox(positions[1], () {
+                          buildSingleCheckbox(_positions[1], () {
                             setState(() {
-                              positions[0].value = false;
-                              positions[2].value = false;
+                              _positions[0].value = false;
+                              _positions[2].value = false;
 
-                              final newValue = !positions[1].value;
-                              positions[1].value = newValue;
+                              final newValue = !_positions[1].value;
+                              _positions[1].value = newValue;
 
-                              if (positions[1].value == true) {
-                                chosenPosition = positions[1].title;
-                                checkboxMarked = true;
+                              if (_positions[1].value == true) {
+                                _chosenPosition = _positions[1].title;
+                                _checkboxMarked = true;
                               } else {
-                                chosenPosition = null;
-                                checkboxMarked = false;
+                                _chosenPosition = null;
+                                _checkboxMarked = false;
                               }
-                              print('chosen position is: $chosenPosition');
+                              print('chosen position is: $_chosenPosition');
                             });
                           }),
-                          buildSingleCheckbox(positions[2], () {
+                          buildSingleCheckbox(_positions[2], () {
                             setState(() {
-                              positions[1].value = false;
-                              positions[0].value = false;
+                              _positions[1].value = false;
+                              _positions[0].value = false;
 
-                              final newValue = !positions[2].value;
-                              positions[2].value = newValue;
+                              final newValue = !_positions[2].value;
+                              _positions[2].value = newValue;
 
-                              if (positions[2].value == true) {
-                                chosenPosition = positions[2].title;
-                                checkboxMarked = true;
+                              if (_positions[2].value == true) {
+                                _chosenPosition = _positions[2].title;
+                                _checkboxMarked = true;
                               } else {
-                                chosenPosition = null;
-                                checkboxMarked = false;
+                                _chosenPosition = null;
+                                _checkboxMarked = false;
                               }
-                              print('chosen position is: $chosenPosition');
+                              print('chosen position is: $_chosenPosition');
                             });
                           }),
                         ],
@@ -213,10 +211,10 @@ class _SignupScreenState extends State<SignupScreen> {
                     height: 12,
                   ),
                   PrivacyPolicyCheckbox(
-                    agreementValue: agreement,
+                    agreementValue: _agreement,
                     onChanged: (value) {
                       setState(() {
-                        agreement = value;
+                        _agreement = value;
                       });
                     },
                   ),
@@ -227,18 +225,19 @@ class _SignupScreenState extends State<SignupScreen> {
                     AuthButton(
                       'signup'.tr,
                       () async {
-                        String email = emailController.text.trim().toLowerCase();
-                        String fullName = fullNameController.text.trim();
-                        String password = passwordController.text.trim();
-                        
+                        String email =
+                            _emailController.text.trim().toLowerCase();
+                        String fullName = _fullNameController.text.trim();
+                        String password = _passwordController.text.trim();
+
                         getFullameIndex(fullName);
 
                         if (fullName.isNotEmpty &&
                             password.isNotEmpty &&
                             email.isNotEmpty &&
-                            checkboxMarked == true &&
-                            agreement == true) {
-                          if (chosenPosition == positions[0].title) {
+                            _checkboxMarked == true &&
+                            _agreement == true) {
+                          if (_chosenPosition == _positions[0].title) {
                             // Student
                             if (email.length == 24 &&
                                 email.endsWith('@stu.sdu.edu.kz')) {
@@ -261,7 +260,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   'avatar': noAvatarUrl,
                                   'email': email,
                                   'fullname': fullName,
-                                  'position': chosenPosition,
+                                  'position': _chosenPosition,
                                   'searchIndex': indexList,
                                 });
                               }).whenComplete(() {
@@ -277,17 +276,24 @@ class _SignupScreenState extends State<SignupScreen> {
                               controller.emptyAgain();
 
                               print('signing up teacher & stuff...');
-                              
 
-                              Provider.of<Authentication>(context, listen: false).createAccount(email, password).whenComplete(() {
+                              Provider.of<Authentication>(context,
+                                      listen: false)
+                                  .createAccount(email, password)
+                                  .whenComplete(() {
                                 print('creating USER collection');
-                              Provider.of<FirebaseOperations>(context, listen: false).createUserCollection(context, {
-                                'useruid': Provider.of<Authentication>(context, listen: false).getUserUid,
-                                'avatar': noAvatarUrl,
-                                'email': email,
-                                'fullname': fullName,
-                                'position': chosenPosition,
-                                'searchIndex': indexList,
+                                Provider.of<FirebaseOperations>(context,
+                                        listen: false)
+                                    .createUserCollection(context, {
+                                  'useruid': Provider.of<Authentication>(
+                                          context,
+                                          listen: false)
+                                      .getUserUid,
+                                  'avatar': noAvatarUrl,
+                                  'email': email,
+                                  'fullname': fullName,
+                                  'position': _chosenPosition,
+                                  'searchIndex': indexList,
                                 });
                               }).whenComplete(() {
                                 Get.toNamed('/dashboard');

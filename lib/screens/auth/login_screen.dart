@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uniguide/constants/font_styles.dart';
@@ -7,18 +5,14 @@ import 'package:get/get.dart';
 import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/screens/auth/auth_controllers/login_controller.dart';
-import 'package:uniguide/services/auth_service.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_button.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_textfield.dart';
 import 'package:uniguide/widgets/wide_button_box.dart';
 
 class LoginScreen extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
-  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-
-  final LoginController controller = Get.put(LoginController());
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final LoginController _controller = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +43,7 @@ class LoginScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 20),
                 child: Obx(
                   () => Text(
-                    '${controller.error.value}',
+                    '${_controller.error.value}',
                     style: authError,
                   ),
                 ),
@@ -62,7 +56,7 @@ class LoginScreen extends StatelessWidget {
                     child: AuthTextField(
                       labelText: 'email_address'.tr,
                       hidePassword: false,
-                      controller: emailController,
+                      controller: _emailController,
                       trailingIcon: null,
                       keyboardType: TextInputType.emailAddress,
                     ),
@@ -75,7 +69,7 @@ class LoginScreen extends StatelessWidget {
                     child: AuthTextField(
                       labelText: 'password'.tr,
                       hidePassword: true,
-                      controller: passwordController,
+                      controller: _passwordController,
                       trailingIcon: Icon(Icons.remove_red_eye),
                       keyboardType: TextInputType.visiblePassword,
                     ),
@@ -108,7 +102,7 @@ class LoginScreen extends StatelessWidget {
                       'login'.tr,
                       () async {
                         try {
-                          Provider.of<Authentication>(context, listen: false).logIntoAccount(emailController.text, passwordController.text).whenComplete((){
+                          Provider.of<Authentication>(context, listen: false).logIntoAccount(_emailController.text, _passwordController.text).whenComplete((){
                           print('User logged in');
                           // - - - ->
                           Provider.of<FirebaseOperations>(context, listen: false).initUserData(context);

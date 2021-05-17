@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:uniguide/widgets/dashboard_widgets/comment_card.dart';
-
 import '../constants/colors.dart';
 import '../constants/consants.dart';
 import '../constants/font_styles.dart';
@@ -14,10 +12,10 @@ import 'authentication.dart';
 import 'firebase_operations.dart';
 
 class PostFunctions with ChangeNotifier {
-  DashboardController dc = Get.put(DashboardController());
+  DashboardController _dc = Get.put(DashboardController());
 
-  String timePosted;
-  String get getTimePosted => timePosted;
+  String _timePosted;
+  String get getTimePosted => _timePosted;
 
   showTimeAgo(dynamic timedata) {
     Timestamp time = timedata;
@@ -26,7 +24,7 @@ class PostFunctions with ChangeNotifier {
     timeago.setLocaleMessages('ru', timeago.RuShortMessages());
     timeago.setLocaleMessages('en', timeago.EnShortMessages());
 
-    timePosted = timeago.format(dateTime, locale: 'ru');
+    _timePosted = timeago.format(dateTime, locale: 'ru');
 
   }
 
@@ -150,7 +148,7 @@ class PostFunctions with ChangeNotifier {
                           ? CircleAvatar(
                               backgroundColor: darPurple,
                               child: Text(
-                                dc.getInitials(
+                                _dc.getInitials(
                                     documentSnapshot.data()['fullname']),
                                 style: initialsStyle,
                               ),

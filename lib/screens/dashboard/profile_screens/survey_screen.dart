@@ -16,11 +16,11 @@ class SurveyScreen extends StatefulWidget {
 }
 
 class _SurveyScreenState extends State<SurveyScreen> {
-  List surveysList = [];
-  bool isTeacherOrStuff;
+  List _surveysList = [];
+  bool _isTeacherOrStuff;
 
-  TextEditingController nameC = TextEditingController();
-  TextEditingController linkC = TextEditingController();
+  TextEditingController _nameC = TextEditingController();
+  TextEditingController _linkC = TextEditingController();
 
   @override
   void initState() {
@@ -50,7 +50,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
       print('cannot fetch surveys');
     } else {
       setState(() {
-        surveysList = result;
+        _surveysList = result;
       });
     }
   }
@@ -60,12 +60,12 @@ class _SurveyScreenState extends State<SurveyScreen> {
         Provider.of<FirebaseOperations>(context, listen: false).getInitPosition;
 
     if (position == 'Teacher' || position == 'Stuff') {
-      isTeacherOrStuff = true;
+      _isTeacherOrStuff = true;
     } else {
-      isTeacherOrStuff = false;
+      _isTeacherOrStuff = false;
     }
     print(position);
-    print(isTeacherOrStuff);
+    print(_isTeacherOrStuff);
   }
 
   @override
@@ -98,7 +98,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              isTeacherOrStuff
+              _isTeacherOrStuff
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -154,7 +154,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                               Container(
                                                 height: 36,
                                                 child: TextField(
-                                                  controller: nameC,
+                                                  controller: _nameC,
                                                   textAlignVertical:
                                                       TextAlignVertical.bottom,
                                                   decoration: InputDecoration(
@@ -187,7 +187,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                               Container(
                                                 height: 36,
                                                 child: TextField(
-                                                  controller: linkC,
+                                                  controller: _linkC,
                                                   textAlignVertical:
                                                       TextAlignVertical.bottom,
                                                   decoration: InputDecoration(
@@ -216,21 +216,21 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                           child: AuthButton(
                                             'Add',
                                             () {
-                                              if (nameC.text.trim() != null &&
-                                                  linkC.text
+                                              if (_nameC.text.trim() != null &&
+                                                  _linkC.text
                                                       .trim()
                                                       .startsWith('https://')) {
                                                 Provider.of<SurveyFunctions>(
                                                         context,
                                                         listen: false)
                                                     .addSurvey(
-                                                        nameC.text.trim(),
-                                                        linkC.text.trim())
+                                                        _nameC.text.trim(),
+                                                        _linkC.text.trim())
                                                     .whenComplete(() {
                                                   print('Survey added');
                                                   getSurveys();
-                                                  nameC.clear();
-                                                  linkC.clear();
+                                                  _nameC.clear();
+                                                  _linkC.clear();
                                                   setState(() {});
                                                 }).whenComplete(() {
                                                   Get.back();
@@ -263,7 +263,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          surveysList[index]['name'],
+                          _surveysList[index]['name'],
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
@@ -275,7 +275,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                            openURL(surveysList[index]['link']);
+                            openURL(_surveysList[index]['link']);
                           },
                           child: Container(
                             width: double.infinity,
@@ -287,7 +287,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
                             padding: EdgeInsets.symmetric(horizontal: 20),
                             child: Center(
                               child: Text(
-                                '${surveysList[index]['link'].toString().substring(0, 24)}...',
+                                '${_surveysList[index]['link'].toString().substring(0, 24)}...',
                               ),
                             ),
                           ),
@@ -298,7 +298,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
                       ],
                     );
                   },
-                  itemCount: surveysList.length,
+                  itemCount: _surveysList.length,
                 ),
               ),
             ],

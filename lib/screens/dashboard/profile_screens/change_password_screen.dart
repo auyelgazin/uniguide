@@ -12,11 +12,11 @@ class ChangePasswordScreen extends StatefulWidget {
 }
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
-  FirebaseAuth auth = FirebaseAuth.instance;
-  TextEditingController newPassController = TextEditingController();
-  TextEditingController oldPassController = TextEditingController();
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  TextEditingController _newPassController = TextEditingController();
+  TextEditingController _oldPassController = TextEditingController();
 
-  final DashboardController dashboardController =
+  final DashboardController _dashboardController =
       Get.put(DashboardController());
 
   @override
@@ -61,7 +61,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             child: AuthTextField(
               labelText: 'Enter your old password',
               hidePassword: true,
-              controller: oldPassController,
+              controller: _oldPassController,
               trailingIcon: null,
               keyboardType: TextInputType.visiblePassword,
             ),
@@ -72,7 +72,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             child: AuthTextField(
               labelText: 'Enter your new password',
               hidePassword: true,
-              controller: newPassController,
+              controller: _newPassController,
               trailingIcon: null,
               keyboardType: TextInputType.visiblePassword,
             ),
@@ -89,9 +89,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   child: AuthButton(
                     'Change',
                     () async {
-                      if (oldPassController.text.trim().length >= 6 &&
-                          newPassController.text.trim().length >= 6) {
-                        changePassword(newPassController.text.trim());
+                      if (_oldPassController.text.trim().length >= 6 &&
+                          _newPassController.text.trim().length >= 6) {
+                        changePassword(_newPassController.text.trim());
                       } else {
                         Get.defaultDialog();
                       }
@@ -107,11 +107,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   }
 
   void changePassword(String password) async {
-    await auth.currentUser.updatePassword(password).then((_) {
+    await _auth.currentUser.updatePassword(password).then((_) {
       print('Password changed');
       Get.defaultDialog(title: 'Password Changed', middleText: 'OK');
-      oldPassController.clear();
-      newPassController.clear();
+      _oldPassController.clear();
+      _newPassController.clear();
     }).catchError((e) {
       print('Error ${e.toString()}');
     });

@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 
 class SurveyFunctions with ChangeNotifier {
   Future getSurveys() async {
-    List surveys = [];
+    List _surveys = [];
 
     try {
       await FirebaseFirestore.instance.collection('surveys').orderBy('time', descending: true).get().then((snap) {
         snap.docs.forEach((element) {
-          surveys.add(element.data());
+          _surveys.add(element.data());
         });
       });
-      return surveys;
+      return _surveys;
     } catch (e) {
       print(e.toString());
     }

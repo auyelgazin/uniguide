@@ -1,11 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:uniguide/constants/colors.dart';
 import 'package:uniguide/constants/font_styles.dart';
-
-import '../../constants/colors.dart';
-import '../../constants/colors.dart';
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -13,9 +9,9 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  TextEditingController searchC = TextEditingController();
+  TextEditingController _searchC = TextEditingController();
 
-  String searchString;
+  String _searchString;
 
   @override
   Widget build(BuildContext context) {
@@ -57,21 +53,21 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 // border:
               ),
-              controller: searchC,
+              controller: _searchC,
               onChanged: (val) {
                 setState(() {
-                  searchString = val.toLowerCase();
+                  _searchString = val.toLowerCase();
                 });
               },
             ),
             Expanded(
 
               child: StreamBuilder<QuerySnapshot>(
-                stream: (searchString == null || searchString.trim() == '')
+                stream: (_searchString == null || _searchString.trim() == '')
                     ? FirebaseFirestore.instance.collection('users').snapshots()
                     : FirebaseFirestore.instance
                         .collection('users')
-                        .where('searchIndex', arrayContains: searchString)
+                        .where('searchIndex', arrayContains: _searchString)
                         .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {

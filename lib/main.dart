@@ -44,15 +44,15 @@ class MyApp extends StatelessWidget {
 
         title: 'UniGuide',
         theme: ThemeData(
-          
           fontFamily: 'SFPro',
           primarySwatch: Colors.blue,
           unselectedWidgetColor: Color(0xFF232195),
         ),
         debugShowCheckedModeBanner: false,
         getPages: AppRoutes.list,
-        initialRoute:
-            initScreen == 0 || initScreen == null ? '/chooseLang' : '/chooseLang',
+        initialRoute: initScreen == 0 || initScreen == null
+            ? '/chooseLang'
+            : authWrap(context),
       ),
       providers: [
         ChangeNotifierProvider(create: (_) => SurveyFunctions()),
@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-String authWrap(BuildContext context)  {
+String authWrap(BuildContext context) {
   if (FirebaseAuth.instance.currentUser != null) {
     // Provider.of<FirebaseOperations>(context, listen: false).initUserData(context);
     //  FirebaseOperations().initUserData(context);

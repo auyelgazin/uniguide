@@ -1,18 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'authentication.dart';
 
 class FirebaseOperations with ChangeNotifier {
-  UploadTask imageUploadTask;
-  String initEmail, initAvatar, initFullname, initPosition;
-  List<dynamic> initSearchIndex;
-  String get getInitFullname => initFullname;
-  String get getInitAvatar => initAvatar;
-  String get geiInitEmail => initEmail;
-  String get getInitPosition => initPosition;
-  List<dynamic> get getInitSearchIndex => initSearchIndex;
+  String _initEmail, _initAvatar, _initFullname, _initPosition;
+  List<dynamic> _initSearchIndex;
+  String get getInitFullname => _initFullname;
+  String get getInitAvatar => _initAvatar;
+  String get geiInitEmail => _initEmail;
+  String get getInitPosition => _initPosition;
+  List<dynamic> get getInitSearchIndex => _initSearchIndex;
 
 
 
@@ -41,14 +39,14 @@ class FirebaseOperations with ChangeNotifier {
         .then((doc) {
       print('Fetching user data...');
       
-      initFullname = doc.data()['fullname'];
-      initAvatar = doc.data()['avatar'];
-      initEmail = doc.data()['email'];
-      initPosition = doc.data()['position'];
-      initSearchIndex = doc.data()['searchIndex'];
+      _initFullname = doc.data()['fullname'];
+      _initAvatar = doc.data()['avatar'];
+      _initEmail = doc.data()['email'];
+      _initPosition = doc.data()['position'];
+      _initSearchIndex = doc.data()['searchIndex'];
       // initUserImage = doc.data()['userimage'];
       
-      print([initFullname, initAvatar, initEmail, initPosition]);
+      print([_initFullname, _initAvatar, _initEmail, _initPosition]);
       
       // print(initUserImage);
       notifyListeners();

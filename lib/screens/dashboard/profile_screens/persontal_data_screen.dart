@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -10,14 +8,11 @@ import 'package:provider/provider.dart';
 import 'package:uniguide/constants/colors.dart';
 import 'package:uniguide/constants/consants.dart';
 import 'package:uniguide/constants/font_styles.dart';
-import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_button.dart';
 import 'package:uniguide/widgets/auth_widgets/auth_textfield.dart';
-import 'package:uniguide/widgets/wide_button_box.dart';
 import 'package:uniguide/services/firestore_service.dart';
-import 'package:path/path.dart' as Path;
 
 class PersonalDataScreen extends StatefulWidget {
   @override
@@ -25,34 +20,35 @@ class PersonalDataScreen extends StatefulWidget {
 }
 
 class _PersonalDataScreenState extends State<PersonalDataScreen> {
-  FirebaseAuth auth = FirebaseAuth.instance;
-  final TextEditingController fullNameController = TextEditingController();
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  final TextEditingController _fullNameController = TextEditingController();
 
-  String editedFullName;
+  String _editedFullName;
 
-  DashboardController dc = Get.put(DashboardController());
+  DashboardController _dc = Get.put(DashboardController());
 
-  File file;
-  String imageUrl;
+  File _file;
+  String _imageUrl;
 
   Future selectFile(ImageSource source) async {
     var result =
+        // ignore: invalid_use_of_visible_for_testing_member
         await ImagePicker.platform.pickImage(source: source, imageQuality: 40);
 
     if (result == null)
-      file = null;
+      _file = null;
     else {
       final path = result.path;
       setState(() {
-        file = File(path);
+        _file = File(path);
       });
     }
   }
 
   Future sendImage() async {
-    var storageImage = FirebaseStorage.instance.ref().child(file.path);
-    var task = storageImage.putFile(file);
-    imageUrl = await (await task).ref.getDownloadURL();
+    var storageImage = FirebaseStorage.instance.ref().child(_file.path);
+    var task = storageImage.putFile(_file);
+    _imageUrl = await (await task).ref.getDownloadURL();
   }
 
   @override
@@ -96,7 +92,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                             backgroundColor: darPurple,
                             radius: 50,
                             child: Text(
-                              dc.getInitials(Provider.of<FirebaseOperations>(
+                              _dc.getInitials(Provider.of<FirebaseOperations>(
                                       context,
                                       listen: false)
                                   .getInitFullname),
@@ -105,7 +101,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               ),
                             ),
                           )
-                        : (file == null
+                        : (_file == null
                             ? CircleAvatar(
                                 radius: 50,
                                 backgroundImage: NetworkImage(
@@ -115,7 +111,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               )
                             : CircleAvatar(
                                 radius: 50,
-                                backgroundImage: FileImage(file),
+                                backgroundImage: FileImage(_file),
                               )),
                     Positioned(
                       right: 0,
@@ -133,7 +129,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                 Provider.of<FirebaseOperations>(context,
                                         listen: false)
                                     .updateAvatar(context, {
-                                  'avatar': imageUrl,
+                                  'avatar': _imageUrl,
                                 });
                               });
                             });
@@ -177,7 +173,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                 listen: false)
                             .getInitFullname,
                         hidePassword: false,
-                        controller: fullNameController,
+                        controller: _fullNameController,
                         trailingIcon: null,
                         keyboardType: TextInputType.name,
                       ),
@@ -193,7 +189,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
             child: AuthButton(
               'Save',
               () async {
-                editedFullName = fullNameController.text.trim();
+                _editedFullName = _fullNameController.text.trim();
 
                 List<String> indexList = [];
 
@@ -207,12 +203,12 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                     }
                   }
                 }
-                getFullameIndex(editedFullName);
+                getFullameIndex(_editedFullName);
 
-                if (editedFullName.length >= 3) {
-                  await FirestoreService(uid: auth.currentUser.uid)
+                if (_editedFullName.length >= 3) {
+                  await FirestoreService(uid: _auth.currentUser.uid)
                       .updateFullname(
-                    fullName: editedFullName,
+                    fullName: _editedFullName,
                     searchIndex: indexList,
                   ).whenComplete(() {
                     
