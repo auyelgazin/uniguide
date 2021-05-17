@@ -214,7 +214,13 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                       .updateFullname(
                     fullName: editedFullName,
                     searchIndex: indexList,
-                  );
+                  ).whenComplete(() {
+                    
+                    Provider.of<FirebaseOperations>(context, listen: false).getInitFullname;
+                    setState(() {
+                      
+                    });
+                  });
                   Get.back();
                 }
                 // updateUserData()

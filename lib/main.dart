@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         getPages: AppRoutes.list,
         initialRoute:
-            initScreen == 0 || initScreen == null ? '/chooseLang' : authWrap(context),
+            initScreen == 0 || initScreen == null ? '/chooseLang' : '/chooseLang',
       ),
       providers: [
         ChangeNotifierProvider(create: (_) => SurveyFunctions()),

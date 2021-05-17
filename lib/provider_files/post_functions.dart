@@ -28,7 +28,6 @@ class PostFunctions with ChangeNotifier {
 
     timePosted = timeago.format(dateTime, locale: 'ru');
 
-    // notifyListeners();
   }
 
   Future addLike(BuildContext context, String postId, String subDocId) async {
