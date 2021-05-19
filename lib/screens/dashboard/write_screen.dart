@@ -235,6 +235,9 @@ class _WriteScreenState extends State<WriteScreen> {
                   'likes': 0,
                   'comments': 0,
                 }).whenComplete(() {
+                  file = null;
+                  titleController.clear();
+                  FocusScope.of(context).requestFocus(FocusNode());
                   print('Post uploaded');
                 });
               });

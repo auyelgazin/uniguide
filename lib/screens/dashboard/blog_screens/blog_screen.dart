@@ -5,10 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:uniguide/constants/colors.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/provider_files/authentication.dart';
+import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/provider_files/post_functions.dart';
+import 'package:uniguide/screens/dashboard/models/topic.dart';
 import 'package:uniguide/widgets/dashboard_widgets/post_card.dart';
 import 'package:uniguide/widgets/dashboard_widgets/post_in_comment_card.dart';
-
+import 'package:uniguide/widgets/wide_button_box.dart';
 
 class BlogScreen extends StatefulWidget {
   @override
@@ -17,6 +19,7 @@ class BlogScreen extends StatefulWidget {
 
 class _BlogScreenState extends State<BlogScreen> {
   TextEditingController _commentC = TextEditingController();
+  List<String> topics = Topic.topics;
 
   String _orderBy = 'time';
   // sorting widgets:
@@ -28,6 +31,15 @@ class _BlogScreenState extends State<BlogScreen> {
 
   var _discContColor = white;
   var _discTextColor = black.withOpacity(0.2);
+
+  // @override
+  // void initState() {
+  //   Provider.of<Authentication>(context, listen: false)
+  //       .getUID();
+  //   Provider.of<FirebaseOperations>(context, listen: false)
+  //       .initUserData(context);
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -47,57 +59,39 @@ class _BlogScreenState extends State<BlogScreen> {
         centerTitle: false,
         actions: [
           IconButton(
-              icon: ImageIcon(
-                AssetImage('images/filter.png'),
-              ),
-              color: Color(0xFF232195),
-              iconSize: 20,
-              onPressed: () async {
-                // Provider.of<SurveyFunctions>(context, listen: false)
-                //     .showSurveys();
-                // Get.offNamed('/login');
-                // - - - - DONT DELETE - - - -
+            icon: ImageIcon(
+              AssetImage('images/filter.png'),
+            ),
+            color: Color(0xFF232195),
+            iconSize: 20,
+            onPressed: () async {
+              // Provider.of<SurveyFunctions>(context, listen: false)
+              //     .showSurveys();
+              // Get.offNamed('/login');
+              // - - - - DONT DELETE - - - -
 
-                //   Get.bottomSheet(Container(
-                //     height: 500,
-                //     decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.only(
-                //           topRight: Radius.circular(20.0),
-                //           topLeft: Radius.circular(20.0)),
-                //       color: Colors.white,
-                //     ),
-                //     child: Padding(
-                //       padding: const EdgeInsets.symmetric(
-                //           horizontal: 20.0, vertical: 40),
-                //       child: Column(
-                //         mainAxisAlignment: MainAxisAlignment.end,
-                //         children: [
-                //           WideButtonBox(
-                //             ElevatedButton(
-                //               child: Text(
-                //                 'Choose',
-                //                 style: TextStyle(
-                //                     color: Color(0xFF141619),
-                //                     fontSize: 16,
-                //                     fontWeight: FontWeight.w500),
-                //               ),
-                //               onPressed: () {
-                //                 Get.back();
-                //               },
-                //               style: ElevatedButton.styleFrom(
-                //                 primary: Color(0xFFB7C1F4),
-                //                 shape: RoundedRectangleBorder(
-                //                   borderRadius:
-                //                       BorderRadius.circular(10),
-                //                 ),
-                //               ),
-                //             ),
-                //           )
-                //         ],
-                //       ),
-                //     ),
-                //   ));
-              }),
+              Get.bottomSheet(
+                Container(
+                  height: 500,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(20.0),
+                        topLeft: Radius.circular(20.0)),
+                    color: Colors.white,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 40),
+                    child: ListView.builder(
+                        itemCount: topics.length,
+                        itemBuilder: (BuildContext ctxt, int index) {
+                          return new Text(topics[index]);
+                        }),
+                  ),
+                ),
+              );
+            },
+          ),
         ],
       ),
       body: Column(
@@ -220,7 +214,6 @@ class _BlogScreenState extends State<BlogScreen> {
                     ),
                   ),
                 ),
-                
                 SizedBox(
                   width: 20,
                 ),
@@ -234,17 +227,24 @@ class _BlogScreenState extends State<BlogScreen> {
             child: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('posts')
+                  
                   .orderBy(_orderBy, descending: true)
+                  .where('category', isEqualTo: 'Lost-found')
                   .snapshots(),
               builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      backgroundColor: Colors.black,
-                    ),
-                  );
-                } else {
+                
+                if (!snapshot.hasData) {
+                  
+                  print('no data');
+                  return Text('There is no any posts yet.');
+                }
+                else if (snapshot.hasData){
+                  print('=== data ===: ${snapshot.data}');
                   return loadPosts(context, snapshot);
+                }
+                else{
+                  print('cicle');
+                  return CircularProgressIndicator();
                 }
               },
             ),
@@ -253,6 +253,17 @@ class _BlogScreenState extends State<BlogScreen> {
       ),
     );
   }
+
+  // filterByCategory() async{
+  //   List<dynamic> posts = [];
+
+  //   StreamBuilder<QuerySnapshot>(
+  //     stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+  //     builder: (context, snapshot){
+  //       return loadPosts(context, snapshot);
+  //     },
+  //   );
+  // }
 
   Widget loadPosts(
       BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -441,7 +452,9 @@ class _BlogScreenState extends State<BlogScreen> {
                                     'Начало обсуждения',
                                     textAlign: TextAlign.center,
                                   ),
-                                  SizedBox(height: 20,),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
                                   Container(
                                     height: 480,
                                     child: Provider.of<PostFunctions>(context,
@@ -449,7 +462,9 @@ class _BlogScreenState extends State<BlogScreen> {
                                         .showComments(context, documentSnapshot,
                                             documentSnapshot.data()['title']),
                                   ),
-                                  SizedBox(height: 20,),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
                                 ],
                               ),
                             ),
@@ -477,8 +492,7 @@ class _BlogScreenState extends State<BlogScreen> {
                                               ),
                                               fillColor: white,
                                               filled: true,
-                                              hintText:
-                                                  'Add a comment...',
+                                              hintText: 'Add a comment...',
                                               hintStyle: commentHint,
                                             ),
                                           ),
