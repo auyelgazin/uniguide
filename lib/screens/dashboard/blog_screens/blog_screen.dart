@@ -65,31 +65,30 @@ class _BlogScreenState extends State<BlogScreen> {
             color: Color(0xFF232195),
             iconSize: 20,
             onPressed: () async {
-              // Provider.of<SurveyFunctions>(context, listen: false)
-              //     .showSurveys();
-              // Get.offNamed('/login');
-              // - - - - DONT DELETE - - - -
 
-              Get.bottomSheet(
-                Container(
-                  height: 500,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20.0),
-                        topLeft: Radius.circular(20.0)),
-                    color: Colors.white,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 40),
-                    child: ListView.builder(
-                        itemCount: topics.length,
-                        itemBuilder: (BuildContext ctxt, int index) {
-                          return new Text(topics[index]);
-                        }),
-                  ),
-                ),
-              );
+              
+
+              // - - - - DONT DELETE - - - -
+              // Get.bottomSheet(
+              //   Container(
+              //     height: 500,
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.only(
+              //           topRight: Radius.circular(20.0),
+              //           topLeft: Radius.circular(20.0)),
+              //       color: Colors.white,
+              //     ),
+              //     child: Padding(
+              //       padding: const EdgeInsets.symmetric(
+              //           horizontal: 20.0, vertical: 40),
+              //       child: ListView.builder(
+              //           itemCount: topics.length,
+              //           itemBuilder: (BuildContext ctxt, int index) {
+              //             return new Text(topics[index]);
+              //           }),
+              //     ),
+              //   ),
+              // );
             },
           ),
         ],
@@ -229,7 +228,7 @@ class _BlogScreenState extends State<BlogScreen> {
                   .collection('posts')
                   
                   .orderBy(_orderBy, descending: true)
-                  .where('category', isEqualTo: 'Lost-found')
+                  // .where('category', isEqualTo: 'Lost-found')
                   .snapshots(),
               builder: (context, snapshot) {
                 
@@ -237,9 +236,12 @@ class _BlogScreenState extends State<BlogScreen> {
                   
                   print('no data');
                   return Text('There is no any posts yet.');
+                  // return CircularProgressIndicator();
                 }
                 else if (snapshot.hasData){
-                  print('=== data ===: ${snapshot.data}');
+                  final doc = snapshot.data.docs;
+                  print(doc);
+                  // print('=== data ===: ${snapshot.data}');
                   return loadPosts(context, snapshot);
                 }
                 else{

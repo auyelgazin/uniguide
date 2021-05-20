@@ -12,6 +12,8 @@ class FirebaseOperations with ChangeNotifier {
   String get getInitPosition => _initPosition;
   List<dynamic> get getInitSearchIndex => _initSearchIndex;
 
+  
+
 
 
   Future createUserCollection(BuildContext context, dynamic data) async {
