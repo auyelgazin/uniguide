@@ -9,7 +9,7 @@ import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart
 import 'package:uniguide/screens/dashboard/controllers/dashboard_provider.dart';
 import 'package:uniguide/screens/dashboard/dashboard_helper.dart';
 import 'blog_screens/blog_screen.dart';
-import 'chat_screen.dart';
+import 'chat_screens/users_list_screen.dart';
 import 'profile_screens/profile_screen.dart';
 import 'write_screen.dart';
 
@@ -24,21 +24,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   var pages = [
     BlogScreen(),
-    ChatScreen(),
+    UsersList(),
     ProfileScreen(),
     WriteScreen(),
   ];
 
   @override
   void initState() {
-     Provider.of<Authentication>(context, listen: false)
-        .getUID();
+    Provider.of<Authentication>(context, listen: false).getUID();
     Provider.of<FirebaseOperations>(context, listen: false)
         .initUserData(context);
     super.initState();
   }
-
-  
 
   @override
   Widget build(BuildContext context) {

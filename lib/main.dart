@@ -52,8 +52,8 @@ class MyApp extends StatelessWidget {
         getPages: AppRoutes.list,
         initialRoute: initScreen == 0 || initScreen == null
             ? '/chooseLang'
-            : '/chooseLang'
             // : authWrap(context),
+            : '/chats'
       ),
       providers: [
         ChangeNotifierProvider(create: (_) => SurveyFunctions()),
@@ -70,8 +70,6 @@ class MyApp extends StatelessWidget {
 
 String authWrap(BuildContext context) {
   if (FirebaseAuth.instance.currentUser != null) {
-    // Provider.of<FirebaseOperations>(context, listen: false).initUserData(context);
-    //  FirebaseOperations().initUserData(context);
     return '/dashboard';
   } else
     return '/login';

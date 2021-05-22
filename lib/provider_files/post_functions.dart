@@ -37,7 +37,7 @@ class PostFunctions with ChangeNotifier {
         .get()
         .then((doc) {
       if (doc.exists) {
-        print('user already liked');
+        print('$arrow This user already liked this post');
       } else {
         FirebaseFirestore.instance
             .collection('posts')
@@ -62,7 +62,7 @@ class PostFunctions with ChangeNotifier {
               .geiInitEmail,
           'time': Timestamp.now()
         }).whenComplete(() {
-          print('subCollection "likes" created for this post');
+          print('$arrow Subcollection "likes" created for this post');
         });
       }
     });

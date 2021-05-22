@@ -2,7 +2,8 @@ import 'package:get/get.dart';
 import 'package:uniguide/screens/auth/congratz_screen.dart';
 import 'package:uniguide/screens/auth/login_screen.dart';
 import 'package:uniguide/screens/auth/signup_screen.dart';
-import 'package:uniguide/screens/dashboard/chat_screen.dart';
+import 'package:uniguide/screens/dashboard/chat_screens/chat_screen.dart';
+import 'package:uniguide/screens/dashboard/chat_screens/users_list_screen.dart';
 import 'package:uniguide/screens/dashboard/profile_screens/profile_screen.dart';
 import 'package:uniguide/screens/dashboard/profile_screens/persontal_data_screen.dart';
 import 'package:uniguide/screens/dashboard/profile_screens/settings_screen.dart';
@@ -47,6 +48,10 @@ class AppRoutes {
     GetPage(
       name: '/settings',
       page: () => SettingsScreen(),
+    ),
+    GetPage(
+      name: '/chats',
+      page: () => UsersList(),
     ),
     GetPage(
       name: '/chat',

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:uniguide/constants/colors.dart';
+import 'package:uniguide/constants/consants.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/firebase_operations.dart';
@@ -233,19 +234,15 @@ class _BlogScreenState extends State<BlogScreen> {
               builder: (context, snapshot) {
                 
                 if (!snapshot.hasData) {
-                  
-                  print('no data');
                   return Text('There is no any posts yet.');
                   // return CircularProgressIndicator();
                 }
                 else if (snapshot.hasData){
-                  final doc = snapshot.data.docs;
-                  print(doc);
                   // print('=== data ===: ${snapshot.data}');
                   return loadPosts(context, snapshot);
                 }
                 else{
-                  print('cicle');
+                  print('$arrow Loading...');
                   return CircularProgressIndicator();
                 }
               },
@@ -532,11 +529,6 @@ class _BlogScreenState extends State<BlogScreen> {
                         ),
                       ),
                   transition: Transition.cupertino);
-
-              // dc.getCurrentProfile();
-              // PostFunctions().addComment(context, documentSnapshot.data()['title'], 'kuka');
-              // PostFunctions().showCommentsPage(context, documentSnapshot, documentSnapshot.data()['title']);
-              // Get.to(() => CommentsScreen());
             },
             onLikes: () {
               print('going to Likes page...');
