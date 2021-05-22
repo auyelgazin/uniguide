@@ -55,7 +55,7 @@ class PrivacyPolicyCheckbox extends StatelessWidget {
             child: TextButton(
               onPressed: () {},
               child: Text(
-                'Я даю согласие на обработку персональных данных',
+                'I give consent to the processing of personal data',
                 style: TextStyle(fontSize: 16),
               ),
             ),

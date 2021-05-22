@@ -52,7 +52,8 @@ class MyApp extends StatelessWidget {
         getPages: AppRoutes.list,
         initialRoute: initScreen == 0 || initScreen == null
             ? '/chooseLang'
-            : authWrap(context),
+            : '/chooseLang'
+            // : authWrap(context),
       ),
       providers: [
         ChangeNotifierProvider(create: (_) => SurveyFunctions()),

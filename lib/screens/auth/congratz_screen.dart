@@ -26,7 +26,7 @@ class CongratzScreen extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.75,
                   child: Text(
-                    'Поздравляю! Вы успешно зарегались',
+                    'Congratulations! You have successfully registered',
                     style: TextStyle(
                         color: Color(0xFF141619),
                         fontSize: 22,

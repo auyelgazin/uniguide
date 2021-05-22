@@ -9,6 +9,11 @@ import 'package:uniguide/screens/dashboard/controllers/dashboard_provider.dart';
 class DashboardHelper with ChangeNotifier {
   DashboardController _dc = DashboardController();
   int pageIndex = 0;
+
+  void goToBlog(){
+    pageIndex = 0;
+    notifyListeners();
+  }
   Widget bottomNav(
       BuildContext context, int index, PageController pageController) {
     return Container(

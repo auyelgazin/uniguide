@@ -24,7 +24,7 @@ class PostFunctions with ChangeNotifier {
     timeago.setLocaleMessages('ru', timeago.RuShortMessages());
     timeago.setLocaleMessages('en', timeago.EnShortMessages());
 
-    _timePosted = timeago.format(dateTime, locale: 'ru');
+    _timePosted = timeago.format(dateTime, locale: 'en');
 
   }
 

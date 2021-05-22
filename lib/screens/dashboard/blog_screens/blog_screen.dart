@@ -132,7 +132,7 @@ class _BlogScreenState extends State<BlogScreen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 9, vertical: 2),
                       child: Text(
-                        '#новые',
+                        '#new',
                         style: TextStyle(
                           color: _newTextColor,
                           fontSize: 18,
@@ -168,7 +168,7 @@ class _BlogScreenState extends State<BlogScreen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 9, vertical: 2),
                       child: Text(
-                        '#лучшие',
+                        '#best',
                         style: TextStyle(
                           color: _intTextColor,
                           fontSize: 18,
@@ -204,7 +204,7 @@ class _BlogScreenState extends State<BlogScreen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 9, vertical: 2),
                       child: Text(
-                        '#обсуждаемые',
+                        '#most discussed',
                         style: TextStyle(
                           color: _discTextColor,
                           fontSize: 18,
@@ -365,7 +365,7 @@ class _BlogScreenState extends State<BlogScreen> {
                             ),
                           ),
                           title: Text(
-                            'Коментарии',
+                            'Comments',
                             style: commentsStyle,
                           ),
                         ),
@@ -451,7 +451,7 @@ class _BlogScreenState extends State<BlogScreen> {
                                     ),
                                   ),
                                   Text(
-                                    'Начало обсуждения',
+                                    'Discussion start',
                                     textAlign: TextAlign.center,
                                   ),
                                   SizedBox(

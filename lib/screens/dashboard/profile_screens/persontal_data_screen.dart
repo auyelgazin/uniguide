@@ -27,6 +27,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   DashboardController _dc = Get.put(DashboardController());
 
+  final snackBar = SnackBar(content: Text('Profile avatar updated!'));
+
   File _file;
   String _imageUrl;
 
@@ -98,6 +100,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                   .getInitFullname),
                               style: TextStyle(
                                 fontSize: 30,
+                                color: white,
                               ),
                             ),
                           )
@@ -122,8 +125,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           try {
                             selectFile(ImageSource.gallery).whenComplete(() {
                               print('image selected');
-                              Get.defaultDialog();
-
+                              // Get.defaultDialog();
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
                               sendImage().whenComplete(() {
                                 print('image sent to FStorage');
                                 Provider.of<FirebaseOperations>(context,

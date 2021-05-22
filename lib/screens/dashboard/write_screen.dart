@@ -32,9 +32,11 @@ class _WriteScreenState extends State<WriteScreen> {
   File file;
   String imageUrl;
 
+  final snackBar = SnackBar(content: Text('Post Uploaded!'));
+
   Future selectFile(ImageSource source) async {
     final result =
-        await ImagePicker.platform.pickImage(source: source, imageQuality: 40);
+        await ImagePicker.platform.pickImage(source: source, imageQuality: 20);
 
     if (result == null) return;
     final path = result.path;
@@ -239,6 +241,7 @@ class _WriteScreenState extends State<WriteScreen> {
                   titleController.clear();
                   FocusScope.of(context).requestFocus(FocusNode());
                   print('Post uploaded');
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 });
               });
             },
@@ -284,7 +287,10 @@ class _WriteScreenState extends State<WriteScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('attachedFile: '),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: Text('Attached File: '),
+                              ),
                               Container(
                                 height: 250,
                                 child: Image(

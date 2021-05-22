@@ -264,7 +264,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   'searchIndex': indexList,
                                 });
                               }).whenComplete(() {
-                                Get.toNamed('/dashboard');
+                                Get.toNamed('/congratz');
                               });
                             } else {
                               controller.useSDUmail();
@@ -296,7 +296,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   'searchIndex': indexList,
                                 });
                               }).whenComplete(() {
-                                Get.toNamed('/dashboard');
+                                Get.toNamed('/congratz');
                               });
                             }
                           }
