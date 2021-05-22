@@ -53,9 +53,6 @@ class AppRoutes {
       name: '/chats',
       page: () => UsersList(),
     ),
-    GetPage(
-      name: '/chat',
-      page: () => ChatScreen(),
-    ),
+    
   ];
 }

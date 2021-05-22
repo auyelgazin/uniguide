@@ -17,10 +17,10 @@ class FirebaseOperations with ChangeNotifier {
   String get getInitPosition => _initPosition;
   List<dynamic> get getInitSearchIndex => _initSearchIndex;
 
-  Stream<List<UserModel>> getUsers() => FirebaseFirestore.instance
-      .collection('users')
-      .snapshots()
-      .transform(Utils.transformer(UserModel.fromJson));
+  // Stream<List<UserModel>> getUsers() => FirebaseFirestore.instance
+  //     .collection('users')
+  //     .snapshots()
+  //     .transform(Utils.transformer(UserModel.fromJson));
 
   Future uploadMessage(String uid, String message) async {
     final refMessage =

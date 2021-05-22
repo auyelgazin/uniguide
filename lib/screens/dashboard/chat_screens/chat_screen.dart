@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:uniguide/constants/colors.dart';
 import 'package:uniguide/constants/consants.dart';
 import 'package:uniguide/constants/font_styles.dart';
+import 'package:uniguide/screens/dashboard/chat_screens/models/user.dart';
 
-TextEditingController _controller = TextEditingController();
+
 
 class ChatScreen extends StatefulWidget {
+
+  TextEditingController _controller = TextEditingController();
+  final UserModel user;
+
+  ChatScreen(this.user);
+  
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -15,7 +22,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Napoleon Bonoparte'),
+        title: Text(widget.user.fullname),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,7 +44,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: Container(
                         height: 36,
                         child: TextField(
-                          controller: _controller,
+                          controller: widget._controller,
                           textAlignVertical: TextAlignVertical.bottom,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -62,7 +69,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         color: darPurple,
                       ),
                       onPressed: () {
-                        print('$arrow Sending message[${_controller.text}]');
+                        print('$arrow Sending message[${widget._controller.text}]');
                       },
                     ),
                   ),

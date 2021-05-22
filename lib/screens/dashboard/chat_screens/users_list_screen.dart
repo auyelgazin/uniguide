@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uniguide/constants/colors.dart';
+import 'package:uniguide/constants/consants.dart';
 import 'package:uniguide/constants/font_styles.dart';
 import 'package:uniguide/provider_files/firebase_operations.dart';
+import 'package:uniguide/screens/dashboard/chat_screens/chat_screen.dart';
 import 'package:uniguide/screens/dashboard/chat_screens/models/user.dart';
 import 'package:uniguide/screens/dashboard/chat_screens/utils.dart';
 
@@ -18,9 +20,6 @@ class _UsersListState extends State<UsersList> {
   TextEditingController _searchC = TextEditingController();
 
   String _searchString;
-  
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -72,28 +71,67 @@ class _UsersListState extends State<UsersList> {
             Container(
               height: 350,
               child: StreamBuilder<List<UserModel>>(
-                stream: Provider.of<FirebaseOperations>(context, listen: false).getUsers(),
+                stream: (_searchString == null || _searchString.trim() == '')
+                    ? FirebaseFirestore.instance
+                        .collection('users')
+                        .snapshots()
+                        .transform(Utils.transformer(UserModel.fromJson))
+                    : FirebaseFirestore.instance
+                        .collection('users')
+                        .where('searchIndex', arrayContains: _searchString)
+                        .snapshots()
+                        .transform(Utils.transformer(UserModel.fromJson)),
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                  return Center(child: CircularProgressIndicator());
-                default:
-                  if (snapshot.hasError) {
-                    print(snapshot.error);
-                    return Text('Something Went Wrong Try later');
-                  } else {
-                    final users = snapshot.data;
+                    case ConnectionState.waiting:
+                      return Center(child: CircularProgressIndicator());
+                    default:
+                      if (snapshot.hasError) {
+                        print(snapshot.error);
+                        return Text('Something Went Wrong Try later');
+                      } else {
+                        final users = snapshot.data;
 
-                    if (users.isEmpty) {
-                      return Text('No Users Found');
-                    } else
-                      return Text(users.toString());
+                        if (users.isEmpty) {
+                          return Text('No Users Found');
+                        } else
+                          return ListView.builder(
+                            itemCount: users.length,
+                            itemBuilder: (context, index) {
+                              final user = users[index];
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: Container(
+                                  alignment: Alignment.bottomLeft,
+                                  height: 45,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            ChatScreen(user),
+                                      ));
+                                    },
+                                    child: new Text(
+                                      '${user.fullname} (${user.position})',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 18,
+                                        color: Color(0xFF2F2F32),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                      }
                   }
-              }
                 },
               ),
             ),
-            // DONT DELETE 
+            // DONT DELETE
             // Expanded(
             //   child: StreamBuilder<QuerySnapshot>(
             //     stream: (_searchString == null || _searchString.trim() == '')
