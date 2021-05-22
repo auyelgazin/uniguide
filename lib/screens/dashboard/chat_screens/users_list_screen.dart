@@ -117,6 +117,7 @@ class _UsersListState extends State<UsersList> {
                                           builder: (context) =>
                                               ChatScreen(user),
                                         ));
+                                        FocusScope.of(context).unfocus();
                                       },
                                       child: new Text(
                                         '${user.fullname} (${user.position})',

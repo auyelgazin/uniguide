@@ -239,7 +239,8 @@ class _WriteScreenState extends State<WriteScreen> {
                 }).whenComplete(() {
                   file = null;
                   titleController.clear();
-                  FocusScope.of(context).requestFocus(FocusNode());
+                  FocusScope.of(context).unfocus();
+                  // FocusScope.of(context).requestFocus(FocusNode());
                   print('Post uploaded');
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 });

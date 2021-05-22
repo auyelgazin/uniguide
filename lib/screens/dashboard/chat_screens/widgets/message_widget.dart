@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uniguide/constants/colors.dart';
 import 'package:uniguide/screens/dashboard/chat_screens/models/message.dart';
 
 class MessageWidget extends StatelessWidget {
@@ -19,11 +20,11 @@ class MessageWidget extends StatelessWidget {
           CircleAvatar(
               radius: 16, backgroundImage: NetworkImage(message.avatar)),
         Container(
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.only(left:10, right:16, top:16, bottom:16),
           margin: EdgeInsets.all(16),
           constraints: BoxConstraints(maxWidth: 140),
           decoration: BoxDecoration(
-            color: isMe ? Colors.grey[100] : Theme.of(context).accentColor,
+            color: isMe ? lightPurple.withOpacity(0.3) : Theme.of(context).accentColor,
             borderRadius: isMe
                 ? borderRadius.subtract(BorderRadius.only(bottomRight: radius))
                 : borderRadius.subtract(BorderRadius.only(bottomLeft: radius)),
