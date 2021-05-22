@@ -5,10 +5,7 @@ class MessageWidget extends StatelessWidget {
   final Message message;
   final bool isMe;
 
-  const MessageWidget({
-    @required this.message,
-    @required this.isMe,
-  });
+  const MessageWidget({Key key, this.message, this.isMe}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +16,8 @@ class MessageWidget extends StatelessWidget {
       mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: <Widget>[
         if (!isMe)
-          // CircleAvatar(
-          //     radius: 16, backgroundImage: NetworkImage(message.avatar)),
+          CircleAvatar(
+              radius: 16, backgroundImage: NetworkImage(message.avatar)),
         Container(
           padding: EdgeInsets.all(16),
           margin: EdgeInsets.all(16),

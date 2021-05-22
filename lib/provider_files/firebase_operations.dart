@@ -37,11 +37,12 @@ class FirebaseOperations with ChangeNotifier {
   }
 
   Stream<List<Message>> getMessages(String uid) {
-    FirebaseFirestore.instance
+    return FirebaseFirestore.instance
         .collection('users/$uid/messages')
         // .orderBy()
         .snapshots()
         .transform(Utils.transformer(Message.fromJson));
+
   }
 
   Future createUserCollection(BuildContext context, dynamic data) async {
