@@ -68,67 +68,73 @@ class _UsersListState extends State<UsersList> {
                 });
               },
             ),
-            Container(
-              height: 350,
-              child: StreamBuilder<List<UserModel>>(
-                stream: (_searchString == null || _searchString.trim() == '')
-                    ? FirebaseFirestore.instance
-                        .collection('users')
-                        .snapshots()
-                        .transform(Utils.transformer(UserModel.fromJson))
-                    : FirebaseFirestore.instance
-                        .collection('users')
-                        .where('searchIndex', arrayContains: _searchString)
-                        .snapshots()
-                        .transform(Utils.transformer(UserModel.fromJson)),
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return Center(child: CircularProgressIndicator());
-                    default:
-                      if (snapshot.hasError) {
-                        print(snapshot.error);
-                        return Text('Something Went Wrong Try later');
-                      } else {
-                        final users = snapshot.data;
+            const SizedBox(height: 13),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: lightPurple.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: StreamBuilder<List<UserModel>>(
+                  stream: (_searchString == null || _searchString.trim() == '')
+                      ? FirebaseFirestore.instance
+                          .collection('users')
+                          .snapshots()
+                          .transform(Utils.transformer(UserModel.fromJson))
+                      : FirebaseFirestore.instance
+                          .collection('users')
+                          .where('searchIndex', arrayContains: _searchString)
+                          .snapshots()
+                          .transform(Utils.transformer(UserModel.fromJson)),
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return Center(child: CircularProgressIndicator());
+                      default:
+                        if (snapshot.hasError) {
+                          print(snapshot.error);
+                          return Text('Something Went Wrong Try later');
+                        } else {
+                          final users = snapshot.data;
 
-                        if (users.isEmpty) {
-                          return Text('No Users Found');
-                        } else
-                          return ListView.builder(
-                            itemCount: users.length,
-                            itemBuilder: (context, index) {
-                              final user = users[index];
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                child: Container(
-                                  alignment: Alignment.bottomLeft,
-                                  height: 45,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context)
-                                          .push(MaterialPageRoute(
-                                        builder: (context) =>
-                                            ChatScreen(user),
-                                      ));
-                                    },
-                                    child: new Text(
-                                      '${user.fullname} (${user.position})',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 18,
-                                        color: Color(0xFF2F2F32),
+                          if (users.isEmpty) {
+                            return Text('No Users Found');
+                          } else
+                            return ListView.builder(
+                              itemCount: users.length,
+                              itemBuilder: (context, index) {
+                                final user = users[index];
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  child: Container(
+                                    alignment: Alignment.bottomLeft,
+                                    height: 45,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                          builder: (context) =>
+                                              ChatScreen(user),
+                                        ));
+                                      },
+                                      child: new Text(
+                                        '${user.fullname} (${user.position})',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 18,
+                                          color: Color(0xFF2F2F32),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
-                          );
-                      }
-                  }
-                },
+                                );
+                              },
+                            );
+                        }
+                    }
+                  },
+                ),
               ),
             ),
             // DONT DELETE

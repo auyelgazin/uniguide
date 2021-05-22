@@ -86,3 +86,9 @@ const surveyInfo = TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.w400,
 );
+
+const ChatAppbarName = TextStyle(
+  color: darPurple,
+  fontSize: 18,
+  fontWeight: FontWeight.w500,
+);
