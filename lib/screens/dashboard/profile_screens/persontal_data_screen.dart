@@ -126,7 +126,6 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                             selectFile(ImageSource.gallery).whenComplete(() {
                               print('image selected');
                               // Get.defaultDialog();
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
                               sendImage().whenComplete(() {
                                 print('image sent to FStorage');
                                 Provider.of<FirebaseOperations>(context,
