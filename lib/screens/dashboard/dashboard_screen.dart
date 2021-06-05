@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:uniguide/provider_files/authentication.dart';
 import 'package:uniguide/provider_files/firebase_operations.dart';
 import 'package:uniguide/provider_files/survey_functions.dart';
+import 'package:uniguide/screens/dashboard/chat2_screen/users_list_screen.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:uniguide/screens/dashboard/controllers/dashboard_provider.dart';
 import 'package:uniguide/screens/dashboard/dashboard_helper.dart';
@@ -24,7 +25,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   var pages = [
     BlogScreen(),
-    UsersList(),
+    UsersListScreen(),
     ProfileScreen(),
     WriteScreen(),
   ];

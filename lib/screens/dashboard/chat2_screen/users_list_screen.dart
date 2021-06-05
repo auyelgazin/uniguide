@@ -11,14 +11,14 @@ import 'package:uniguide/screens/dashboard/chat_screens/chat_sucareen.dart';
 import 'package:uniguide/screens/dashboard/chat_screens/models/user.dart';
 import 'package:uniguide/screens/dashboard/chat_screens/utils.dart';
 
-class UsersList extends StatefulWidget {
+class UsersListScreen extends StatefulWidget {
   @override
-  _UsersListState createState() => _UsersListState();
+  _UsersListScreenState createState() => _UsersListScreenState();
 
   // UsersList(this.users);
 }
 
-class _UsersListState extends State<UsersList> {
+class _UsersListScreenState extends State<UsersListScreen> {
   TextEditingController _searchC = TextEditingController();
 
   String _searchString;
@@ -141,7 +141,7 @@ class _UsersListState extends State<UsersList> {
                 ),
               ),
             ),
-            // DONT DELETE
+            //! DONT DELETE
             // Expanded(
             //   child: StreamBuilder<QuerySnapshot>(
             //     stream: (_searchString == null || _searchString.trim() == '')

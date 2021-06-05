@@ -17,14 +17,33 @@ class FirebaseOperations with ChangeNotifier {
   String get getInitPosition => _initPosition;
   List<dynamic> get getInitSearchIndex => _initSearchIndex;
 
+  Future addChat(String firstUserUID, String secondUserUID) async {
+    String combo = firstUserUID.compareTo(secondUserUID) == 1
+        ? '$firstUserUID$secondUserUID'
+        : '$secondUserUID$firstUserUID';
+
+    return FirebaseFirestore.instance
+        .collection('chats')
+        .doc(combo)
+        .collection('messages');
+  }
+
+  String getChatCombo(String firstUserUID, String secondUserUID) {
+    String combo = firstUserUID.compareTo(secondUserUID) == 1
+        ? '$firstUserUID$secondUserUID'
+        : '$secondUserUID$firstUserUID';
+    return combo;
+  }
+
   // Stream<List<UserModel>> getUsers() => FirebaseFirestore.instance
   //     .collection('users')
   //     .snapshots()
   //     .transform(Utils.transformer(UserModel.fromJson));
 
-  Future uploadMessage(String uid, String message) async {
-    final refMessage =
-        FirebaseFirestore.instance.collection('chats/$uid/messages');
+  Future uploadMessage(String uid, String message, String secondUID) async {
+    final refMessage = FirebaseFirestore.instance.collection('chats').doc(
+          getChatCombo(uid, secondUID)
+        ).collection('messages');
 
     final newMessage = Message(
       uid: FirebaseAuth.instance.currentUser.uid,
@@ -42,7 +61,6 @@ class FirebaseOperations with ChangeNotifier {
         // .orderBy()
         .snapshots()
         .transform(Utils.transformer(Message.fromJson));
-
   }
 
   Future createUserCollection(BuildContext context, dynamic data) async {

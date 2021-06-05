@@ -33,9 +33,9 @@ class _ChatScreenState extends State<ChatScreen> {
     FocusScope.of(context).unfocus();
 
     await Provider.of<FirebaseOperations>(context, listen: false)
-        .uploadMessage(widget.user.uid, message);
+        .uploadMessage(widget.user.uid, message, Provider.of<Authentication>(context, listen: false).getUserUid);
 
-    _controller.clear();
+    // _controller.clear();
   }
 
   @override
@@ -82,7 +82,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               child: StreamBuilder<List<Message>>(
                 stream: FirebaseFirestore.instance
-                    .collection('chats/${widget.user.uid}/messages')
+                    .collection('chats/${Provider.of<FirebaseOperations>(context, listen: false).getChatCombo(Provider.of<Authentication>(context, listen: false).getUserUid, widget.user.uid)}/messages')
                     .orderBy(MessageField.createdAt, descending: true)
                     .snapshots()
                     .transform(Utils.transformer(Message.fromJson)),
