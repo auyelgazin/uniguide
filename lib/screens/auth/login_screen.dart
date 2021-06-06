@@ -102,13 +102,17 @@ class LoginScreen extends StatelessWidget {
                       'login'.tr,
                       () async {
                         try {
-                          Provider.of<Authentication>(context, listen: false).logIntoAccount(_emailController.text, _passwordController.text).whenComplete((){
-                          print('User logged in');
-                          // - - - ->
-                          Provider.of<FirebaseOperations>(context, listen: false).initUserData(context);
+                          await Provider.of<Authentication>(context, listen: false)
+                              .logIntoAccount(_emailController.text,
+                                  _passwordController.text)
+                              .whenComplete(() {
+                            print('User logged in');
+                            // - - - ->
+                            // Provider.of<FirebaseOperations>(context, listen: false).initUserData(context);
+                          });
                           Get.toNamed('/dashboard');
-                        });
                         } catch (e) {
+                          _controller.isIncorrect();
                           print(e);
                         }
                         // await AuthService(auth: firebaseAuth).Login(

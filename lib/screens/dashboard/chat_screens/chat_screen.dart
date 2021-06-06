@@ -35,7 +35,7 @@ class _ChatScreenState extends State<ChatScreen> {
     await Provider.of<FirebaseOperations>(context, listen: false)
         .uploadMessage(widget.user.uid, message, Provider.of<Authentication>(context, listen: false).getUserUid);
 
-    // _controller.clear();
+    _controller.clear();
   }
 
   @override
@@ -94,10 +94,9 @@ class _ChatScreenState extends State<ChatScreen> {
                       if (snapshot.hasError) {
                         return Text('Something Went Wrong Try later');
                       } else {
-                        print(snapshot.data);
+                       
                         final messages = snapshot.data;
-                        print('$arrow Current UID: ${Provider.of<Authentication>(context, listen: false).getUserUid}');
-                        print(messages);
+                       
                         return messages.isEmpty
                             ? Center(child: Text('No messages'))
                             : ListView.builder(

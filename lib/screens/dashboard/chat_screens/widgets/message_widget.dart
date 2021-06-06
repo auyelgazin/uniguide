@@ -16,15 +16,15 @@ class MessageWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: <Widget>[
-        if (!isMe)
-          CircleAvatar(
-              radius: 16, backgroundImage: NetworkImage(message.avatar)),
+        // if (!isMe)
+        //   CircleAvatar(
+        //       radius: 16, backgroundImage: NetworkImage(message.avatar)),
         Container(
           padding: EdgeInsets.only(left:10, right:16, top:16, bottom:16),
           margin: EdgeInsets.all(16),
           constraints: BoxConstraints(maxWidth: 140),
           decoration: BoxDecoration(
-            color: isMe ? lightPurple.withOpacity(0.3) : Theme.of(context).accentColor,
+            color: isMe ? lightPurple.withOpacity(0.3) : Color(0xFFe5e5ea).withOpacity(0.8),
             borderRadius: isMe
                 ? borderRadius.subtract(BorderRadius.only(bottomRight: radius))
                 : borderRadius.subtract(BorderRadius.only(bottomLeft: radius)),
@@ -41,7 +41,7 @@ class MessageWidget extends StatelessWidget {
         children: <Widget>[
           Text(
             message.message,
-            style: TextStyle(color: isMe ? Colors.black : Colors.white),
+            style: TextStyle(color: isMe ? Colors.black : Colors.black),
             textAlign: isMe ? TextAlign.end : TextAlign.start,
           ),
         ],
